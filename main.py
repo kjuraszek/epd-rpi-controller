@@ -168,7 +168,8 @@ def main():
 
     topic = NewTopic(name=KAFKA_VIEW_MANAGER_TOPIC,
                      num_partitions=1,
-                     replication_factor=1)
+                     replication_factor=1,
+                     topic_configs={'retention.ms':'60000'})
     try:
         kafka_admin.delete_topics([KAFKA_VIEW_MANAGER_TOPIC])
     except (UnknownTopicOrPartitionError, TopicAlreadyExistsError):
