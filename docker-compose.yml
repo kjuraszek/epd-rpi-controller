@@ -34,6 +34,8 @@ services:
       - kafka
     ports:
       - 19000:9000
+    profiles:
+      - all
     environment:
       KAFKA_BROKERCONNECT: kafka:29092
   kafka-rest:
