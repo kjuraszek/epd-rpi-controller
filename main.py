@@ -1,4 +1,6 @@
-import threading, time
+import threading
+import time
+import logging
 
 from kafka import KafkaAdminClient, KafkaConsumer, KafkaProducer
 from kafka.admin import NewTopic
@@ -9,6 +11,8 @@ from waiting import wait, TimeoutExpired
 KAFKA_VIEW_MANAGER_TOPIC  = 'epaper_view_manager'
 PRODUCER_INTERVAL = 10
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class View:
     '''
@@ -28,7 +32,7 @@ class DummyView(View):
     dummy view
     '''
     def show(self):
-        print(self.name, ' is running')
+        logger.info('%s is running', self.name)
         time.sleep(2)
 
 
@@ -89,8 +93,9 @@ class Consumer(threading.Thread):
                     elif message_decoded == 'stop':
                         self.stop()
                 except:
-                    print('Consumer decoding error with ', message.value)
+                    logger.error('Consumer decoding error with %s', message.value)
                 if self.stop_event.is_set():
+                    logger.info('Stopping consumer')
                     break
 
         consumer.close()
@@ -119,14 +124,14 @@ class ViewManager(threading.Thread):
             self.busy.set()
             self.action = 'next'
         else:
-            print('View manager is busy')
+            logger.debug('View manager is busy')
 
     def prev(self):
         if not self.busy.is_set():
             self.busy.set()
             self.action = 'prev'
         else:
-            print('View manager is busy')
+            logger.debug('View manager is busy')
         
     def stop(self):
         self.stop_event.set()
@@ -142,9 +147,9 @@ class ViewManager(threading.Thread):
                 switched = False
             if not switched:
                 self.busy.set()
-                print('\tView is running')
+                logger.debug('\tView is running')
                 self.views[self.current_view].show()
-                print('\tView is idle')
+                logger.debug('\tView is idle')
                 self.busy.clear()
                 if self.views[self.current_view].interval == 0:
                     switched = True
@@ -172,8 +177,10 @@ def main():
                      topic_configs={'retention.ms':'60000'})
     try:
         kafka_admin.delete_topics([KAFKA_VIEW_MANAGER_TOPIC])
-    except (UnknownTopicOrPartitionError, TopicAlreadyExistsError):
-        print('unable to delete topic')
+        time.sleep(2)
+        logger.debug('topic deleted')
+    except UnknownTopicOrPartitionError:
+        logger.debug('unable to delete topic')
     kafka_admin.create_topics([topic])
     
     epd = None
@@ -202,7 +209,11 @@ def main():
     while not tasks[0].stop_event.is_set():
         time.sleep(1)
 
-    kafka_admin.delete_topics([KAFKA_VIEW_MANAGER_TOPIC])
+    try:
+        kafka_admin.delete_topics([KAFKA_VIEW_MANAGER_TOPIC])
+        logger.debug('topic deleted')
+    except TopicAlreadyExistsError:
+        logger.debug('unable to delete topic')
 
     for task in tasks:
         task.stop()
