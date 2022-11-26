@@ -6,13 +6,10 @@ from kafka import KafkaAdminClient
 from kafka.admin import NewTopic
 from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError
 
-from config import cfg
+from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL
 from src import Consumer, MockedEPD, Producer, ViewManager
 from src.example import VIEWS
 
-
-KAFKA_VIEW_MANAGER_TOPIC  = cfg['kafka'].get('view_manager_topic', 'epd_rpi_view_manager')
-PRODUCER_INTERVAL = cfg['main'].getint('producer_interval', 0)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
