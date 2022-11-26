@@ -9,6 +9,7 @@ from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError
 from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL
 from src import Consumer, MockedEPD, Producer, ViewManager
 from src.example import VIEWS
+from src.helpers import validate_config, validate_views
 
 
 logging.basicConfig(level=logging.INFO)
@@ -16,7 +17,8 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-    
+    validate_config()
+    validate_views()
     kafka_admin = KafkaAdminClient(bootstrap_servers='localhost:9092')
 
     topic = NewTopic(name=KAFKA_VIEW_MANAGER_TOPIC,
