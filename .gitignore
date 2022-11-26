@@ -130,3 +130,6 @@ dmypy.json
 
 # .cfg files
 epd-rpi-controller.cfg
+
+# mocked epd image
+mocked_epd.png
