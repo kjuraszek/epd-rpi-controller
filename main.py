@@ -6,6 +6,8 @@ from kafka import KafkaAdminClient, KafkaConsumer, KafkaProducer
 from kafka.admin import NewTopic
 from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError
 
+from PIL import Image, ImageDraw, ImageFont
+
 from waiting import wait, TimeoutExpired
 
 from config import cfg
@@ -15,6 +17,26 @@ PRODUCER_INTERVAL = cfg['main'].getint('producer_interval', 0)
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+class MockedEPD:
+    '''
+    mocked epd
+    '''
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def init(self, *args):
+        pass
+
+    def Clear(self, *args):
+        pass
+
+    def getbuffer(self, image):
+        return image
+    
+    def display(self, image, file_name = 'mocked_epd.png'):
+        image.save(file_name)
 
 class View:
     '''
@@ -36,6 +58,13 @@ class DummyView(View):
     def show(self):
         logger.info('%s is running', self.name)
         time.sleep(2)
+                
+        image = Image.new('1', (self.epd.width, self.epd.height), 255)
+        draw = ImageDraw.Draw(image)
+        font = ImageFont.truetype('/usr/share/fonts/truetype/msttcorefonts/Impact.ttf', 24)       
+        draw.text((10, 10), f'Hello\nWorld from\n{self.name}', font = font, fill = 0)
+        
+        self.epd.display(self.epd.getbuffer(image))
 
 
 class Producer(threading.Thread):
@@ -113,14 +142,15 @@ class ViewManager(threading.Thread):
     '''
     view manager
     '''
-    def __init__(self, views, starting_view = 0):
+    def __init__(self, views, epd, starting_view = 0):
         threading.Thread.__init__(self)
         self.stop_event = threading.Event()
         self.busy = threading.Event()
         self.current_view = starting_view
         self.views = views
         self.action = None
-    
+        self.epd = epd
+
     def next(self):
         if not self.busy.is_set():
             self.busy.set()
@@ -140,6 +170,8 @@ class ViewManager(threading.Thread):
     
     def run(self):
         switched = False
+        self.epd.init(0)
+        self.epd.Clear(0xFF)
         while not self.stop_event.is_set():
             if self.busy.is_set() and self.action in ('next', 'prev'):
                 if self.action == 'next':
@@ -185,7 +217,7 @@ def main():
         logger.debug('unable to delete topic')
     kafka_admin.create_topics([topic])
     
-    epd = None
+    epd = MockedEPD(width = 200, height = 200)
     
     views = [
         DummyView(epd, 'Dummy view 1', 0),
@@ -194,7 +226,7 @@ def main():
         DummyView(epd, 'Dummy view 4', 7)
     ]
 
-    view_manager = ViewManager(views)
+    view_manager = ViewManager(views, epd)
     consumer = Consumer(view_manager)
     producer = Producer(asc_order=True)
 
