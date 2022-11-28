@@ -6,9 +6,8 @@ from kafka import KafkaAdminClient
 from kafka.admin import NewTopic
 from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError
 
-from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL
-from src import Consumer, MockedEPD, Producer, ViewManager
-from src.example import VIEWS
+from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, USE_MOCKED_EPD, MOCKED_EPD_WIDTH, MOCKED_EPD_HEIGHT
+from src import Consumer, Producer, ViewManager
 from src.helpers import validate_config, validate_views
 
 
@@ -19,6 +18,14 @@ logger = logging.getLogger(__name__)
 def main():
     validate_config()
     validate_views()
+
+    if USE_MOCKED_EPD:
+        from src.example import VIEWS
+        from src import MockedEPD
+        epd = MockedEPD(width = MOCKED_EPD_WIDTH, height = MOCKED_EPD_HEIGHT)
+    else:
+        raise NotImplementedError
+
     kafka_admin = KafkaAdminClient(bootstrap_servers='localhost:9092')
 
     topic = NewTopic(name=KAFKA_VIEW_MANAGER_TOPIC,
@@ -33,7 +40,6 @@ def main():
         logger.debug('unable to delete topic')
     kafka_admin.create_topics([topic])
 
-    epd = MockedEPD(width = 200, height = 200)
 
     views = deepcopy(VIEWS)
     for view in views:

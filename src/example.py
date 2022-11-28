@@ -7,7 +7,7 @@ import logging
 
 from PIL import Image, ImageDraw, ImageFont
 
-from src.view import View
+from src import View
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
