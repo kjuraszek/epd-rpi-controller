@@ -6,7 +6,7 @@ from kafka import KafkaAdminClient
 from kafka.admin import NewTopic
 from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError
 
-from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, USE_MOCKED_EPD, MOCKED_EPD_WIDTH, MOCKED_EPD_HEIGHT
+from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, USE_MOCKED_EPD, MOCKED_EPD_WIDTH, MOCKED_EPD_HEIGHT, CLEAR_EPD_ON_EXIT
 from src import Consumer, Producer, ViewManager
 from src.helpers import validate_config, validate_views
 from custom_views import VIEWS
@@ -73,6 +73,9 @@ def main():
 
     for task in tasks:
         task.join()
+
+    if CLEAR_EPD_ON_EXIT:
+        epd.Clear(0xFF)
 
 
 if __name__ == '__main__':

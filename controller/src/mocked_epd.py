@@ -2,6 +2,8 @@
 Mocked EPD class
 '''
 
+from PIL import Image, ImageDraw, ImageFont
+
 class MockedEPD:
     '''
     mocked epd
@@ -13,8 +15,9 @@ class MockedEPD:
     def init(self, *args, **kwargs):
         pass
 
-    def Clear(self, *args, **kwargs):
-        pass
+    def Clear(self, color, *args, **kwargs):
+        image = Image.new('1', (self.width, self.height), color)
+        self.display(self.getbuffer(image))
 
     def getbuffer(self, image):
         return image
