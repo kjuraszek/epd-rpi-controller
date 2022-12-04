@@ -1,5 +1,5 @@
 '''
-Examplary views
+Examplary class DummyView and views
 '''
 
 import time
@@ -22,8 +22,8 @@ class DummyView(View):
                 
         image = Image.new('1', (self.epd.width, self.epd.height), 255)
         draw = ImageDraw.Draw(image)
-        font = ImageFont.truetype('/usr/share/fonts/truetype/msttcorefonts/Impact.ttf', 24)       
-        draw.text((10, 10), f'Hello\nWorld from\n{self.name}', font = font, fill = 0)
+        font = ImageFont.truetype('/usr/share/fonts/truetype/msttcorefonts/Impact.ttf', self.epd.width // 10)
+        draw.text((self.epd.width // 20, self.epd.height // 20), f'Hello\nWorld from\n{self.name}', font = font, fill = 0)
         
         self.epd.display(self.epd.getbuffer(image))
 

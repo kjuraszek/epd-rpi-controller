@@ -4,7 +4,7 @@ Module contains helper functions
 
 from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, USE_MOCKED_EPD, MOCKED_EPD_WIDTH, MOCKED_EPD_HEIGHT, CLEAR_EPD_ON_EXIT
 from src import View
-from src.example import VIEWS
+from custom_views import VIEWS
 
 
 def validate_config():
@@ -19,4 +19,5 @@ def validate_config():
 
 
 def validate_views():
+    assert len(VIEWS) > 0
     assert all([isinstance(view, View) for view in VIEWS])
