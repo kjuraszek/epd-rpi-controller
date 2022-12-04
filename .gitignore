@@ -133,3 +133,6 @@ epd-rpi-controller.cfg
 
 # mocked epd image
 mocked_epd.png
+
+# custom views
+controller/custom_views/views.py
