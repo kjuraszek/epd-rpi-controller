@@ -24,7 +24,7 @@ class DummyView(View):
         draw = ImageDraw.Draw(image)
         font = ImageFont.truetype('/usr/share/fonts/truetype/msttcorefonts/Impact.ttf', self.epd.width // 10)
         draw.text((self.epd.width // 20, self.epd.height // 20), f'Hello\nWorld from\n{self.name}', font = font, fill = 0)
-        
+        self.image = image
         self.epd.display(self.epd.getbuffer(image))
 
 
