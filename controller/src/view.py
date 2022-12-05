@@ -6,8 +6,8 @@ class View:
     '''
     view
     '''
-    def __init__(self, epd, name, interval):
-        self.epd = epd
+    def __init__(self, name, interval):
+        self.epd = None
         self.name = name
         self.interval = interval
 

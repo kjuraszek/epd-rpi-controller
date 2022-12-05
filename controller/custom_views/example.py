@@ -29,8 +29,8 @@ class DummyView(View):
 
 
 VIEWS = [
-    DummyView(None, 'Dummy view 1', 0),
-    DummyView(None, 'Dummy view 2', 6),
-    DummyView(None, 'Dummy view 3', 0),
-    DummyView(None, 'Dummy view 4', 7)
+    DummyView('Dummy view 1', 0),
+    DummyView('Dummy view 2', 6),
+    DummyView('Dummy view 3', 0),
+    DummyView('Dummy view 4', 7)
 ]
