@@ -6,7 +6,7 @@ from kafka import KafkaAdminClient
 from kafka.admin import NewTopic
 from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError
 
-from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, USE_MOCKED_EPD, MOCKED_EPD_WIDTH, MOCKED_EPD_HEIGHT, CLEAR_EPD_ON_EXIT
+from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, USE_MOCKED_EPD, MOCKED_EPD_WIDTH, MOCKED_EPD_HEIGHT, CLEAR_EPD_ON_EXIT, USE_BUTTONS
 from src import Consumer, Producer, ViewManager
 from src.helpers import validate_config, validate_views
 from custom_views import VIEWS
@@ -25,6 +25,9 @@ def main():
         epd = MockedEPD(width = MOCKED_EPD_WIDTH, height = MOCKED_EPD_HEIGHT)
     else:
         raise NotImplementedError
+
+    if USE_BUTTONS:
+        from src import ButtonManager
 
     kafka_admin = KafkaAdminClient(bootstrap_servers='localhost:9092')
 
@@ -55,6 +58,8 @@ def main():
     ]
     
     if PRODUCER_INTERVAL > 0: tasks.append(producer)
+
+    if USE_BUTTONS: tasks.append(ButtonManager())
 
     for task in tasks:
         task.start()
