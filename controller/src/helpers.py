@@ -2,7 +2,7 @@
 Module contains helper functions
 '''
 
-from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, USE_MOCKED_EPD, MOCKED_EPD_WIDTH, MOCKED_EPD_HEIGHT, CLEAR_EPD_ON_EXIT, USE_BUTTONS, LEFT_BUTTON_PIN, RIGHT_BUTTON_PIN
+from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, USE_MOCKED_EPD, MOCKED_EPD_WIDTH, MOCKED_EPD_HEIGHT, CLEAR_EPD_ON_EXIT, USE_BUTTONS, LEFT_BUTTON_PIN, RIGHT_BUTTON_PIN, VIEW_ANGLE
 from src import View
 from custom_views import VIEWS
 
@@ -13,6 +13,7 @@ def validate_config():
     assert type(PRODUCER_INTERVAL) is int and PRODUCER_INTERVAL >= 0
     assert type(USE_MOCKED_EPD) is bool
     assert type(CLEAR_EPD_ON_EXIT) is bool
+    assert type(VIEW_ANGLE) is int
     assert type(USE_BUTTONS) is bool
     if USE_MOCKED_EPD:
         assert type(MOCKED_EPD_WIDTH) is int and MOCKED_EPD_WIDTH > 0
