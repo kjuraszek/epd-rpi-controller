@@ -25,12 +25,13 @@ class DummyView(View):
         font = ImageFont.truetype('/usr/share/fonts/truetype/msttcorefonts/Impact.ttf', self.epd.width // 10)
         draw.text((self.epd.width // 20, self.epd.height // 20), f'Hello\nWorld from\n{self.name}', font = font, fill = 0)
         self.image = image
-        self.epd.display(self.epd.getbuffer(image))
+        self._rotate_image()
+        self.epd.display(self.epd.getbuffer(self.image))
 
 
 VIEWS = [
     DummyView('Dummy view 1', 0),
-    DummyView('Dummy view 2', 6),
+    DummyView('Dummy view 2', 6, 180),
     DummyView('Dummy view 3', 0),
     DummyView('Dummy view 4', 7)
 ]
