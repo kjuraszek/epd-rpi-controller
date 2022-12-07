@@ -8,7 +8,8 @@ services:
       - epd-rpi-network
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_TICK_TIME: 3000
+      ZOOKEEPER_SYNC_LIMIT: 2
   kafka:
     image: confluentinc/cp-kafka:7.3.0
     container_name: kafka
@@ -26,6 +27,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_HEAP_OPTS: '-Xmx256M -Xms128M'
   kafdrop:
     image: obsidiandynamics/kafdrop:latest
     networks: 
