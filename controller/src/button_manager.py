@@ -21,7 +21,7 @@ class ButtonManager(threading.Thread):
         threading.Thread.__init__(self)
         self.stop_event = threading.Event()
         GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BCM)
         GPIO.setup(LEFT_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(RIGHT_BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
@@ -44,11 +44,11 @@ class ButtonManager(threading.Thread):
 
         self.producer.close()
 
-    def _left_button_callback(self):
+    def _left_button_callback(self, *args):
         time.sleep(0.01)
         self.producer.send(KAFKA_VIEW_MANAGER_TOPIC, bytes('prev', encoding='utf-8'))
 
-    def _right_button_callback(self):
+    def _right_button_callback(self, *args):
         time.sleep(0.01)
         self.producer.send(KAFKA_VIEW_MANAGER_TOPIC, bytes('next', encoding='utf-8'))
 
