@@ -5,9 +5,13 @@ import logging
 from kafka import KafkaProducer
 
 from waiting import wait, TimeoutExpired
-import RPi.GPIO as GPIO
 
-from config import KAFKA_VIEW_MANAGER_TOPIC, LEFT_BUTTON_PIN, RIGHT_BUTTON_PIN
+from config import KAFKA_VIEW_MANAGER_TOPIC, LEFT_BUTTON_PIN, RIGHT_BUTTON_PIN, USE_BUTTONS
+
+if USE_BUTTONS:
+    import RPi.GPIO as GPIO
+else:
+    import Mock.GPIO as GPIO
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
