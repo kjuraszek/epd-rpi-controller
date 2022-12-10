@@ -1,2 +1,6 @@
 kafka-python==2.0.2
+Mock.GPIO==0.1.8
+Pillow==9.1.0
+RPi.GPIO==0.7.1
 waiting==1.4.1
+waveshare-epd-driver==1.0.0

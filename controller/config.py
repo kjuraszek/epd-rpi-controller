@@ -4,7 +4,7 @@ cfg = configparser.ConfigParser()
 cfg.read('epd-rpi-controller.cfg')
 
 PRODUCER_INTERVAL = cfg['main'].getint('producer_interval')
-USE_MOCKED_EPD = cfg['main'].getboolean('use_mocked_epd')
+EPD_MODEL = cfg['main'].get('epd_model')
 MOCKED_EPD_WIDTH = cfg['main'].getint('mocked_epd_width')
 MOCKED_EPD_HEIGHT = cfg['main'].getint('mocked_epd_height')
 CLEAR_EPD_ON_EXIT = cfg['main'].getboolean('clear_epd_on_exit')

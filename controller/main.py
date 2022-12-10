@@ -1,12 +1,13 @@
 import time
 import logging
+import importlib
 from copy import deepcopy
 
 from kafka import KafkaAdminClient
 from kafka.admin import NewTopic
 from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError
 
-from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, USE_MOCKED_EPD, MOCKED_EPD_WIDTH, MOCKED_EPD_HEIGHT, CLEAR_EPD_ON_EXIT, USE_BUTTONS
+from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, EPD_MODEL, MOCKED_EPD_WIDTH, MOCKED_EPD_HEIGHT, CLEAR_EPD_ON_EXIT, USE_BUTTONS
 from src import Consumer, Producer, ViewManager
 from src.helpers import validate_config, validate_views
 from custom_views import VIEWS
@@ -20,11 +21,11 @@ def main():
     validate_config()
     validate_views()
 
-    if USE_MOCKED_EPD:
+    if EPD_MODEL == 'mock':
         from src import MockedEPD
         epd = MockedEPD(width = MOCKED_EPD_WIDTH, height = MOCKED_EPD_HEIGHT)
     else:
-        raise NotImplementedError
+        epd = importlib.import_module(f'waveshare_epd_driver.{EPD_MODEL}.EPD')
 
     if USE_BUTTONS:
         from src import ButtonManager
