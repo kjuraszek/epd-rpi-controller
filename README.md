@@ -34,11 +34,14 @@ which:
 - installs Python dependencies
 - creates docker network `epd-rpi-network`
 
-You should adjust config file to your needs. Also to run the Controller you must prepare Views in `controller/custom_views/views.py` (file by default doesn't exist) - take a look on file `example.py` or you can use a command
+You should adjust config file to your needs. Also to run the Controller you must prepare Views in `controller/custom_views/views.py` (file by default doesn't exist) - take a look on file `example.py`.
+Alternatively you can use a command:
 
 `make create-views-file`
 
 to copy contents from `example.py`.
+
+To learn more about custom views go to [Custom views](/controller/custom_views/Readme.md)
 
 ### Run docker compose
 
@@ -61,7 +64,7 @@ Config is stored in a file `epd-rpi-controller.cfg` (file by default doesn't exi
 | producer_interval | Interval (in seconds) | positive integers or 0 - 0 means no interval|
 | epd_model | EPD model which will be importen from Waveshare library | model name or `mock` |
 | mocked_epd_width | Width of mocked EPD display (only used when `epd_model=mock`) | positive integer |
-| mocked_epd_height | Height of mocked EPD display `epd_model=mock` | positive integer |
+| mocked_epd_height | Height of mocked EPD display (only used when `epd_model=mock`) | positive integer |
 | clear_epd_on_exit | Clears display on exit when setted | bool (yes/no) |
 | view_angle | An angle by which the display will be rotated | integer |
 | use_buttons | Enables support for two physical buttons (left and right) | bool (yes/no) |
@@ -78,7 +81,7 @@ To test how Views will look you can use a Mocked EPD first - each View content w
 
 ## Using physical buttons
 
-EPD Rpi Controller also supports usage of two physical buttons - one button for triggering *previous* view and the other one - to trigger the *next* view. Both GPIOs are in BCM mode - **GPIO number is used, instead of physical pin number on the board**. GPIOs are connected to internal PULL_UP resistor.
+EPD Rpi Controller also supports usage of two physical buttons - one button for triggering *previous* view and the other one - to trigger the *next* view. Both GPIOs are in BCM mode - **GPIO number is used, instead of physical pin number on the board**. GPIOs are connected to internal *PULL_UP* resistor and are working in *INPUT* mode.
 Both buttons are connected to:
 
 - GND
