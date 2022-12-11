@@ -9,7 +9,7 @@ In addition controller also allows to switch between `Views` using physical butt
 
 ## Prerequisites
 
-- Raspberry Pi (tested using Rpi 3B, v4 should also be fine) with 2GB memory ()
+- Raspberry Pi (tested using Rpi 3B, v4 should also be fine) with 2GB memory (if less than 2GB - swapping memory *might* do the trick, see `dphys-swapfile`)
 - supported Linux operating system installed (eg. Ubuntu Server)
 - Docker and Docker Compose installed
 - GNU Make
@@ -21,26 +21,76 @@ In addition controller also allows to switch between `Views` using physical butt
 
 Below are instructions on running this project.
 
-### Create .cfg file
+### Prepare environment
 
-Create `epd-rpi-controller.cfg` (copy epd-rpi-controller.example.cfg file) and make adjustments
+Run the command:
 
-### Prepare Python venv
+`make prepare`
 
-Create and set Python virtual environment
+which:
 
-### Install Python dependencies
+- creates `epd-rpi-controller.cfg` (copies epd-rpi-controller.example.cfg file)
+- prepares Python virtual environment
+- installs Python dependencies
+- creates docker network `epd-rpi-network`
 
-Install Python dependencies from requirements.txt
+You should adjust config file to your needs. Also to run the Controller you must prepare Views in `controller/custom_views/views.py` (file by default doesn't exist) - take a look on file `example.py` or you can use a command
 
-### Create docker network
+`make create-views-file`
 
-Create docker network `epd-rpi-network`
+to copy contents from `example.py`.
 
 ### Run docker compose
 
-Run docker compose to run Kafka - Zookeeper, Kafka Server and Kafka REST-api
+Run Kafka stack in Docker containers - Zookeeper, Kafka Server and Kafka REST-api
+
+`make run-docker`
 
 ### Run controller
 
-Run controller/main.py
+Run controller using a command:
+
+`make run-controller`
+
+## Configuration file
+
+Config is stored in a file `epd-rpi-controller.cfg` (file by default doesn't exist).
+
+| Option | Purpose | Values |
+| --- | --- | --- |
+| producer_interval | Interval (in seconds) | positive integers or 0 - 0 means no interval|
+| epd_model | EPD model which will be importen from Waveshare library | model name or `mock` |
+| mocked_epd_width | Width of mocked EPD display (only used when `epd_model=mock`) | positive integer |
+| mocked_epd_height | Height of mocked EPD display `epd_model=mock` | positive integer |
+| clear_epd_on_exit | Clears display on exit when setted | bool (yes/no) |
+| view_angle | An angle by which the display will be rotated | integer |
+| use_buttons | Enables support for two physical buttons (left and right) | bool (yes/no) |
+| left_button_pin | GPIO number (not physical pin on board!) of pin connected to the left button | positive integer |
+| right_button_pin | GPIO number (not physical pin on board!) of pin connected to the right button | positive integer |
+| view_manager_topic | Name of the *topic* used by Kafka | string compatible with Kafka topic naming rules |
+
+## Using mocked EPD
+
+To test how Views will look you can use a Mocked EPD first - each View content will be saved to a file `mocked_epd.png`. To turn on this mode edit config:
+
+- set `epd_model=mock`
+- set desired width and height (`mocked_epd_width` and `mocked_epd_height`)
+
+## Using physical buttons
+
+EPD Rpi Controller also supports usage of two physical buttons - one button for triggering *previous* view and the other one - to trigger the *next* view. Both GPIOs are in BCM mode - **GPIO number is used, instead of physical pin number on the board**. GPIOs are connected to internal PULL_UP resistor.
+Both buttons are connected to:
+
+- GND
+- with a 330 Ω (ohm) resistor (for Rpi safety) to a corresponding GPIO
+
+To use buttons edit config file and set `use_buttons = yes`. Also set `left_button_pin` and `right_button_pin` to desired **GPIO** numbers.
+
+![Electric Circuit for EPD Rpi Controller](/images/electric_circuit.png)
+*Electric Circuit for EPD Rpi Controller with connected buttons*
+
+Examplary button config for a circuit above would be:
+
+    use_buttons = yes
+    left_button_pin = 26
+    right_button_pin = 16
