@@ -53,6 +53,12 @@ services:
       KAFKA_REST_HOST_NAME: kafka-rest
       KAFKA_REST_LISTENERS: http://0.0.0.0:8082
       KAFKA_REST_BOOTSTRAP_SERVERS: kafka:29092
+  rpi_epd_controller:
+    build: 
+      context: .
+      dockerfile: controller/Dockerfile
+    depends_on:
+      - kafka
 networks: 
   epd-rpi-network:
     driver: bridge
