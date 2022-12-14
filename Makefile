@@ -39,16 +39,16 @@ run-controller:
 	$(VENV_ACTIVATE_CONTROLLER) && $(PYTHON_CONTROLLER) $(CONTROLLER)/main.py
 
 build-docker:
-	docker-compose build
+	docker compose build
 
 run-docker:
-	docker-compose up -d
+	docker compose up -d
 
 stop-docker:
-	docker-compose stop
+	docker compose stop
 
 clean-docker:
-	docker-compose down --rmi=all --volume
+	docker compose down --rmi=all --volume
 
 clean:
 	rm -rf __pycache__
