@@ -44,6 +44,9 @@ build-docker:
 run-docker:
 	docker compose up -d
 
+run-docker-with-controller:
+	docker compose --profile controller up -d
+
 stop-docker:
 	docker compose stop
 

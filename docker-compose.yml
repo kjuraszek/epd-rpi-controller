@@ -39,6 +39,7 @@ services:
       - 19000:9000
     profiles:
       - all
+      - kafdrop
     environment:
       KAFKA_BROKERCONNECT: kafka:29092
   kafka-rest:
@@ -63,6 +64,9 @@ services:
     privileged: true
     networks: 
       - epd-rpi-network
+    profiles:
+      - all
+      - controller
 networks: 
   epd-rpi-network:
     driver: bridge
