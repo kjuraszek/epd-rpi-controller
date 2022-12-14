@@ -6,7 +6,7 @@ from kafka import KafkaProducer
 
 from waiting import wait, TimeoutExpired
 
-from config import KAFKA_VIEW_MANAGER_TOPIC, LEFT_BUTTON_PIN, RIGHT_BUTTON_PIN, USE_BUTTONS
+from config import KAFKA_VIEW_MANAGER_TOPIC, LEFT_BUTTON_PIN, RIGHT_BUTTON_PIN, USE_BUTTONS, KAFKA_BOOTSTRAP_SERVER
 
 if USE_BUTTONS:
     import RPi.GPIO as GPIO
@@ -33,7 +33,7 @@ class ButtonManager(threading.Thread):
         self.stop_event.set()
 
     def run(self):
-        self.producer = KafkaProducer(bootstrap_servers='localhost:9092')
+        self.producer = KafkaProducer(bootstrap_servers=KAFKA_BOOTSTRAP_SERVER)
         GPIO.add_event_detect(LEFT_BUTTON_PIN, GPIO.FALLING,
                               callback=self._left_button_callback)
         GPIO.add_event_detect(RIGHT_BUTTON_PIN, GPIO.FALLING,

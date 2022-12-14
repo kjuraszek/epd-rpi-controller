@@ -5,9 +5,9 @@ from copy import deepcopy
 
 from kafka import KafkaAdminClient
 from kafka.admin import NewTopic
-from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError
+from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError, NoBrokersAvailable, NodeNotReadyError
 
-from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, EPD_MODEL, MOCKED_EPD_WIDTH, MOCKED_EPD_HEIGHT, CLEAR_EPD_ON_EXIT, USE_BUTTONS
+from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, EPD_MODEL, MOCKED_EPD_WIDTH, MOCKED_EPD_HEIGHT, CLEAR_EPD_ON_EXIT, USE_BUTTONS, KAFKA_BOOTSTRAP_SERVER
 from src import Consumer, Producer, ViewManager
 from src.helpers import validate_config, validate_views
 from custom_views import VIEWS
@@ -30,7 +30,15 @@ def main():
     if USE_BUTTONS:
         from src import ButtonManager
 
-    kafka_admin = KafkaAdminClient(bootstrap_servers='localhost:9092')
+    for number in range(1, 8):
+        try:
+            kafka_admin = KafkaAdminClient(bootstrap_servers=KAFKA_BOOTSTRAP_SERVER, api_version=(2, 5, 0))
+            break
+        except (NoBrokersAvailable, NodeNotReadyError) as e:
+            if number == 5:
+                raise e
+            logger.error(f'Failed to connect with Kafka broker, retrying in: {number * 10} seconds.')
+            time.sleep(number * 10)
 
     topic = NewTopic(name=KAFKA_VIEW_MANAGER_TOPIC,
                      num_partitions=1,

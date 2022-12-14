@@ -43,17 +43,35 @@ to copy contents from `example.py`.
 
 To learn more about custom views go to [Custom views](/controller/custom_views/Readme.md)
 
-### Run docker compose
+### Prepare Kafka stack
 
 Run Kafka stack in Docker containers - Zookeeper, Kafka Server and Kafka REST-api
 
 `make run-docker`
 
-### Run controller
+> ⚠️**Warning!** Kafka stack (Zookeper, Kafka, Kafka-REST) is crucial component of this project - if one of its the containers is not working or exiting prematurely you should examine the reason for such behaviour before moving forward.
 
-Run controller using a command:
+### Running the controller
+
+Controller can be executed directly via Python or in a Docker container. The former is suggested when creating and adjusting views (especially with MockedEPD) whilst the latter - rather on 'production', when everything works (due to eg. building Docker image which is time-consuming).
+
+#### Executing via Python
+
+Firstly make sure Kafka stack is up and running, if not run:
+
+`make run-docker`
+
+and then run the controller using a command:
 
 `make run-controller`
+
+#### Controller in a container
+
+Run the controller with Kafka stack using a command
+
+`make run-docker-with-controller`
+
+> When making changes in the code make sure you're using the newest image - remember to run `make build-docker` before running run-docker command.
 
 ## Configuration file
 

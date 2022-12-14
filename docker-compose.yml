@@ -28,6 +28,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_HEAP_OPTS: '-Xmx256M -Xms128M'
+      KAFKA_ADVERTISED_HOST_NAME: kafka
   kafdrop:
     image: obsidiandynamics/kafdrop:latest
     networks: 
@@ -38,6 +39,7 @@ services:
       - 19000:9000
     profiles:
       - all
+      - kafdrop
     environment:
       KAFKA_BROKERCONNECT: kafka:29092
   kafka-rest:
@@ -53,6 +55,18 @@ services:
       KAFKA_REST_HOST_NAME: kafka-rest
       KAFKA_REST_LISTENERS: http://0.0.0.0:8082
       KAFKA_REST_BOOTSTRAP_SERVERS: kafka:29092
+  rpi_epd_controller:
+    build: 
+      context: .
+      dockerfile: controller/Dockerfile
+    depends_on:
+      - kafka
+    privileged: true
+    networks: 
+      - epd-rpi-network
+    profiles:
+      - all
+      - controller
 networks: 
   epd-rpi-network:
     driver: bridge
