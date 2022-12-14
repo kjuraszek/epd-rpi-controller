@@ -71,6 +71,8 @@ Run the controller with Kafka stack using a command
 
 `make run-docker-with-controller`
 
+> When making changes in the code make sure you're using the newest image - remember to run `make build-docker` before running run-docker command.
+
 ## Configuration file
 
 Config is stored in a file `epd-rpi-controller.cfg` (file by default doesn't exist).
