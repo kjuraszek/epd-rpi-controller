@@ -16,10 +16,10 @@ class DummyView(View):
     '''
     dummy view
     '''
-    def show(self):
+    def show(self, first_call):
         logger.info('%s is running', self.name)
         time.sleep(2)
-                
+
         image = Image.new('1', (self.epd.width, self.epd.height), 255)
         draw = ImageDraw.Draw(image)
         font = ImageFont.truetype('/usr/share/fonts/truetype/msttcorefonts/Impact.ttf', self.epd.width // 10)

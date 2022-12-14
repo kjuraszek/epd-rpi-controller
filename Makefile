@@ -48,7 +48,7 @@ run-docker-with-controller:
 	docker compose --profile controller up -d
 
 stop-docker:
-	docker compose stop
+	docker compose --profile all stop
 
 clean-docker:
 	docker compose down --rmi=all --volume

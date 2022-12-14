@@ -16,7 +16,7 @@ class View:
         self.image = None
         self.view_angle = view_angle
 
-    def show(self):
+    def show(self, first_call):
         raise NotImplementedError
 
     def screenshot(self):
