@@ -8,7 +8,7 @@ Firstly a `views.py` file must be created - it can be based or copied from `exam
 
 ## View class
 
-Every custom view must be a child of `View` class. Also a method `show` must be defined - this methods interacts with EPD.
+Every custom view must be a child of `View` class. Also a method `show` must be defined with `first_call` argument - this methods interacts with EPD. This parameter might be useful to determine if a current view was displayed during current interval.
 
 ### Arguments passed to a constructor
 

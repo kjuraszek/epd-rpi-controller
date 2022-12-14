@@ -40,6 +40,7 @@ class ViewManager(threading.Thread):
     
     def run(self):
         switched = False
+        first_call = True
         self.epd.init(0)
         self.epd.Clear(0xFF)
         while not self.stop_event.is_set():
@@ -49,15 +50,17 @@ class ViewManager(threading.Thread):
                 else:
                     self.current_view = self.current_view - 1 if self.current_view > 0 else len(self.views) - 1
                 switched = False
+                first_call = True
             if not switched:
                 self.busy.set()
                 logger.debug('\tView is running')
-                self.views[self.current_view].show()
+                self.views[self.current_view].show(first_call = first_call)
                 logger.debug('\tView is idle')
                 self.busy.clear()
                 if self.views[self.current_view].interval == 0:
                     switched = True
                 else:
+                    first_call = False
                     switched = False
                     try:
                         wait(lambda : self.busy.is_set() or self.stop_event.is_set(),
