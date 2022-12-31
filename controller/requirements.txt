@@ -4,5 +4,6 @@ Pillow==9.1.0
 RPi.GPIO==0.7.1
 spidev==3.5
 tornado==6.2
+tornado-swagger==1.4.5
 waiting==1.4.1
 waveshare-epd-driver==1.0.0
