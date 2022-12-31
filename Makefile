@@ -15,6 +15,12 @@ venv:
 
 install: venv
 	$(VENV_ACTIVATE_CONTROLLER) && $(PIP_CONTROLLER) install -r $(CONTROLLER)/requirements.txt
+ifeq ($(shell test -f $(CONTROLLER)/custom_views/custom_requirements.txt && echo -n 0), 0)
+	@echo 'Installing custom_requirements.'
+	$(VENV_ACTIVATE_CONTROLLER) && $(PIP_CONTROLLER) install -r $(CONTROLLER)/custom_views/custom_requirements.txt
+else
+	@echo 'No custom_requirements.txt file - skipping.'
+endif
 
 create-config:
 ifeq ($(shell test -s epd-rpi-controller.cfg && echo -n 0), 0)
