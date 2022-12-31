@@ -67,6 +67,8 @@ services:
     profiles:
       - all
       - controller
+    ports:
+      - "8888:8888"
 networks: 
   epd-rpi-network:
     driver: bridge
