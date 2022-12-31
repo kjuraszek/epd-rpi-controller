@@ -41,7 +41,8 @@ Alternatively you can use a command:
 
 to copy contents from `example.py`.
 
-To learn more about custom views go to [Custom views](/controller/custom_views/Readme.md)
+Also custom requirements.txt file is supported.
+To learn more about custom views and requirements go to [Custom views](/controller/custom_views/Readme.md)
 
 ### Prepare Kafka stack
 
