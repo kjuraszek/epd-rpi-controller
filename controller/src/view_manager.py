@@ -72,3 +72,10 @@ class ViewManager(threading.Thread):
                             break
                         if self.busy.is_set():
                             continue
+
+    def epd_status(self):
+        return {
+            'epd_busy': self.busy.is_set(),
+            'current_view': self.current_view,
+            'total_views': len(self.views)
+        }
