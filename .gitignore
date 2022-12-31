@@ -136,3 +136,4 @@ mocked_epd.png
 
 # custom views
 controller/custom_views/views.py
+controller/custom_views/custom_requirements.txt

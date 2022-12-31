@@ -36,3 +36,7 @@ and:
 - views 1 and 3 have no `interval` (0)
 - views 2 and 4 have interval (in seconds) by which a `show` method will be called unless a switching view action gets called.
 - view 2 is rotated by 180 degree
+
+## Custom requirements
+
+If a View uses any additional Python packages they should be added to a `controller/custom_views/custom_requirements.txt` file. If this file doesn't exist it must be created first.
