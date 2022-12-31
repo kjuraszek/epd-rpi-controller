@@ -9,6 +9,7 @@ from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError, 
 
 from config import KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, EPD_MODEL, MOCKED_EPD_WIDTH, MOCKED_EPD_HEIGHT, CLEAR_EPD_ON_EXIT, USE_BUTTONS, KAFKA_BOOTSTRAP_SERVER
 from src import Consumer, Producer, ViewManager
+from src.api import MainAPI
 from src.helpers import validate_config, validate_views
 from custom_views import VIEWS
 
@@ -60,10 +61,12 @@ def main():
     view_manager = ViewManager(views, epd)
     consumer = Consumer(view_manager)
     producer = Producer(asc_order=True)
+    api = MainAPI(view_manager)
 
     tasks = [
         consumer,
-        view_manager
+        view_manager,
+        api
     ]
     
     if PRODUCER_INTERVAL > 0: tasks.append(producer)

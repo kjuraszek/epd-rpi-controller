@@ -12,6 +12,8 @@ COPY Makefile .
 COPY epd-rpi-controller.cfg .
 RUN make install
 
+EXPOSE 8888
+
 ENV EPD_RPI_DOCKERIZED true
 
 CMD ["venv/bin/python3.9", "controller/main.py"]
