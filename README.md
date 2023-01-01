@@ -70,9 +70,15 @@ and then run the controller using a command:
 
 Run the controller with Kafka stack using a command
 
-`make run-docker-with-controller`
+`make run-docker-ctrl`
 
 > When making changes in the code make sure you're using the newest image - remember to run `make build-docker` before running run-docker command.
+
+Alternatively you can run Kafka's web UI - Kafdrop via command:
+
+`make run-docker-all`
+
+which will be available at [localhost:19000](http://localhost:19000/).
 
 ## Configuration file
 
