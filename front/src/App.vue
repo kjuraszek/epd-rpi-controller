@@ -6,25 +6,12 @@
       dark
     >
     </v-app-bar>
-
     <v-main>
-      <Main/>
+      <Main />
     </v-main>
   </v-app>
 </template>
 
-<script>
-import Main from './components/Main';
-
-export default {
-  name: 'App',
-
-  components: {
-    Main,
-  },
-
-  data: () => ({
-    //
-  }),
-};
+<script setup>
+  import Main from '@/components/Main.vue'
 </script>
