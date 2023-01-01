@@ -3,7 +3,6 @@ import tornado.web
 from tornado_swagger.setup import setup_swagger
 
 from .handlers import RootHandler, StatusHandler, NextViewHandler, PreviousViewHandler
-from .models import StatusModel
 
 class TornadoApplication(tornado.web.Application):
     def __init__(self, view_manager):

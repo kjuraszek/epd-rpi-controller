@@ -1,5 +1,7 @@
 import tornado.web
 
+from .models import StatusModel
+
 
 class RootHandler(tornado.web.RequestHandler):
     def get(self):
@@ -18,12 +20,10 @@ class StatusHandler(tornado.web.RequestHandler):
         description: Get Epaper Display current status 
         operationId: getStatus
         responses:
-            '200':
+            200:
               description: EPD status
-              content:
-                application/json:
-                  schema:
-                    $ref: '#/definitions/StatusModel'
+              schema:
+                $ref: '#/definitions/StatusModel'
         """
         epd_status = self.view_manager.epd_status()
         self.write(epd_status)

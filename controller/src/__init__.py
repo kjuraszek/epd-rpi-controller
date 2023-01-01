@@ -1,4 +1,4 @@
-from src.api.main_api import MainAPI
+from src.api import MainAPI
 from src.button_manager import ButtonManager
 from src.consumer import Consumer
 from src.mocked_epd import MockedEPD
