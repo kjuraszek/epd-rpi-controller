@@ -4,6 +4,8 @@ Waveshare epaper display controller for Raspberry Pi. Project is mostly written 
 
 ## About the project
 
+![EPD RPi Controller](/images/epd-rpi-controller.jpg)
+
 This project simplifies displaying custom informations on Epaper display connected to a Raspberry Pi. Display part is realized by a `View` - configured object with a defined method `show` which performs directly on EPD object. Views are managed by a `View Manager` - they can be switched automatically by some time interval and in a different order. EPD can be simulated using config option - an image with a current view will be generated (instead of displaying it on a physical device).
 In addition controller also allows to switch between `Views` using physical buttons.
 
