@@ -3,7 +3,7 @@ import logging
 
 from kafka import KafkaConsumer
 
-from config import KAFKA_VIEW_MANAGER_TOPIC, KAFKA_BOOTSTRAP_SERVER
+from config import Config
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -22,10 +22,10 @@ class Consumer(threading.Thread):
         self.stop_event.set()
 
     def run(self):
-        consumer = KafkaConsumer(bootstrap_servers=KAFKA_BOOTSTRAP_SERVER,
+        consumer = KafkaConsumer(bootstrap_servers=Config.KAFKA_BOOTSTRAP_SERVER,
                                  auto_offset_reset='earliest',
                                  consumer_timeout_ms=1000)
-        consumer.subscribe([KAFKA_VIEW_MANAGER_TOPIC])
+        consumer.subscribe([Config.KAFKA_VIEW_MANAGER_TOPIC])
 
         while not self.stop_event.is_set():
             for message in consumer:
