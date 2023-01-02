@@ -3,13 +3,13 @@ View class
 '''
 from PIL import Image
 
-from config import VIEW_ANGLE
+from config import Config
 
 class View:
     '''
     view
     '''
-    def __init__(self, name, interval, view_angle = VIEW_ANGLE):
+    def __init__(self, name, interval, view_angle = Config.VIEW_ANGLE):
         self.epd = None
         self.name = name
         self.interval = interval
