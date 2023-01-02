@@ -88,7 +88,9 @@ Config is stored in a file `epd-rpi-controller.cfg` (file by default doesn't exi
 
 | Option | Purpose | Values |
 | --- | --- | --- |
-| producer_interval | Interval (in seconds) | positive integers or 0 - 0 means no interval|
+| producer_interval | Interval (in seconds) | positive integers or 0 - 0 means no interval |
+| producer_asc_order | Order of switching views, `yes` means ascending. Works only if `producer_interval` is set. | bool (yes/no) |
+| starting_view | Index of View which will be the starting one | positive integers or 0 - 0 means no interval |
 | epd_model | EPD model which will be importen from Waveshare library | model name or `mock` |
 | mocked_epd_width | Width of mocked EPD display (only used when `epd_model=mock`) | positive integer |
 | mocked_epd_height | Height of mocked EPD display (only used when `epd_model=mock`) | positive integer |

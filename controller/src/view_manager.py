@@ -3,6 +3,7 @@ import logging
 
 from waiting import wait, TimeoutExpired
 
+from config import Config
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -12,11 +13,11 @@ class ViewManager(threading.Thread):
     '''
     view manager
     '''
-    def __init__(self, views, epd, starting_view = 0):
+    def __init__(self, views, epd):
         threading.Thread.__init__(self)
         self.stop_event = threading.Event()
         self.busy = threading.Event()
-        self.current_view = starting_view
+        self.current_view = Config.STARTING_VIEW
         self.views = views
         self.action = None
         self.epd = epd
