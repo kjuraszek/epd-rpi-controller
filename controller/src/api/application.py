@@ -2,7 +2,7 @@ import tornado.web
 
 from tornado_swagger.setup import setup_swagger
 
-from .handlers import RootHandler, StatusHandler, NextViewHandler, PreviousViewHandler
+from .handlers import RootHandler, StatusHandler, NextViewHandler, PreviousViewHandler, CurrentDisplayHandler
 
 class TornadoApplication(tornado.web.Application):
     def __init__(self, view_manager):
@@ -13,6 +13,7 @@ class TornadoApplication(tornado.web.Application):
             tornado.web.url(r'/api/status', StatusHandler, dict(view_manager=view_manager)),
             tornado.web.url(r'/api/next', NextViewHandler, dict(view_manager=view_manager)),
             tornado.web.url(r'/api/prev', PreviousViewHandler, dict(view_manager=view_manager)),
+            tornado.web.url(r'/api/current_display', CurrentDisplayHandler, dict(view_manager=view_manager)),
         ]
         setup_swagger(self._api_routes,
                       api_base_url='/',

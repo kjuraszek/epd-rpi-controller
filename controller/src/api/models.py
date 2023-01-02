@@ -17,3 +17,13 @@ class StatusModel:
             type: integer
             format: int64
     """
+
+
+@register_swagger_model
+class CurrentDisplayModel:
+    """
+    ---
+    type: string
+    description: EPD current display model representation
+    format: binary
+    """
