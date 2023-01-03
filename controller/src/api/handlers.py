@@ -103,9 +103,9 @@ class CurrentDisplayHandler(tornado.web.RequestHandler):
         if not current_image or not isinstance(current_image, Image.Image):
             self.set_status(400, "Returning current display failed.")
             return
-        bytes_io = io.BytesIO()
-        current_image.save(bytes_io, format="JPEG")
-        current_image_string = bytes_io.getvalue()
+        current_image_buffer = io.BytesIO()
+        current_image.save(current_image_buffer, format="JPEG")
+        current_image_bytes = current_image_buffer.getvalue()
         self.set_header('Content-type', 'image/jpg')
-        self.set_header('Content-length', len(current_image_string))   
-        self.write(current_image_string)
+        self.set_header('Content-length', len(current_image_bytes))   
+        self.write(current_image_bytes)
