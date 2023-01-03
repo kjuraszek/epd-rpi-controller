@@ -1,6 +1,8 @@
+import io
 import tornado.web
+from PIL import Image
 
-from .models import StatusModel
+from .models import StatusModel, CurrentDisplayModel
 
 
 class RootHandler(tornado.web.RequestHandler):
@@ -77,3 +79,33 @@ class PreviousViewHandler(tornado.web.RequestHandler):
         self.view_manager.prev()
         self.set_status(204)
 
+
+class CurrentDisplayHandler(tornado.web.RequestHandler):
+    def initialize(self, view_manager):
+        self.view_manager = view_manager
+    def get(self):
+        """
+        ---
+        tags:
+          - General
+        summary: Get current display as image
+        description: Get current display as jpeg image
+        operationId: getCurrentDisplay
+        responses:
+            200:
+              description: Current display as image returned successfully
+              schema:
+                $ref: '#/definitions/CurrentDisplayModel'
+            400:
+              description: Returning current display as image failed
+        """
+        current_image = self.view_manager.current_display()
+        if not current_image or not isinstance(current_image, Image.Image):
+            self.set_status(400, "Returning current display failed.")
+            return
+        current_image_buffer = io.BytesIO()
+        current_image.save(current_image_buffer, format="JPEG")
+        current_image_bytes = current_image_buffer.getvalue()
+        self.set_header('Content-type', 'image/jpg')
+        self.set_header('Content-length', len(current_image_bytes))   
+        self.write(current_image_bytes)

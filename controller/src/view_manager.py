@@ -80,3 +80,6 @@ class ViewManager(threading.Thread):
             'current_view': self.current_view,
             'total_views': len(self.views)
         }
+        
+    def current_display(self):
+        return self.views[self.current_view].image
