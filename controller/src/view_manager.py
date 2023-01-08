@@ -1,5 +1,6 @@
 import threading
 import logging
+from datetime import datetime
 
 from waiting import wait, TimeoutExpired
 
@@ -21,6 +22,7 @@ class ViewManager(threading.Thread):
         self.views = views
         self.action = None
         self.epd = epd
+        self.timestamp = None
 
     def next(self):
         if not self.busy.is_set():
@@ -56,6 +58,7 @@ class ViewManager(threading.Thread):
                 self.busy.set()
                 logger.debug('\tView is running')
                 self.views[self.current_view].show(first_call = first_call)
+                self._set_timestamp()
                 logger.debug('\tView is idle')
                 self.busy.clear()
                 if self.views[self.current_view].interval == 0:
@@ -78,8 +81,13 @@ class ViewManager(threading.Thread):
         return {
             'epd_busy': self.busy.is_set(),
             'current_view': self.current_view,
-            'total_views': len(self.views)
+            'total_views': len(self.views),
+            'timestamp': self.timestamp
         }
         
     def current_display(self):
         return self.views[self.current_view].image
+
+    def _set_timestamp(self):
+        current_date = datetime.now()
+        self.timestamp = current_date.strftime("%Y-%m-%d, %H:%M:%S")
