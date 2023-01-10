@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import { useStatusStore } from '@/stores/status'
+  import { useUiStatusStore } from '@/stores/uiStatus'
   import { mapWritableState, mapActions } from 'pinia'
 
   const ACTIONS = new Set(['next', 'prev']);
@@ -31,22 +31,24 @@
       icon:  'mdi-arrow-left-bold-outline'
     },
   }
+  const HOST = `${window.location.protocol}//${window.location.hostname}`
 
   export default {
     data () {
       return {
-        ACTIONDATA
+        ACTIONDATA,
+        HOST
       }
     },
     computed: {
-    ...mapWritableState(useStatusStore, ['successAlert', 'warningAlert', 'errorAlert'])
+    ...mapWritableState(useUiStatusStore, ['successAlert', 'warningAlert', 'errorAlert'])
     },
     props: {
       controlAction: String
     },
     methods: {
       switchView () {
-        fetch('http://localhost:8888/api/' + this.controlAction)
+        fetch(`${HOST}:8888/api/${this.controlAction}`)
         .then(response => {
           return response
         })
@@ -68,7 +70,7 @@
           console.error('Error while switching a view:', error);
         })
       },
-    ...mapActions(useStatusStore, ['resetAlerts']),
+    ...mapActions(useUiStatusStore, ['resetAlerts']),
     },
     mounted () {
       if (!ACTIONS.has(this.controlAction)) {

@@ -27,7 +27,7 @@
       >
         <v-alert width="100%" type="error">
           Action failed - unable to connect to an API.
-          <span v-if="lastSuccessfulCheck"> Last checked: {{ lastSuccessfulCheck }}</span>
+          <span v-if="lastSuccessfulCheck"> Last successful check: {{ lastSuccessfulCheck }}</span>
         </v-alert>
       </v-snackbar>
 
@@ -35,7 +35,7 @@
   </template>
 
 <script>
-  import { useStatusStore } from '@/stores/status'
+  import { useUiStatusStore } from '@/stores/uiStatus'
   import { mapWritableState, mapActions } from 'pinia'
 
   export default {
@@ -43,10 +43,10 @@
       timeout: 3000,
     }),
     computed: {
-      ...mapWritableState(useStatusStore, ['successAlert', 'warningAlert', 'errorAlert', 'lastSuccessfulCheck'])
+      ...mapWritableState(useUiStatusStore, ['successAlert', 'warningAlert', 'errorAlert', 'lastSuccessfulCheck'])
     },
     methods: {
-      ...mapActions(useStatusStore, ['resetAlerts']),
+      ...mapActions(useUiStatusStore, ['resetAlerts']),
     }
   }
 </script>

@@ -16,12 +16,12 @@
 </template>
 
 <script>
-  import { useStatusStore } from '@/stores/status'
+  import { useEpdStatusStore } from '@/stores/epdStatus'
   import { mapState } from 'pinia'
 
   export default {
     computed: {
-      ...mapState(useStatusStore, ['currentView', 'totalViews', 'epdBusy']),
+      ...mapState(useEpdStatusStore, ['currentView', 'totalViews', 'epdBusy']),
       currentViewProportional () {
         return Math.round((this.currentView + 1) / this.totalViews * 100)
       }

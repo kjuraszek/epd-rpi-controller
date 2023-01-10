@@ -8,7 +8,7 @@
     </v-row>
 
     <v-row
-      v-if="failedRequestsCount < 100"
+      v-if="failedRequestsCount < 50"
       class="text-center"
       justify="center">
       <v-col cols="12" md="8"  xl="6" class="mb-1 text-center" justify="space-between">
@@ -29,7 +29,7 @@
               controlAction="next"/>
           </v-col>
         </v-row>
-        
+
       </v-col>
     </v-row>
     <v-row
@@ -50,12 +50,12 @@
   import Alerts from '@/components/Alerts.vue'
   import MainHeadings from '@/components/MainHeadings.vue'
   
-  import { useStatusStore } from '@/stores/status'
+  import { useUiStatusStore } from '@/stores/uiStatus'
   import { mapState } from 'pinia'
 
   export default {
     computed: {
-      ...mapState(useStatusStore, ['failedRequestsCount'])
+      ...mapState(useUiStatusStore, ['failedRequestsCount'])
     },
     components: {
       ControlButton, CurrentDisplay, Alerts, MainHeadings

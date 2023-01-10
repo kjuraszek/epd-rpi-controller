@@ -21,7 +21,8 @@
 <script>
   import Main from '@/components/Main.vue'
   import Footer from '@/components/Footer.vue'
-  import { useStatusStore } from '@/stores/status'
+  import { useUiStatusStore } from '@/stores/uiStatus'
+  import { useEpdStatusStore } from '@/stores/epdStatus'
   import { mapState, mapActions } from 'pinia'
 
   export default {
@@ -30,7 +31,7 @@
     Main, Footer
   },
   computed: {
-    ...mapState(useStatusStore, ['failedRequestsCount'])
+    ...mapState( useUiStatusStore, ['failedRequestsCount'] )
   },
   data () {
     return {
@@ -41,7 +42,7 @@
     this.startInterval()
   },
   methods: {
-    ...mapActions(useStatusStore, ["fetchStatus"]),
+    ...mapActions( useEpdStatusStore, ["fetchStatus"] ),
     startInterval () {
       clearInterval(this.interval)
       this.interval = setInterval(() => {
@@ -50,14 +51,14 @@
     }
   },
   watch: {
-    failedRequestsCount (oldValue, newValue) {
-      if (newValue > 100) {
-        clearInterval(this.interval)
+    failedRequestsCount (newValue, oldValue) {
+      if (newValue > 50) {
+        clearInterval( this.interval )
       }
     }
   },
   beforeDestroy () {
-    clearInterval(this.interval)
+    clearInterval( this.interval )
   }
 }
 

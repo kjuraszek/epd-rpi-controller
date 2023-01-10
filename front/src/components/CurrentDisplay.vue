@@ -11,12 +11,14 @@
 
 <script>
   import CurrentDisplayInfo from '@/components/CurrentDisplayInfo.vue'
-  import { useStatusStore } from '@/stores/status'
+  import { useEpdStatusStore } from '@/stores/epdStatus'
+  import { useUiStatusStore } from '@/stores/uiStatus'
   import { mapState } from 'pinia'
 
   export default {
     computed: {
-    ...mapState(useStatusStore, ['currentImage', 'loadingImage']),
+    ...mapState(useEpdStatusStore, ['currentImage']),
+    ...mapState(useUiStatusStore, ['loadingImage']),
     currentImageClass () {
       return this.loadingImage ? 'current-image img-loading-shadow' : 'current-image img-no-shadow'
     }
