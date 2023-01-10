@@ -1,5 +1,6 @@
 VENV = venv
 CONTROLLER = controller
+FRONT = front
 
 PYTHON_VERSION = 3.9
 SYSTEM_PYTHON = $(shell which python$(PYTHON_VERSION))
@@ -44,6 +45,9 @@ endif
 run-controller:
 	$(VENV_ACTIVATE_CONTROLLER) && $(PYTHON_CONTROLLER) $(CONTROLLER)/main.py
 
+run-ui:
+	npm run --prefix $(FRONT) dev
+
 build-docker:
 	docker-compose --profile all build
 
@@ -69,7 +73,9 @@ clean:
 	rm -rf $(CONTROLLER)/api/__pycache__
 	rm -rf $(CONTROLLER)/custom_views/views.py
 	rm -rf $(CONTROLLER)/custom_views/custom_requirements.txt
+	rm -rf $(FRONT)/node_modules
+	rm -rf $(FRONT)/dist
 	rm -rf epd-rpi-controller.cfg
 	rm -rf mocked_epd.png
 	
-.PHONY: venv install create-env create-config copy-config prepare run-controller build-docker run-docker stop-docker clean-docker clean
+.PHONY: venv install create-env create-config copy-config prepare run-controller run-ui build-docker run-docker stop-docker clean-docker clean

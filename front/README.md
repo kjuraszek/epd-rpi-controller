@@ -1,8 +1,12 @@
-# default
+# EPD Rpi controller UI
+
+UI for EPD Rpi controller based on Vue.js 3 and Vuetify.
+
+![EPD RPi Controller UI](/front/epd_ui.jpg)
 
 ## Project setup
 
-```
+```bash
 # yarn
 yarn
 
@@ -15,7 +19,7 @@ pnpm install
 
 ### Compiles and hot-reloads for development
 
-```
+```bash
 # yarn
 yarn dev
 
@@ -28,7 +32,7 @@ pnpm dev
 
 ### Compiles and minifies for production
 
-```
+```bash
 # yarn
 yarn build
 

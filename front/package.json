@@ -1,6 +1,6 @@
 {
-  "name": "front",
-  "version": "0.0.0",
+  "name": "epd-rpi-controller-ui",
+  "version": "0.0.1",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
