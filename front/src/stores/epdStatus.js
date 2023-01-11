@@ -1,9 +1,6 @@
 import { defineStore } from 'pinia'
 import { useUiStatusStore } from '@/stores/uiStatus'
-
-const HOST = `${window.location.protocol}//${window.location.hostname}`
-const STATUS_ENPOINT = `${HOST}:8888/api/status`
-const CURRENT_DISPLAY_ENPOINT = `${HOST}:8888/api/current_display`
+import { STATUS_ENDPOINT, CURRENT_DISPLAY_ENDPOINT } from '@/consts'
 
 export const useEpdStatusStore = defineStore({
   id: 'epdStatus',
@@ -22,7 +19,7 @@ export const useEpdStatusStore = defineStore({
         uiStatusStore.$patch({
           fetchingStatus: true
         })
-        fetch( STATUS_ENPOINT )
+        fetch( STATUS_ENDPOINT )
         .then( response => {
           return response.json()
         })
@@ -63,7 +60,7 @@ export const useEpdStatusStore = defineStore({
     async fetchCurrentImage() {
       const uiStatusStore = useUiStatusStore()
 
-      fetch( CURRENT_DISPLAY_ENPOINT )
+      fetch( CURRENT_DISPLAY_ENDPOINT )
       .then( response => {
         return response
       })

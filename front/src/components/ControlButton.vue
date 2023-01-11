@@ -19,6 +19,7 @@
 <script>
   import { useUiStatusStore } from '@/stores/uiStatus'
   import { mapWritableState, mapActions } from 'pinia'
+  import { API } from '@/consts'
 
   const ACTIONS = new Set(['next', 'prev']);
   const ACTIONDATA = {
@@ -31,13 +32,12 @@
       icon:  'mdi-arrow-left-bold-outline'
     },
   }
-  const HOST = `${window.location.protocol}//${window.location.hostname}`
 
   export default {
     data () {
       return {
         ACTIONDATA,
-        HOST
+        API
       }
     },
     computed: {
@@ -48,7 +48,7 @@
     },
     methods: {
       switchView () {
-        fetch(`${HOST}:8888/api/${this.controlAction}`)
+        fetch(`${API}/${this.controlAction}`)
         .then(response => {
           return response
         })
