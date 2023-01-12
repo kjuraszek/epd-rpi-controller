@@ -5,12 +5,18 @@ from PIL import Image
 from .models import StatusModel, CurrentDisplayModel
 
 
-class RootHandler(tornado.web.RequestHandler):
+class BaseHandler(tornado.web.RequestHandler):
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Headers", "x-requested-with")
+        self.set_header('Access-Control-Allow-Methods', ' PUT, DELETE, OPTIONS')
+        return super().set_default_headers()
+class RootHandler(BaseHandler):
     def get(self):
         self.write("EPD RPI Controller's API root")
 
 
-class StatusHandler(tornado.web.RequestHandler):
+class StatusHandler(BaseHandler):
     def initialize(self, view_manager):
         self.view_manager = view_manager
     def get(self):
@@ -31,7 +37,7 @@ class StatusHandler(tornado.web.RequestHandler):
         self.write(epd_status)
 
 
-class NextViewHandler(tornado.web.RequestHandler):
+class NextViewHandler(BaseHandler):
     def initialize(self, view_manager):
         self.view_manager = view_manager
     def get(self):
@@ -56,7 +62,7 @@ class NextViewHandler(tornado.web.RequestHandler):
         self.set_status(204)
 
 
-class PreviousViewHandler(tornado.web.RequestHandler):
+class PreviousViewHandler(BaseHandler):
     def initialize(self, view_manager):
         self.view_manager = view_manager
     def get(self):
@@ -80,7 +86,7 @@ class PreviousViewHandler(tornado.web.RequestHandler):
         self.set_status(204)
 
 
-class CurrentDisplayHandler(tornado.web.RequestHandler):
+class CurrentDisplayHandler(BaseHandler):
     def initialize(self, view_manager):
         self.view_manager = view_manager
     def get(self):

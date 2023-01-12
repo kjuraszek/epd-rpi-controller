@@ -16,6 +16,8 @@ class StatusModel:
         total_views:
             type: integer
             format: int64
+        timestamp:
+            type: string
     """
 
 
