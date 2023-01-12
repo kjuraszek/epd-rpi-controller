@@ -9,6 +9,10 @@ Firstly a `views.py` file must be created - it can be based or copied from `exam
 ## View class
 
 Every custom view must be a child of `View` class. Also a method `show` must be defined with `first_call` argument - this methods interacts with EPD. This parameter might be useful to determine if a current view was displayed during current interval.
+In addition a **fallback** can be displayed if a `show` method will fail with an exception. To achieve this:
+
+- `show` method bust be decorated with `@View.fallback` decorator and
+- `_fallback_show` method which displays fallback view must be defined
 
 ### Arguments passed to a constructor
 
@@ -22,13 +26,14 @@ In addition each view instance must be initiated with a name and interval. Optio
 
 ### Examplary usage of custom View
 
-Basing on `example.py` and using defined DummyView class a `VIEWS` list might look like:
+Basing on `example.py` and using defined DummyView and BrokenDummyView class a `VIEWS` list might look like:
 
     VIEWS = [
         DummyView('Dummy view 1', 0),
         DummyView('Dummy view 2', 6, 180),
         DummyView('Dummy view 3', 0),
-        DummyView('Dummy view 4', 7)
+        DummyView('Dummy view 4', 7),
+        BrokenDummyView('Broken dummy view 5', 0)
     ]
 
 and:
@@ -36,6 +41,7 @@ and:
 - views 1 and 3 have no `interval` (0)
 - views 2 and 4 have interval (in seconds) by which a `show` method will be called unless a switching view action gets called.
 - view 2 is rotated by 180 degree
+- view 5 will show a fallback image since its `show` method raises an exception (but is decorated with a `@View.fallback`)
 
 ## Custom requirements
 
