@@ -1,6 +1,8 @@
 import time
 import logging
 import importlib
+import signal
+from functools import partial
 from copy import deepcopy
 
 from kafka import KafkaAdminClient
@@ -10,7 +12,7 @@ from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError, 
 from config import Config
 from src import Consumer, Producer, ViewManager
 from src.api import MainAPI
-from src.helpers import validate_config, validate_views
+from src.helpers import validate_config, validate_views, signal_handler
 from custom_views import VIEWS
 
 
@@ -62,6 +64,9 @@ def main():
     consumer = Consumer(view_manager)
     api = MainAPI(view_manager)
 
+    signal.signal(signal.SIGINT, partial(signal_handler, consumer))
+    signal.signal(signal.SIGTERM, partial(signal_handler, consumer))
+
     tasks = [
         consumer,
         view_manager,
@@ -92,6 +97,7 @@ def main():
 
     if Config.CLEAR_EPD_ON_EXIT:
         epd.Clear(0xFF)
+        logger.info('EPD has been cleaned.')
 
 
 if __name__ == '__main__':
