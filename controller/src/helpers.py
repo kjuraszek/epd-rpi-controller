@@ -58,6 +58,11 @@ def validate_views():
         raise ValidationViewException from e
 
 
+def signal_handler(thread, *args):
+    logger.info('Received Signal: %s, stopping the controller.', args[0])
+    thread.stop_event.set()
+
+
 class ValidationConfigException(Exception):
     '''Error with validating config file.'''
 
