@@ -1,11 +1,16 @@
+"""Module exports TornadoApplication"""
+
 import tornado.web
 
 from tornado_swagger.setup import setup_swagger
 
 from .handlers import RootHandler, StatusHandler, NextViewHandler, PreviousViewHandler, CurrentDisplayHandler
 
+
 class TornadoApplication(tornado.web.Application):
+    """TornadoApplication is an API for EPD RPI Controller"""
     def __init__(self, view_manager):
+        """TornadoApplication constructor method"""
         self._routes = [
             (r"/", RootHandler),
         ]

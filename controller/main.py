@@ -1,3 +1,5 @@
+"""An entrypoint for EPD Rpi Controller"""
+
 import time
 import logging
 import importlib
@@ -12,7 +14,8 @@ from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError, 
 from config import Config
 from src import Consumer, Producer, ViewManager
 from src.api import MainAPI
-from src.helpers import validate_config, validate_views, signal_handler
+from src.helpers import signal_handler
+from src.validators import validate_config, validate_views
 from custom_views import VIEWS
 
 
@@ -20,13 +23,21 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+# pylint: disable=C0415
 def main():
+    """EPD Rpi Controller's main function
+
+    This function starts the controller. It initiates: Kafka-related classes,
+    API, ButtonManager. Also it's responsible for proper signal handling: SIGINT and SIGTERM.
+    Views and config are validated within this function.
+    """
+
     validate_config()
     validate_views()
 
     if Config.EPD_MODEL == 'mock':
         from src import MockedEPD
-        epd = MockedEPD(width = Config.MOCKED_EPD_WIDTH, height = Config.MOCKED_EPD_HEIGHT)
+        epd = MockedEPD(width=Config.MOCKED_EPD_WIDTH, height=Config.MOCKED_EPD_HEIGHT)
     else:
         epd = importlib.import_module(f'waveshare_epd_driver.{Config.EPD_MODEL}.EPD')
 
@@ -37,16 +48,16 @@ def main():
         try:
             kafka_admin = KafkaAdminClient(bootstrap_servers=Config.KAFKA_BOOTSTRAP_SERVER, api_version=(2, 5, 0))
             break
-        except (NoBrokersAvailable, NodeNotReadyError) as e:
-            if number == 5:
-                raise e
-            logger.error(f'Failed to connect with Kafka broker, retrying in: {number * 10} seconds.')
+        except (NoBrokersAvailable, NodeNotReadyError) as kafka_exception:
+            if number == 7:
+                raise kafka_exception
+            logger.error('Failed to connect with Kafka broker, retrying in: %s seconds.', number * 10)
             time.sleep(number * 10)
 
     topic = NewTopic(name=Config.KAFKA_VIEW_MANAGER_TOPIC,
                      num_partitions=1,
                      replication_factor=1,
-                     topic_configs={'retention.ms':'60000'})
+                     topic_configs={'retention.ms': '60000'})
     try:
         kafka_admin.delete_topics([Config.KAFKA_VIEW_MANAGER_TOPIC])
         time.sleep(2)
@@ -54,7 +65,6 @@ def main():
     except UnknownTopicOrPartitionError:
         logger.debug('unable to delete topic')
     kafka_admin.create_topics([topic])
-
 
     views = deepcopy(VIEWS)
     for view in views:
@@ -72,10 +82,12 @@ def main():
         view_manager,
         api
     ]
-    
-    if Config.PRODUCER_INTERVAL > 0: tasks.append(Producer())
 
-    if Config.USE_BUTTONS: tasks.append(ButtonManager())
+    if Config.PRODUCER_INTERVAL > 0:
+        tasks.append(Producer())
+
+    if Config.USE_BUTTONS:
+        tasks.append(ButtonManager())
 
     for task in tasks:
         task.start()

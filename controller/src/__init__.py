@@ -1,3 +1,5 @@
+"""Module exports classes used in application"""
+
 from src.api import MainAPI
 from src.button_manager import ButtonManager
 from src.consumer import Consumer

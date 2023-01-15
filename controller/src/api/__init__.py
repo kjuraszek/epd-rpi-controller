@@ -1,3 +1,5 @@
+"""Module exports MainAPI"""
+
 from .main_api import MainAPI
 
 
