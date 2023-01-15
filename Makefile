@@ -23,6 +23,9 @@ else
 	@echo 'No custom_requirements.txt file - skipping.'
 endif
 
+install-dev: install
+	$(VENV_ACTIVATE_CONTROLLER) && $(PIP_CONTROLLER) install -r $(CONTROLLER)/requirements_development.txt
+
 create-config:
 ifeq ($(shell test -s epd-rpi-controller.cfg && echo -n 0), 0)
 	@echo 'Skipping this step - epd-rpi-controller.cfg file exists.'
@@ -65,6 +68,17 @@ stop-docker:
 
 clean-docker:
 	docker compose down --rmi=all --volume
+
+lint-controller: install-dev lint-pylint lint-flake8
+
+lint-pylint:
+	$(VENV_ACTIVATE_CONTROLLER) && $(VENV)/bin/pylint --rcfile=$(CONTROLLER)/.pylintrc $(CONTROLLER)/
+
+lint-flake8:
+	$(VENV_ACTIVATE_CONTROLLER) && $(VENV)/bin/flake8 --config=$(CONTROLLER)/.flake8 $(CONTROLLER)/
+
+lint-ui:
+	npm run --prefix $(FRONT) lint
 
 clean:
 	rm -rf __pycache__
