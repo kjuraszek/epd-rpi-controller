@@ -1,6 +1,6 @@
-'''
+"""
 Module contains validation functions
-'''
+"""
 
 import logging
 
@@ -11,9 +11,11 @@ from custom_views import VIEWS
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 def validate_config():
+    """Function validates configuration from .cfg file"""
     try:
-        assert not None in [Config.KAFKA_VIEW_MANAGER_TOPIC, Config.PRODUCER_INTERVAL, Config.EPD_MODEL, Config.CLEAR_EPD_ON_EXIT],\
+        assert None not in [Config.KAFKA_VIEW_MANAGER_TOPIC, Config.PRODUCER_INTERVAL, Config.EPD_MODEL, Config.CLEAR_EPD_ON_EXIT],\
             'KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, EPD_MODEL, CLEAR_EPD_ON_EXIT must be set'
         assert isinstance(Config.KAFKA_VIEW_MANAGER_TOPIC, str),\
             'KAFKA_VIEW_MANAGER_TOPIC must be a string'
@@ -49,6 +51,7 @@ def validate_config():
 
 
 def validate_views():
+    """Function validates custom views"""
     try:
         assert len(VIEWS) > 0, 'VIEWS must contain at least one element'
         assert all(isinstance(view, View) for view in VIEWS),\
@@ -59,8 +62,8 @@ def validate_views():
 
 
 class ValidationConfigException(Exception):
-    '''Error with validating config file.'''
+    """Error with validating config file."""
 
 
 class ValidationViewException(Exception):
-    '''Error with validating views.'''
+    """Error with validating views."""

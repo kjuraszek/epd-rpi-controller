@@ -1,3 +1,5 @@
+"""Module exports defined VIEWS"""
+
 import logging
 
 logging.basicConfig(level=logging.INFO)

@@ -1,3 +1,5 @@
+"""Module exports models used in API"""
+
 from tornado_swagger.model import register_swagger_model
 
 

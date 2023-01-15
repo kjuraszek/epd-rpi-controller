@@ -1,3 +1,5 @@
+"""An entrypoint for EPD Rpi Controller"""
+
 import time
 import logging
 import importlib
@@ -23,12 +25,19 @@ logger = logging.getLogger(__name__)
 
 # pylint: disable=C0415
 def main():
+    """EPD Rpi Controller's main function
+
+    This function starts the controller. It initiates: Kafka-related classes,
+    API, ButtonManager. Also it's responsible for proper signal handling: SIGINT and SIGTERM.
+    Views and config are validated within this function.
+    """
+
     validate_config()
     validate_views()
 
     if Config.EPD_MODEL == 'mock':
         from src import MockedEPD
-        epd = MockedEPD(width = Config.MOCKED_EPD_WIDTH, height = Config.MOCKED_EPD_HEIGHT)
+        epd = MockedEPD(width=Config.MOCKED_EPD_WIDTH, height=Config.MOCKED_EPD_HEIGHT)
     else:
         epd = importlib.import_module(f'waveshare_epd_driver.{Config.EPD_MODEL}.EPD')
 
@@ -48,7 +57,7 @@ def main():
     topic = NewTopic(name=Config.KAFKA_VIEW_MANAGER_TOPIC,
                      num_partitions=1,
                      replication_factor=1,
-                     topic_configs={'retention.ms':'60000'})
+                     topic_configs={'retention.ms': '60000'})
     try:
         kafka_admin.delete_topics([Config.KAFKA_VIEW_MANAGER_TOPIC])
         time.sleep(2)
@@ -56,7 +65,6 @@ def main():
     except UnknownTopicOrPartitionError:
         logger.debug('unable to delete topic')
     kafka_admin.create_topics([topic])
-
 
     views = deepcopy(VIEWS)
     for view in views:

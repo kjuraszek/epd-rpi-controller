@@ -1,3 +1,5 @@
+"""Configuration which is accessible throughout the application"""
+
 import configparser
 from dataclasses import dataclass
 import os
@@ -5,8 +7,10 @@ import os
 cfg = configparser.ConfigParser()
 cfg.read('epd-rpi-controller.cfg')
 
+
 @dataclass
 class Config:
+    """Config object which stores options from .cfg file and certain environment variables"""
     PRODUCER_INTERVAL = cfg['main'].getint('producer_interval')
     PRODUCER_ASC_ORDER = cfg['main'].getboolean('producer_asc_order')
     STARTING_VIEW = cfg['main'].getint('starting_view')
@@ -18,6 +22,6 @@ class Config:
     USE_BUTTONS = cfg['main'].getboolean('use_buttons')
     LEFT_BUTTON_PIN = cfg['main'].getint('left_button_pin')
     RIGHT_BUTTON_PIN = cfg['main'].getint('right_button_pin')
-    KAFKA_VIEW_MANAGER_TOPIC  = cfg['kafka'].get('view_manager_topic')
+    KAFKA_VIEW_MANAGER_TOPIC = cfg['kafka'].get('view_manager_topic')
 
     KAFKA_BOOTSTRAP_SERVER = 'kafka:29092' if 'EPD_RPI_DOCKERIZED' in os.environ else 'localhost:9092'
