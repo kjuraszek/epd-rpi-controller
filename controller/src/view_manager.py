@@ -37,10 +37,10 @@ class ViewManager(threading.Thread):
             self.action = 'prev'
         else:
             logger.debug('View manager is busy')
-        
+
     def stop(self):
         self.stop_event.set()
-    
+
     def run(self):
         switched = False
         first_call = True
@@ -84,7 +84,7 @@ class ViewManager(threading.Thread):
             'total_views': len(self.views),
             'timestamp': self.timestamp
         }
-        
+
     def current_display(self):
         return self.views[self.current_view].image
 

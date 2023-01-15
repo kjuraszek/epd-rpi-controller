@@ -21,22 +21,21 @@ class MainAPI(threading.Thread):
         self.ioloop = None
 
         self.app = TornadoApplication(self.view_manager)
-        
-    def run(self):        
+
+    def run(self):
         logger.info('Starting tornado server')
         asyncio.set_event_loop(asyncio.new_event_loop())
-        
+
         self.http_server = tornado.httpserver.HTTPServer(self.app)
         self.http_server.listen(8888)
 
         self.ioloop = tornado.ioloop.IOLoop.current()
         logger.info('Serving swagger at http://localhost:8888/api/doc/')
         self.ioloop.start()
-        
+
         logger.info('Tornado server has been stopped')
 
     def stop(self):
         logger.info('Stopping tornado server')
         self.http_server.stop()
         self.ioloop.add_callback(self.ioloop.stop)
-

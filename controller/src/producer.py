@@ -31,7 +31,7 @@ class Producer(threading.Thread):
         while not self.stop_event.is_set():
             producer.send(Config.KAFKA_VIEW_MANAGER_TOPIC, bytes(self.order, encoding='utf-8'))
             try:
-                wait(lambda : self.stop_event.is_set(), timeout_seconds=self.interval)
+                wait(lambda : self.stop_event.is_set(), timeout_seconds=self.interval)  # pylint: disable=W0108
             except TimeoutExpired:
                 pass
             else:

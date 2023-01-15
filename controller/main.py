@@ -12,7 +12,8 @@ from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError, 
 from config import Config
 from src import Consumer, Producer, ViewManager
 from src.api import MainAPI
-from src.helpers import validate_config, validate_views, signal_handler
+from src.helpers import signal_handler
+from src.validators import validate_config, validate_views
 from custom_views import VIEWS
 
 
@@ -20,6 +21,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+# pylint: disable=C0415
 def main():
     validate_config()
     validate_views()
@@ -37,10 +39,10 @@ def main():
         try:
             kafka_admin = KafkaAdminClient(bootstrap_servers=Config.KAFKA_BOOTSTRAP_SERVER, api_version=(2, 5, 0))
             break
-        except (NoBrokersAvailable, NodeNotReadyError) as e:
-            if number == 5:
-                raise e
-            logger.error(f'Failed to connect with Kafka broker, retrying in: {number * 10} seconds.')
+        except (NoBrokersAvailable, NodeNotReadyError) as kafka_exception:
+            if number == 7:
+                raise kafka_exception
+            logger.error('Failed to connect with Kafka broker, retrying in: %s seconds.', number * 10)
             time.sleep(number * 10)
 
     topic = NewTopic(name=Config.KAFKA_VIEW_MANAGER_TOPIC,
@@ -72,10 +74,12 @@ def main():
         view_manager,
         api
     ]
-    
-    if Config.PRODUCER_INTERVAL > 0: tasks.append(Producer())
 
-    if Config.USE_BUTTONS: tasks.append(ButtonManager())
+    if Config.PRODUCER_INTERVAL > 0:
+        tasks.append(Producer())
+
+    if Config.USE_BUTTONS:
+        tasks.append(ButtonManager())
 
     for task in tasks:
         task.start()

@@ -2,7 +2,6 @@
 View class
 '''
 import logging
-import functools
 from PIL import Image
 
 from config import Config
@@ -14,18 +13,6 @@ class View:
     '''
     view
     '''
-    def fallback(func):
-        @functools.wraps(func)
-        def wrapper(self, *args, **kwargs):
-            try:
-                func(self, *args, **kwargs)
-            except KeyboardInterrupt:
-                raise
-            except Exception as e:
-                logger.exception(f'Error occured in {self.name}, calling fallback')
-                self._fallback_show(self, *args, **kwargs)
-        return wrapper
-
     def __init__(self, name, interval, view_angle = Config.VIEW_ANGLE):
         self.epd = None
         self.name = name
@@ -36,12 +23,24 @@ class View:
     def show(self, first_call):
         raise NotImplementedError
 
-    def screenshot(self):
-        return self.image
-
     def _rotate_image(self):
         if self.image and isinstance(self.image, Image.Image):
             self.image = self.image.rotate(self.view_angle)
 
-    def _fallback_show(self, *args, **kwargs):
+    def fallback_show(self, *args, **kwargs):
         raise NotImplementedError
+
+# class ViewFallback:
+#     def __init__(self, view_class) -> None:
+#         self.view_class = view_class
+
+#     def __call__(self, func):
+#         def wrapper(*args, **kwargs):
+#             try:
+#                 func(*args, **kwargs)
+#             except KeyboardInterrupt:
+#                 raise
+#             except Exception as e:
+#                 logger.exception(f'Error occured in {self.view_class.name}, calling fallback')
+#                 self.view_class.fallback_show(*args, **kwargs)
+#         return wrapper

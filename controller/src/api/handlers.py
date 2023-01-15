@@ -2,20 +2,22 @@ import io
 import tornado.web
 from PIL import Image
 
-from .models import StatusModel, CurrentDisplayModel
+from .models import StatusModel, CurrentDisplayModel  # pylint: disable=W0611
 
 
-class BaseHandler(tornado.web.RequestHandler):
+class BaseHandler(tornado.web.RequestHandler):  # pylint: disable=W0223
     def set_default_headers(self):
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Headers", "x-requested-with")
         self.set_header('Access-Control-Allow-Methods', ' PUT, DELETE, OPTIONS')
         return super().set_default_headers()
-class RootHandler(BaseHandler):
+
+class RootHandler(BaseHandler):  # pylint: disable=W0223
     def get(self):
         self.write("EPD RPI Controller's API root")
 
 
+# pylint: disable=W0223,W0201
 class StatusHandler(BaseHandler):
     def initialize(self, view_manager):
         self.view_manager = view_manager
@@ -25,7 +27,7 @@ class StatusHandler(BaseHandler):
         tags:
           - General
         summary: Get EPD status
-        description: Get Epaper Display current status 
+        description: Get Epaper Display current status
         operationId: getStatus
         responses:
             200:
@@ -37,6 +39,7 @@ class StatusHandler(BaseHandler):
         self.write(epd_status)
 
 
+# pylint: disable=W0223,W0201
 class NextViewHandler(BaseHandler):
     def initialize(self, view_manager):
         self.view_manager = view_manager
@@ -57,11 +60,12 @@ class NextViewHandler(BaseHandler):
         if self.view_manager.busy.is_set():
             self.set_status(400, "View change failed - EPD is busy.")
             return
-            
+
         self.view_manager.next()
         self.set_status(204)
 
 
+# pylint: disable=W0223,W0201
 class PreviousViewHandler(BaseHandler):
     def initialize(self, view_manager):
         self.view_manager = view_manager
@@ -86,6 +90,7 @@ class PreviousViewHandler(BaseHandler):
         self.set_status(204)
 
 
+# pylint: disable=W0223,W0201
 class CurrentDisplayHandler(BaseHandler):
     def initialize(self, view_manager):
         self.view_manager = view_manager
@@ -113,5 +118,5 @@ class CurrentDisplayHandler(BaseHandler):
         current_image.save(current_image_buffer, format="JPEG")
         current_image_bytes = current_image_buffer.getvalue()
         self.set_header('Content-type', 'image/jpg')
-        self.set_header('Content-length', len(current_image_bytes))   
+        self.set_header('Content-length', len(current_image_bytes))
         self.write(current_image_bytes)

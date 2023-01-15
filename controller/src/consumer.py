@@ -37,7 +37,7 @@ class Consumer(threading.Thread):
                         self.next()
                     elif message_decoded == 'stop':
                         self.stop()
-                except:
+                except Exception:  # pylint: disable=W0703
                     logger.error('Consumer decoding error with %s', message.value)
                 if self.stop_event.is_set():
                     logger.info('Stopping consumer')
@@ -47,6 +47,6 @@ class Consumer(threading.Thread):
 
     def prev(self):
         self.view_manager.prev()
-    
+
     def next(self):
         self.view_manager.next()

@@ -2,7 +2,7 @@ from tornado_swagger.model import register_swagger_model
 
 
 @register_swagger_model
-class StatusModel:
+class StatusModel:  # pylint: disable=R0903
     """
     ---
     type: object
@@ -22,7 +22,7 @@ class StatusModel:
 
 
 @register_swagger_model
-class CurrentDisplayModel:
+class CurrentDisplayModel:  # pylint: disable=R0903
     """
     ---
     type: string
