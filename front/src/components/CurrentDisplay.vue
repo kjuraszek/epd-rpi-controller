@@ -1,12 +1,13 @@
 <template>
-    <v-img v-if="currentImage"
-      :class="currentImageClass" 
-      :src="currentImage">
-    </v-img>
-    <p v-else>
-      Unable to load an image, check if API and EPD are working.
-    </p>
-    <CurrentDisplayInfo />
+  <v-img
+    v-if="currentImage"
+    :class="currentImageClass" 
+    :src="currentImage"
+  />
+  <p v-else>
+    Unable to load an image, check if API and EPD are working.
+  </p>
+  <CurrentDisplayInfo />
 </template>
 
 <script>
@@ -16,16 +17,16 @@
   import { mapState } from 'pinia'
 
   export default {
-    computed: {
-    ...mapState(useEpdStatusStore, ['currentImage']),
-    ...mapState(useUiStatusStore, ['loadingImage']),
-    currentImageClass () {
-      return this.loadingImage ? 'current-image img-loading-shadow' : 'current-image img-no-shadow'
-    }
-    },
     components: {
       CurrentDisplayInfo
-    }
+    },
+    computed: {
+      ...mapState(useEpdStatusStore, ['currentImage']),
+      ...mapState(useUiStatusStore, ['loadingImage']),
+      currentImageClass () {
+        return this.loadingImage ? 'current-image img-loading-shadow' : 'current-image img-no-shadow'
+      }
+    },
   }
 </script>
 

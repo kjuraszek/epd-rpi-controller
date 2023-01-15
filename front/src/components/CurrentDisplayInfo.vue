@@ -4,10 +4,14 @@
       :model-value="currentViewProportional"
       color="teal"
       rounded
-    ></v-progress-linear>
+    />
     
-    <p v-if="epdBusy">(EPD is switching)</p>
-    <p v-else>&nbsp;</p>
+    <p v-if="epdBusy">
+      (EPD is switching)
+    </p>
+    <p v-else>
+&nbsp;
+    </p>
 
     <p class="text-h5 my-3 font-weight-regular">
       <em>View {{ currentView + 1 }} of {{ totalViews }}</em>

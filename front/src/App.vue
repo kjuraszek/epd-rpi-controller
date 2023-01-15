@@ -5,22 +5,21 @@
       class="bg-teal"
       light
       flat
-    >
-    </v-app-bar>
+    />
 
     <v-main>
-      <Main />
+      <AppMain />
+      <AppAlerts />
     </v-main>
     
-    <Footer />
-
+    <AppFooter />
   </v-app>
-
 </template>
 
 <script>
-  import Main from '@/components/Main.vue'
-  import Footer from '@/components/Footer.vue'
+  import AppAlerts from '@/components/AppAlerts.vue'
+  import AppMain from '@/components/AppMain.vue'
+  import AppFooter from '@/components/AppFooter.vue'
   import { useUiStatusStore } from '@/stores/uiStatus'
   import { useEpdStatusStore } from '@/stores/epdStatus'
   import { mapState, mapActions } from 'pinia'
@@ -28,18 +27,29 @@
   export default {
   name: 'App',
   components: {
-    Main, Footer
-  },
-  computed: {
-    ...mapState( useUiStatusStore, ['failedRequestsCount'] )
+    AppMain, AppFooter, AppAlerts
   },
   data () {
     return {
       interval: null
     }
   },
+  computed: {
+    ...mapState( useUiStatusStore, ['failedRequestsCount'] )
+  },
+  watch: {
+    // eslint-disable-next-line no-unused-vars
+    failedRequestsCount (newValue, oldValue) {
+      if (newValue > 50) {
+        clearInterval( this.interval )
+      }
+    }
+  },
   mounted() {
     this.startInterval()
+  },
+  beforeUnmount () {
+    clearInterval( this.interval )
   },
   methods: {
     ...mapActions( useEpdStatusStore, ["fetchStatus"] ),
@@ -50,16 +60,6 @@
       }, 1000)
     }
   },
-  watch: {
-    failedRequestsCount (newValue, oldValue) {
-      if (newValue > 50) {
-        clearInterval( this.interval )
-      }
-    }
-  },
-  beforeDestroy () {
-    clearInterval( this.interval )
-  }
 }
 
 </script>
