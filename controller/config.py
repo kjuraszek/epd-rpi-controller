@@ -2,11 +2,12 @@
 
 import configparser
 from dataclasses import dataclass
+from dotenv import load_dotenv
 import os
 
 cfg = configparser.ConfigParser()
 cfg.read('epd-rpi-controller.cfg')
-
+load_dotenv()
 
 @dataclass
 class Config:
@@ -25,3 +26,4 @@ class Config:
     KAFKA_VIEW_MANAGER_TOPIC = cfg['kafka'].get('view_manager_topic')
 
     KAFKA_BOOTSTRAP_SERVER = 'kafka:29092' if 'EPD_RPI_DOCKERIZED' in os.environ else 'localhost:9092'
+    VITE_API_PORT = os.getenv('VITE_API_PORT')

@@ -1,3 +1,5 @@
+include .env
+
 VENV = venv
 CONTROLLER = controller
 FRONT = front
@@ -33,10 +35,17 @@ else
 	cp epd-rpi-controller.example.cfg epd-rpi-controller.cfg
 endif
 
+create-env:
+ifeq ($(shell test -s .env && echo -n 0), 0)
+	@echo 'Skipping this step - .env file exists.'
+else
+	cp .env.example .env
+endif
+
 create-docker-network:
 	docker network create epd-rpi-network || true
 
-prepare: install create-config create-docker-network
+prepare: install create-config create-env create-docker-network
 
 create-views-file:
 ifeq ($(shell test -s controller/custom_views/views.py && echo -n 0), 0)
@@ -49,6 +58,8 @@ run-controller:
 	$(VENV_ACTIVATE_CONTROLLER) && $(PYTHON_CONTROLLER) $(CONTROLLER)/main.py
 
 run-ui:
+	export VITE_UI_PORT=$(VITE_UI_PORT) &&\
+	export VITE_API_PORT=$(VITE_API_PORT) &&\
 	npm run --prefix $(FRONT) dev
 
 build-docker:
