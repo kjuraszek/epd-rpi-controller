@@ -2,17 +2,20 @@
   <v-btn
     color="primary"
     @click="switchView()"
-  ><v-icon
-    right
-    dark
-    large
+  >
+    <v-icon
+      right
+      dark
+      large
     >
-      {{ ACTIONDATA[this.controlAction]['icon'] }}
+      {{ ACTIONDATA[controlAction]['icon'] }}
     </v-icon>
     <v-tooltip
-        activator="parent"
-        location="bottom"
-      >{{ ACTIONDATA[this.controlAction]['label'] }}</v-tooltip>
+      activator="parent"
+      location="bottom"
+    >
+      {{ ACTIONDATA[controlAction]['label'] }}
+    </v-tooltip>
   </v-btn>
 </template>
 
@@ -34,6 +37,12 @@
   }
 
   export default {
+    props: {
+      controlAction: {
+        type: String,
+        required: true
+      }
+    },
     data () {
       return {
         ACTIONDATA,
@@ -43,8 +52,10 @@
     computed: {
     ...mapWritableState(useUiStatusStore, ['successAlert', 'warningAlert', 'errorAlert'])
     },
-    props: {
-      controlAction: String
+    mounted () {
+      if (!ACTIONS.has(this.controlAction)) {
+        throw new Error(`Unknown action ${this.controlAction} in ControlButton component.`);
+      }
     },
     methods: {
       switchView () {
@@ -72,10 +83,5 @@
       },
     ...mapActions(useUiStatusStore, ['resetAlerts']),
     },
-    mounted () {
-      if (!ACTIONS.has(this.controlAction)) {
-        throw new Error(`Unknown action ${this.controlAction} in ControlButton component.`);
-      }
-    }
   }
 </script>
