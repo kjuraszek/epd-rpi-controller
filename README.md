@@ -37,7 +37,7 @@ which:
 - installs Python dependencies
 - creates docker network `epd-rpi-network`
 
-You should adjust config file to your needs. Also to run the Controller you must prepare Views in `controller/custom_views/views.py` (file by default doesn't exist) - take a look on file `example.py`.
+You should adjust config and .env files to your needs - however bear in mind that all defined variables/parameters in examplary files are crucial for controller to work properly. Also to run the Controller you must prepare Views in `controller/custom_views/views.py` (file by default doesn't exist) - take a look on file `example.py`.
 Alternatively you can use a command:
 
 `make create-views-file`
