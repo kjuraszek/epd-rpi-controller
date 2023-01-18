@@ -72,6 +72,20 @@ services:
       - controller
     ports:
       - ${VITE_API_PORT}:${VITE_API_PORT}
+  rpi_epd_ui:
+    build: 
+      context: .
+      dockerfile: front/Dockerfile
+      args:
+      - VITE_API_PORT=${VITE_API_PORT}
+      - VITE_UI_PORT=${VITE_UI_PORT}
+    networks: 
+      - epd-rpi-network
+    profiles:
+      - all
+      - ui
+    ports:
+      - ${VITE_UI_PORT}:${VITE_UI_PORT}
 networks: 
   epd-rpi-network:
     driver: bridge

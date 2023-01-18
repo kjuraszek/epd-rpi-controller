@@ -71,6 +71,12 @@ run-docker:
 run-docker-ctrl:
 	docker compose --profile controller up -d
 
+run-docker-ctrl-ui:
+	docker compose --profile controller --profile ui up -d
+
+run-docker-ui:
+	docker compose --profile ui up -d
+
 run-docker-all:
 	docker compose --profile all up -d
 
