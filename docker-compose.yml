@@ -59,6 +59,9 @@ services:
     build: 
       context: .
       dockerfile: controller/Dockerfile
+      args:
+      - VITE_API_PORT=${VITE_API_PORT}
+      - TIMEZONE=${TIMEZONE}
     depends_on:
       - kafka
     privileged: true
@@ -68,7 +71,7 @@ services:
       - all
       - controller
     ports:
-      - "8888:8888"
+      - ${VITE_API_PORT}:${VITE_API_PORT}
 networks: 
   epd-rpi-network:
     driver: bridge

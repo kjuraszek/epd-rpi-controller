@@ -32,11 +32,12 @@ Run the command:
 which:
 
 - creates `epd-rpi-controller.cfg` (copies epd-rpi-controller.example.cfg file)
+- creates `.env` (copies .env.example file)
 - prepares Python virtual environment
 - installs Python dependencies
 - creates docker network `epd-rpi-network`
 
-You should adjust config file to your needs. Also to run the Controller you must prepare Views in `controller/custom_views/views.py` (file by default doesn't exist) - take a look on file `example.py`.
+You should adjust config and .env files to your needs - however bear in mind that all defined variables/parameters in examplary files are crucial for controller to work properly. Also to run the Controller you must prepare Views in `controller/custom_views/views.py` (file by default doesn't exist) - take a look on file `example.py`.
 Alternatively you can use a command:
 
 `make create-views-file`
@@ -100,6 +101,16 @@ Config is stored in a file `epd-rpi-controller.cfg` (file by default doesn't exi
 | left_button_pin | GPIO number (not physical pin on board!) of pin connected to the left button | positive integer |
 | right_button_pin | GPIO number (not physical pin on board!) of pin connected to the right button | positive integer |
 | view_manager_topic | Name of the *topic* used by Kafka | string compatible with Kafka topic naming rules |
+
+## .env file
+
+Variables defined in .env file (file by default doesn't exist):
+
+| Variable | Purpose | Values |
+| --- | --- | --- |
+| TIMEZONE | Timezone used in Controller container | valid timezone eg. `Europe/Paris`, `UTC` etc. |
+| VITE_API_PORT | Port on which Controller's API will be running (added `VITE_` prefix to allow import in Vue.js) | positive integer |
+| VITE_UI_PORT | Port on which Controller's UI will be running | positive integer |
 
 ## Using mocked EPD
 

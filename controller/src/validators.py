@@ -13,9 +13,10 @@ logger = logging.getLogger(__name__)
 
 
 def validate_config():
-    """Function validates configuration from .cfg file"""
+    """Function validates configuration from .cfg and .env files"""
     try:
-        assert None not in [Config.KAFKA_VIEW_MANAGER_TOPIC, Config.PRODUCER_INTERVAL, Config.EPD_MODEL, Config.CLEAR_EPD_ON_EXIT],\
+        assert None not in [Config.KAFKA_VIEW_MANAGER_TOPIC, Config.PRODUCER_INTERVAL, Config.EPD_MODEL,
+                            Config.CLEAR_EPD_ON_EXIT, Config.VITE_API_PORT],\
             'KAFKA_VIEW_MANAGER_TOPIC, PRODUCER_INTERVAL, EPD_MODEL, CLEAR_EPD_ON_EXIT must be set'
         assert isinstance(Config.KAFKA_VIEW_MANAGER_TOPIC, str),\
             'KAFKA_VIEW_MANAGER_TOPIC must be a string'
@@ -33,6 +34,8 @@ def validate_config():
             'EPD_MODEL must be an integer'
         assert isinstance(Config.USE_BUTTONS, bool),\
             'EPD_MODEL must be a boolean'
+        assert isinstance(Config.VITE_API_PORT, int),\
+            'VITE_API_PORT must be an integer'
         if Config.EPD_MODEL == 'mock':
             assert isinstance(Config.MOCKED_EPD_WIDTH, int) and Config.MOCKED_EPD_WIDTH > 0,\
                 'MOCKED_EPD_WIDTH must be an integer greater than 0'

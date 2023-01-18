@@ -1,5 +1,6 @@
 kafka-python==2.0.2
 Mock.GPIO==0.1.8
+python-dotenv==0.21.0
 Pillow==9.3.0
 RPi.GPIO==0.7.1
 spidev==3.5

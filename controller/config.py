@@ -1,11 +1,13 @@
 """Configuration which is accessible throughout the application"""
 
+import os
 import configparser
 from dataclasses import dataclass
-import os
+from dotenv import load_dotenv
 
 cfg = configparser.ConfigParser()
 cfg.read('epd-rpi-controller.cfg')
+load_dotenv()
 
 
 @dataclass
@@ -25,3 +27,4 @@ class Config:
     KAFKA_VIEW_MANAGER_TOPIC = cfg['kafka'].get('view_manager_topic')
 
     KAFKA_BOOTSTRAP_SERVER = 'kafka:29092' if 'EPD_RPI_DOCKERIZED' in os.environ else 'localhost:9092'
+    VITE_API_PORT = int(os.getenv('VITE_API_PORT'))

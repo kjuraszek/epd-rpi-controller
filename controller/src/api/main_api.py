@@ -8,6 +8,7 @@ import tornado.ioloop
 import tornado.web
 import tornado.httpserver
 
+from config import Config
 from .application import TornadoApplication
 
 logging.basicConfig(level=logging.INFO)
@@ -37,10 +38,10 @@ class MainAPI(threading.Thread):
         asyncio.set_event_loop(asyncio.new_event_loop())
 
         self.http_server = tornado.httpserver.HTTPServer(self.app)
-        self.http_server.listen(8888)
+        self.http_server.listen(Config.VITE_API_PORT)
 
         self.ioloop = tornado.ioloop.IOLoop.current()
-        logger.info('Serving swagger at http://localhost:8888/api/doc/')
+        logger.info('Serving swagger at http://localhost:%s/api/doc/', Config.VITE_API_PORT)
         self.ioloop.start()
 
         logger.info('Tornado server has been stopped')
