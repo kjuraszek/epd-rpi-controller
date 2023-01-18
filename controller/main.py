@@ -110,6 +110,7 @@ def main():
     if Config.CLEAR_EPD_ON_EXIT:
         epd.Clear(0xFF)
         logger.info('EPD has been cleaned.')
+    logger.info('Controller has been stopped.')
 
 
 if __name__ == '__main__':

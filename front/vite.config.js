@@ -38,7 +38,7 @@ export default defineConfig(({command, mode}) => {
       ],
     },
     server: {
-      port: env.VITE_UI_PORT,
+      port: parseInt(env.VITE_UI_PORT),
     },
   }
 })

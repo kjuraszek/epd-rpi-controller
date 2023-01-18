@@ -7,8 +7,8 @@ RUN echo "deb http://httpredir.debian.org/debian buster main contrib non-free" >
     && echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections \
     && apt-get update \
     && apt-get install -y ttf-mscorefonts-installer fonts-font-awesome
-RUN cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime || true
-RUN echo "${TIMEZONE}" >  /etc/timezone
+RUN if [ "$TIMEZONE" != "UTC" ] ; then cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime; else true; fi
+RUN if [ "$TIMEZONE" != "UTC" ] ; then echo "${TIMEZONE}" >  /etc/timezone; else true; fi
 WORKDIR /code
 RUN mkdir controller
 COPY controller controller

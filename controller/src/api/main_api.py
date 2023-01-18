@@ -8,8 +8,8 @@ import tornado.ioloop
 import tornado.web
 import tornado.httpserver
 
-from .application import TornadoApplication
 from config import Config
+from .application import TornadoApplication
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
