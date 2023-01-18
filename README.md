@@ -1,12 +1,13 @@
 # EPD Rpi Controller
 
-Waveshare epaper display controller for Raspberry Pi. Project is mostly written in Python 3.9 and is based on Waveshare EPD library, Apache Kafka and Docker containers.
+Waveshare epaper display controller for Raspberry Pi. Project is mostly written in Python 3.9, web interface un Vue.js 3 and is based on Waveshare EPD library, Apache Kafka and Docker containers.
 
 ## About the project
 
 ![EPD RPi Controller](/images/epd-rpi-controller.jpg)
 
-This project simplifies displaying custom informations on Epaper display connected to a Raspberry Pi. Display part is realized by a `View` - configured object with a defined method `show` which performs directly on EPD object. Views are managed by a `View Manager` - they can be switched automatically by some time interval and in a different order. EPD can be simulated using config option - an image with a current view will be generated (instead of displaying it on a physical device).
+This project simplifies displaying custom informations on Epaper display connected to a Raspberry Pi. Display part is realized by a `View` - configured object with a defined method `show` which performs directly on EPD object. Views are managed by a `View Manager` - they can be switched automatically by some time interval and in a different order. EPD can be simulated using config option - an image with a current view will be generated (instead of displaying it on a physical device). Controller exposes an API to trigger view changes via specific `GET` request. Web user interface is also created to make switching views even simplier.
+
 In addition controller also allows to switch between `Views` using physical buttons.
 
 ## Prerequisites
@@ -21,7 +22,9 @@ In addition controller also allows to switch between `Views` using physical butt
 
 ## Running the project
 
-Below are instructions on running this project.
+Below are instructions on running this project. For a long term deployment ("production") it is recommended to run both the Controller and UI in Docker containers. In other hand running them locally will suit better for testing.
+
+> ⚠️**Important!** All below `make` commands are adjusted to run from project's root (and not from `/controller`, `/front` etc.).
 
 ### Prepare environment
 
@@ -57,7 +60,8 @@ Run Kafka stack in Docker containers - Zookeeper, Kafka Server and Kafka REST-ap
 
 ### Running the controller
 
-Controller can be executed directly via Python or in a Docker container. The former is suggested when creating and adjusting views (especially with MockedEPD) whilst the latter - rather on 'production', when everything works (due to eg. building Docker image which is time-consuming).
+Controller can be executed directly via Python or in a Docker container. The former is suggested when creating and adjusting views (especially with MockedEPD) whilst the latter - rather on "production", when everything works (due to eg. building Docker image which is time-consuming).
+Controller will expose an API on selected port from `.env` (by default [localhost:8888/api/doc/](http://localhost:8888/api/doc/) ).
 
 #### Executing via Python
 
@@ -77,11 +81,35 @@ Run the controller with Kafka stack using a command
 
 > When making changes in the code make sure you're using the newest image - remember to run `make build-docker` before running run-docker command.
 
-Alternatively you can run Kafka's web UI - Kafdrop via command:
+### Running the UI \[OPTIONAL\]
+
+A simple user interface is built with Vue.js 3 and Vuetify. For now it displays current view (as image) and allows to switch between views.
+
+Firstly make sure the controller is up and running - either in container or locally.
+UI will run on selected port from `.env` (by default [localhost:3000](http://localhost:3000/) ).
+
+#### Running UI locally
+
+Run the UI using a command:
+
+`make run-ui`
+
+#### UI in a container
+
+Run the UI with Kafka stack using a command
+
+`make run-docker-ui`
+
+> When making changes in the code make sure you're using the newest image - remember to run `make build-docker` before running run-docker command.
+
+Alternatively you can run the controller with web UI and Kafka's web UI - Kafdrop via command:
 
 `make run-docker-all`
 
-which will be available at [localhost:19000](http://localhost:19000/).
+and then:
+
+- Controller and UI will run on selected ports from `.env` (by default [localhost:8888](http://localhost:8888/) and [localhost:3000](http://localhost:3000/) respectively)
+- Kafka UI will be available at [localhost:19000](http://localhost:19000/).
 
 ## Configuration file
 
