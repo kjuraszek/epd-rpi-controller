@@ -24,6 +24,10 @@ export const useEpdStatusStore = defineStore({
           return response.json()
         })
         .then( data => {
+          if ( data.epd_busy ) {
+            this.epdBusy = true
+            return
+          }
           if ( this.timestamp !== data.timestamp ) {
             uiStatusStore.$patch({
               loadingImage: true

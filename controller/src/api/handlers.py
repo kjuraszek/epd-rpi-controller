@@ -4,6 +4,7 @@ import io
 import tornado.web
 from PIL import Image
 
+from config import Config
 from .models import StatusModel, CurrentDisplayModel  # pylint: disable=W0611 # noqa: F401
 
 
@@ -133,6 +134,7 @@ class CurrentDisplayHandler(BaseHandler):
         if not current_image or not isinstance(current_image, Image.Image):
             self.set_status(400, "Returning current display failed.")
             return
+        current_image = current_image.rotate(-Config.VIEW_ANGLE)
         current_image_buffer = io.BytesIO()
         current_image.save(current_image_buffer, format="JPEG")
         current_image_bytes = current_image_buffer.getvalue()

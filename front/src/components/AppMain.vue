@@ -12,7 +12,7 @@
       justify="center"
     >
       <v-col
-        cols="12"
+        cols="10"
         md="8"
         xl="6"
         class="mb-1 text-center"
@@ -24,7 +24,6 @@
         >
           <v-col
             sm="6"
-            md="4"
             xl="3"
             class="mb-1 text-center"
             justify="space-between"

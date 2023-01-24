@@ -63,7 +63,7 @@ run-ui:
 	npm run --prefix $(FRONT) dev
 
 build-docker:
-	docker-compose --profile all build
+	docker compose --profile all build
 
 run-docker:
 	docker compose up -d
