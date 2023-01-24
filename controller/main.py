@@ -39,7 +39,8 @@ def main():
         from src import MockedEPD
         epd = MockedEPD(width=Config.MOCKED_EPD_WIDTH, height=Config.MOCKED_EPD_HEIGHT)
     else:
-        epd = importlib.import_module(f'waveshare_epd_driver.{Config.EPD_MODEL}.EPD')
+        epd_package = importlib.import_module(f'waveshare_epd_driver.{Config.EPD_MODEL}')
+        epd = epd_package.EPD()
 
     if Config.USE_BUTTONS:
         from src import ButtonManager

@@ -57,7 +57,7 @@
       clearInterval(this.interval)
       this.interval = setInterval(() => {
         this.fetchStatus()
-      }, 1000)
+      }, 600)
     }
   },
 }

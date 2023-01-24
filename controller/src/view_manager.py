@@ -2,7 +2,6 @@
 
 import threading
 import logging
-from datetime import datetime
 
 from waiting import wait, TimeoutExpired
 
@@ -72,7 +71,6 @@ class ViewManager(threading.Thread):
                 self.busy.set()
                 logger.debug('\tView is running')
                 self.views[self.current_view].show(first_call=first_call)
-                self._set_timestamp()
                 logger.debug('\tView is idle')
                 self.busy.clear()
                 if self.views[self.current_view].interval == 0:
@@ -94,17 +92,12 @@ class ViewManager(threading.Thread):
     def epd_status(self):
         """Method returns EPD's current status"""
         return {
-            'epd_busy': self.busy.is_set(),
+            'epd_busy': self.views[self.current_view].busy,
             'current_view': self.current_view,
             'total_views': len(self.views),
-            'timestamp': self.timestamp
+            'timestamp': self.views[self.current_view].timestamp
         }
 
     def current_display(self):
         """Method returns EPD's currently displayed image"""
         return self.views[self.current_view].image
-
-    def _set_timestamp(self):
-        """Method sets a timestamp"""
-        current_date = datetime.now()
-        self.timestamp = current_date.strftime("%Y-%m-%d, %H:%M:%S")

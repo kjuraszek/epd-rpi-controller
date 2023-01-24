@@ -12,7 +12,7 @@ Every custom view must be a child of `View` class. Also a method `show` must be 
 In addition a **fallback** can be displayed if a `show` method will fail with an exception. To achieve this:
 
 - `show` method bust be decorated with `@View.fallback` decorator and
-- `fallback_show` method which displays fallback view must be defined
+- `_fallback` method which displays fallback view must be defined
 
 ### Arguments passed to a constructor
 
