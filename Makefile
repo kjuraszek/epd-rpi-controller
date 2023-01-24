@@ -68,6 +68,9 @@ build-docker:
 run-docker:
 	docker compose up -d
 
+run-docker-kafka-full:
+	docker compose --profile kafka-rest --profile kafdrop up -d
+
 run-docker-ctrl:
 	docker compose --profile controller up -d
 

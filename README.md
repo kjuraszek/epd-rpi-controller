@@ -52,11 +52,20 @@ To learn more about custom views and requirements go to [Custom views](/controll
 
 ### Prepare Kafka stack
 
-Run Kafka stack in Docker containers - Zookeeper, Kafka Server and Kafka REST-api
+Run Kafka stack in Docker containers - Zookeeper and Kafka Server
 
 `make run-docker`
 
-> ⚠️**Warning!** Kafka stack (Zookeper, Kafka, Kafka-REST) is crucial component of this project - if one of its the containers is not working or exiting prematurely you should examine the reason for such behaviour before moving forward.
+or
+
+`make run-docker-kafka-full` to run with Kafka REST API and Kafdrop
+
+> ⚠️**Warning!** Kafka stack (Zookeper, Kafka) is crucial component of this project - if one of its the containers is not working or exiting prematurely you should examine the reason for such behaviour before moving forward. `Kafka REST` and `Kafdrop` are optional services.
+
+- Zookeeper will be running at port `2181`
+- Kafka will be running at port `9092` and will listen on port  `29092` for a REST API
+- Kafka REST API will be available at [localhost:8082](http://localhost:8082/)
+- Kafka UI will be available at [localhost:19000](http://localhost:19000/)
 
 ### Running the controller
 
@@ -98,17 +107,22 @@ Run the UI using a command:
 
 Run the UI with Kafka stack using a command
 
-`make run-docker-ui`
+`make run-docker-ctrl-ui` to run UI with a Controller in containers
+
+or
+
+`make run-docker-ui` to run UI in a container (Controller should be started in a new terminal with command `make run-controller`)
 
 > When making changes in the code make sure you're using the newest image - remember to run `make build-docker` before running run-docker command.
 
-Alternatively you can run the controller with web UI and Kafka's web UI - Kafdrop via command:
+Alternatively you can run the controller with web UI, Kafka REST API and Kafka's web UI - Kafdrop via command:
 
 `make run-docker-all`
 
 and then:
 
 - Controller and UI will run on selected ports from `.env` (by default [localhost:8888](http://localhost:8888/) and [localhost:3000](http://localhost:3000/) respectively)
+- Kafka REST API will be available at [localhost:8082](http://localhost:8082/)
 - Kafka UI will be available at [localhost:19000](http://localhost:19000/).
 
 ## Configuration file
