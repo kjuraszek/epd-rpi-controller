@@ -9,6 +9,7 @@ Waveshare epaper display controller for Raspberry Pi. Project is mostly written 
 This project simplifies displaying custom informations on Epaper display connected to a Raspberry Pi. Display part is realized by a `View` - configured object with a defined method `show` which performs directly on EPD object. Views are managed by a `View Manager` - they can be switched automatically by some time interval and in a different order. EPD can be simulated using config option - an image with a current view will be generated (instead of displaying it on a physical device). Controller exposes an API to trigger view changes via specific `GET` request. Web user interface is also created to make switching views even simplier.
 
 In addition controller also allows to switch between `Views` using physical buttons.
+More about Controller: go to [Controller](/controller/README.md).
 
 ## Prerequisites
 
@@ -48,7 +49,7 @@ Alternatively you can use a command:
 to copy contents from `example.py`.
 
 Also custom requirements.txt file is supported.
-To learn more about custom views and requirements go to [Custom views](/controller/custom_views/Readme.md)
+To learn more about custom views and custom_requirements.txt go to [Custom views](/controller/custom_views/README.md)
 
 ### Prepare Kafka stack
 
@@ -70,7 +71,8 @@ or
 ### Running the controller
 
 Controller can be executed directly via Python or in a Docker container. The former is suggested when creating and adjusting views (especially with MockedEPD) whilst the latter - rather on "production", when everything works (due to eg. building Docker image which is time-consuming).
-Controller will expose an API on selected port from `.env` (by default [localhost:8888/api/doc/](http://localhost:8888/api/doc/) ).
+Controller will expose an API on selected port from `.env` (by default [localhost:8888/api/](http://localhost:8888/api/) ).
+Also Swagger documentation will be available, under [localhost:8888/api/doc/](http://localhost:8888/api/doc/) .
 
 #### Executing via Python
 
