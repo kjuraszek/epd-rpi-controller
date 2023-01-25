@@ -71,6 +71,6 @@ VIEWS = [
     DummyView('Dummy view 1', 0),
     DummyView('Dummy view 2', 6, 180),
     DummyView('Dummy view 3', 0),
-    ConditionalDummyView('Dummy view 4', 7),
+    ConditionalDummyView('Conditional view 4', 7),
     BrokenDummyView('Broken dummy view 5', 0)
 ]
