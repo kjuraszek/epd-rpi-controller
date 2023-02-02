@@ -20,6 +20,7 @@ More about Controller: go to [Controller](/controller/README.md).
 - EPD display supported by Waveshare EPD library
 - `[Optional]` Postman or other application/script to send `POST` requests and invoke EPD changes
 - `[Optional]` physical buttons
+- `[Optional]` msttcorefonts and font-awesome fonts installed (used in examplary views - needed only for local development, containers will include those fonts)
 
 ## Running the project
 
@@ -37,11 +38,12 @@ which:
 
 - creates `epd-rpi-controller.cfg` (copies epd-rpi-controller.example.cfg file)
 - creates `.env` (copies .env.example file)
+- creates empty `assets` dir which should store all assets used by Controller (images etc.)
 - prepares Python virtual environment
 - installs Python dependencies
 - creates docker network `epd-rpi-network`
 
-You should adjust config and .env files to your needs - however bear in mind that all defined variables/parameters in examplary files are crucial for controller to work properly. Also to run the Controller you must prepare Views in `controller/custom_views/views.py` (file by default doesn't exist) - take a look on file `example.py`.
+You should adjust config and .env files to your needs - however bear in mind that all defined variables/parameters in examplary .cfg/.env files are crucial for controller to work properly. Also to run the Controller you must prepare Views in `controller/custom_views/views.py` (file by default doesn't exist) - take a look on file `example.py`.
 Alternatively you can use a command:
 
 `make create-views-file`

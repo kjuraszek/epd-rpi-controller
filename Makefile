@@ -45,13 +45,20 @@ endif
 create-docker-network:
 	docker network create epd-rpi-network || true
 
-prepare: install create-config create-env create-docker-network
+prepare: install create-config create-env create-docker-network create-assets-folder
 
 create-views-file:
 ifeq ($(shell test -s controller/custom_views/views.py && echo -n 0), 0)
 	@echo 'Skipping - controller/custom_views/views.py file exists.'
 else
 	cp controller/custom_views/example.py controller/custom_views/views.py
+endif
+
+create-assets-folder:
+ifeq ($(shell test -s assets && echo -n 0), 0)
+	@echo 'Skipping - assets dir exists.'
+else
+	mkdir assets
 endif
 
 run-controller:
@@ -111,5 +118,6 @@ clean:
 	rm -rf $(FRONT)/dist
 	rm -rf epd-rpi-controller.cfg
 	rm -rf mocked_epd.png
+	rm -rf assets
 	
-.PHONY: venv install create-env create-config copy-config prepare run-controller run-ui build-docker run-docker stop-docker clean-docker clean
+.PHONY: venv install create-env create-config create-assets-folder copy-config prepare run-controller run-ui build-docker run-docker stop-docker clean-docker clean
