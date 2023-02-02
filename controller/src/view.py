@@ -15,8 +15,8 @@ class View:
     """View is a basic object which interacts with EPD
 
     To display the data on EPD an instance of View must be created.
-    Also a show method must be implemented to display desired informations
-    on a EPD device. To support fallback view (in case of show method failure)
+    Also a _epd_change method must be implemented to display desired informations
+    on a EPD device. To support fallback view (in case of _epd_change method failure)
     additionally a _fallback method must be implemented.
     """
 
@@ -49,7 +49,8 @@ class View:
         raise NotImplementedError
 
     def _after_epd_change(self):
-        """Method sets view as idle and sets timestamp after EPD change"""
+        """Method rotates the image, sets the timestamp and sets view as idle after EPD change"""
+        self._rotate_image()
         self._set_timestamp()
         self.busy = False
 
