@@ -85,6 +85,7 @@ class AirPollutionView(BaseView):
                 current_width = column_width
 
         self.image = image
+        self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
         
     def _get_data(self):

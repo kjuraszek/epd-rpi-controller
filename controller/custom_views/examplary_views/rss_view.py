@@ -44,6 +44,7 @@ class RSSView(BaseView):
             draw.line((0, current_height, 200, current_height), fill=0, width=2)
 
         self.image = image
+        self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
         logger.info('EPD updated with %s', self.name)
 

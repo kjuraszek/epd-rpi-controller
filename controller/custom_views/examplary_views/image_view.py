@@ -35,6 +35,7 @@ class ImageView(BaseView):
             logger.error('Image and EPD dimensions are different!')
             raise ValueError
         self.image = image
-        self.epd.display(self.epd.getbuffer(image))
+        self._rotate_image()
+        self.epd.display(self.epd.getbuffer(self.image))
         logger.info('EPD updated with %s', self.name)
 

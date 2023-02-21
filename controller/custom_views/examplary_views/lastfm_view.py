@@ -65,6 +65,7 @@ class LastFmView(BaseView):
                 current_height +=10
 
         self.image = image
+        self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
         logger.info('EPD updated with %s', self.name)
 

@@ -29,5 +29,6 @@ class BaseView(View):
         draw.text((self.epd.width//20, self.epd.height//20),
                   f'Unable to show:\n{self.name}\n\nDisplaying fallback', font=font, fill=0)
         self.image = image
+        self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
         logger.info('EPD updated with fallback for %s', self.name)

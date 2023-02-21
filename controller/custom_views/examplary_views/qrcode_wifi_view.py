@@ -68,6 +68,7 @@ class QRCodeWiFiView(BaseView):
         image.paste(img, (margin, margin))
 
         self.image = image
+        self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
         logger.info('EPD updated with %s', self.name)
 

@@ -34,6 +34,7 @@ class ClockView(BaseView):
         draw.text((self.epd.width//20, self.epd.width//4 + self.epd.height//20),
                     f'----------------\n{current_date}', font=font, fill=0)
         self.image = image
+        self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
         logger.info('EPD updated with %s', self.name)
 

@@ -3,6 +3,7 @@ Speedtest view class
 """
 
 import logging
+import time
 
 from PIL import Image, ImageDraw, ImageFont
 import speedtest
@@ -26,6 +27,9 @@ class SpeedTestView(BaseView):
     @view_fallback
     def _epd_change(self, first_call):
         self._epd_in_progress()
+        self.busy = False
+        time.sleep(2)
+        self.busy = True
         self._speed_test()
         image = Image.new('1', (self.epd.width, self.epd.height), 255)
         draw = ImageDraw.Draw(image)
@@ -44,6 +48,7 @@ class SpeedTestView(BaseView):
         draw.text((35, 126), f'{self.ping}', font = font, fill = 0)
         
         self.image = image
+        self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
         logger.info('EPD updated with %s', self.name)
 
@@ -58,6 +63,7 @@ class SpeedTestView(BaseView):
         draw.text((5, 30), f'. . . in progress', font = font, fill = 0)
         
         self.image = image
+        self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
         logger.info('EPD updated with in progress %s', self.name)
 

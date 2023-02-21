@@ -72,6 +72,7 @@ class WeatherView(BaseView):
         draw.text((50, 152), str(self.pressure) + ' hPa', font = font_small, fill = 0)
         
         self.image = image
+        self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
         
     def _get_weather(self):
