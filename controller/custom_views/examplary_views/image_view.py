@@ -30,7 +30,8 @@ class ImageView(BaseView):
         logger.info('%s is running', self.name)
 
         image = Image.open(self.image_path)
-        image_width, image_height = image.size
+        rotated_image = image.rotate(self.view_angle)
+        image_width, image_height = rotated_image.size
         if self.epd.width != image_width or self.epd.height != image_height:
             logger.error('Image and EPD dimensions are different!')
             raise ValueError
