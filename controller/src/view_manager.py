@@ -101,3 +101,15 @@ class ViewManager(threading.Thread):
     def current_display(self):
         """Method returns EPD's currently displayed image"""
         return self.views[self.current_view].image
+
+    def current_view_details(self):
+        """Method returns EPD's currently displayed image"""
+        details = {
+            'current_view': self.current_view,
+            'name': self.views[self.current_view].name,
+            'view_angle': self.views[self.current_view].view_angle,
+            'interval': self.views[self.current_view].interval,
+            'timestamp': self.views[self.current_view].timestamp,
+            'busy': self.views[self.current_view].busy,
+        }
+        return details
