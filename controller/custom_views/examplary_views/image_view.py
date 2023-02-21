@@ -2,10 +2,9 @@
 Image view class
 """
 
-import time
 import logging
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 
 
 from custom_views.examplary_views.base_view import BaseView
