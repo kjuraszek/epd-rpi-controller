@@ -50,7 +50,6 @@ class View:
 
     def _after_epd_change(self):
         """Method rotates the image, sets the timestamp and sets view as idle after EPD change"""
-        self._rotate_image()
         self._set_timestamp()
         self.busy = False
 
