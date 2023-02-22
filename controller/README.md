@@ -18,7 +18,7 @@ Consumer is responsible for consuming messages from Kafka topic and triggering p
 
 ### View Manager
 
-View Manager is responsible for running and switching views in a particular order. It also passes views data to the API. Also check [Custom views](/controller/custom_views/README.md) to learn more about views.
+View Manager is responsible for running and switching views in a particular order. It also passes views data to the API. Also check [Custom views](/controller/custom_views/) to learn more about views.
 
 ### API
 

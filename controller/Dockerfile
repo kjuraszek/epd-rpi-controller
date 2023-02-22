@@ -12,6 +12,8 @@ RUN if [ "$TIMEZONE" != "UTC" ] ; then echo "${TIMEZONE}" >  /etc/timezone; else
 WORKDIR /code
 RUN mkdir controller
 COPY controller controller
+RUN mkdir assets
+COPY assets assets
 COPY Makefile .
 COPY epd-rpi-controller.cfg .
 COPY .env .

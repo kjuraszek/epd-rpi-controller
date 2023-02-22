@@ -1,15 +1,15 @@
 # EPD Rpi Controller
 
-Waveshare epaper display controller for Raspberry Pi. Project is mostly written in Python 3.9, web interface un Vue.js 3 and is based on Waveshare EPD library, Apache Kafka and Docker containers.
+Epaper display controller for Raspberry Pi. Project is mostly written in Python 3.9, web interface un Vue.js 3. It is based on Waveshare EPD library, Apache Kafka and Docker containers.
 
 ## About the project
 
-![EPD RPi Controller](/images/epd-rpi-controller.jpg)
+[![EPD RPi Controller](/images/epd-rpi-controller-yt.jpg)](https://www.youtube.com/watch?v=IhibN0U2Lx4 "Raspberry Pi Epaper Display Controller")
 
-This project simplifies displaying custom informations on Epaper display connected to a Raspberry Pi. Display part is realized by a `View` - configured object with a defined method `show` which performs directly on EPD object. Views are managed by a `View Manager` - they can be switched automatically by some time interval and in a different order. EPD can be simulated using config option - an image with a current view will be generated (instead of displaying it on a physical device). Controller exposes an API to trigger view changes via specific `GET` request. Web user interface is also created to make switching views even simplier.
+This project simplifies displaying custom informations on Epaper display connected to a Raspberry Pi. Display part is realized by a `View` - configured object with a defined method `_epd_change` which performs directly on EPD object. Views are managed by a `View Manager` - they can be switched automatically by some time interval and in a different order. EPD can be simulated using config option - an image with a current view will be generated (instead of displaying it on a physical device). Controller exposes an API to trigger view changes via specific `GET` request. Web user interface is also created to make switching views even simplier.
 
 In addition controller also allows to switch between `Views` using physical buttons.
-More about Controller: go to [Controller](/controller/README.md).
+More about Controller: go to [Controller](/controller/).
 
 ## Prerequisites
 
@@ -18,8 +18,9 @@ More about Controller: go to [Controller](/controller/README.md).
 - Docker and Docker Compose installed
 - GNU Make
 - EPD display supported by Waveshare EPD library
-- `[Optional]` Postman or other application/script to send `POST` requests and invoke EPD changes
+- `[Optional]` Postman or other application/script to send `POST` requests and invoke EPD changes (using Kafka REST)
 - `[Optional]` physical buttons
+- `[Optional]` msttcorefonts and font-awesome fonts installed (used in examplary views - needed only for local development, containers will include those fonts)
 
 ## Running the project
 
@@ -37,11 +38,12 @@ which:
 
 - creates `epd-rpi-controller.cfg` (copies epd-rpi-controller.example.cfg file)
 - creates `.env` (copies .env.example file)
+- creates empty `assets` dir which should store all assets used by Controller (images etc.)
 - prepares Python virtual environment
 - installs Python dependencies
 - creates docker network `epd-rpi-network`
 
-You should adjust config and .env files to your needs - however bear in mind that all defined variables/parameters in examplary files are crucial for controller to work properly. Also to run the Controller you must prepare Views in `controller/custom_views/views.py` (file by default doesn't exist) - take a look on file `example.py`.
+You should adjust config and .env files to your needs - however bear in mind that all defined variables/parameters in examplary .cfg/.env files are crucial for controller to work properly. Also to run the Controller you must prepare Views in `controller/custom_views/views.py` (file by default doesn't exist) - take a look on file `example.py`.
 Alternatively you can use a command:
 
 `make create-views-file`
@@ -49,7 +51,8 @@ Alternatively you can use a command:
 to copy contents from `example.py`.
 
 Also custom requirements.txt file is supported.
-To learn more about custom views and custom_requirements.txt go to [Custom views](/controller/custom_views/README.md)
+To learn more about custom views and custom_requirements.txt go to [Custom views](/controller/custom_views/)
+There are also some predefined View classes - see [Examplary Views](/controller/custom_views/examplary_views/).
 
 ### Prepare Kafka stack
 
