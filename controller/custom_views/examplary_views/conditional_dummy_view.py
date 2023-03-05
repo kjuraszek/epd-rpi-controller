@@ -10,6 +10,7 @@ from custom_views.examplary_views.dummy_view import DummyView
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 # pylint: disable=R0801
 class ConditionalDummyView(DummyView):
     """
@@ -24,4 +25,3 @@ class ConditionalDummyView(DummyView):
         if bool(kwargs['first_call']) or self.switch:
             return True
         return False
-

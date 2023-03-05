@@ -14,6 +14,7 @@ from src.helpers import view_fallback
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 # pylint: disable=R0801
 class ImageView(BaseView):
     """
@@ -38,4 +39,3 @@ class ImageView(BaseView):
         self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
         logger.info('EPD updated with %s', self.name)
-

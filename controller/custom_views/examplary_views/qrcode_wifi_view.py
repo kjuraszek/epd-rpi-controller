@@ -16,53 +16,49 @@ from src.helpers import view_fallback
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 # pylint: disable=R0801
 class QRCodeWiFiView(BaseView):
     """
     View displays QRCode to connect to WiFi network.
-    
+
     It uses environment variables to prepare connection string.
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         load_dotenv()
-        WIFI_SSID = os.getenv('WIFI_SSID')
-        WIFI_PASS = os.getenv('WIFI_PASS')
-        WIFI_TYPE = os.getenv('WIFI_TYPE')
-        WIFI_HIDDEN = os.getenv('WIFI_HIDDEN')
-        if None in (WIFI_SSID, WIFI_PASS, WIFI_TYPE):
+        wifi_ssid = os.getenv('WIFI_SSID')
+        wifi_pass = os.getenv('WIFI_PASS')
+        wifi_type = os.getenv('WIFI_TYPE')
+        wifi_hidden = os.getenv('WIFI_HIDDEN')
+        if None in (wifi_ssid, wifi_pass, wifi_type):
             self.connection_string = None
-        elif WIFI_HIDDEN == 'true':
-            self.connection_string = f'WIFI:S:{WIFI_SSID};T:{WIFI_TYPE};P:{WIFI_PASS};H:{WIFI_HIDDEN};'
+        elif wifi_hidden == 'true':
+            self.connection_string = f'WIFI:S:{wifi_ssid};T:{wifi_type};P:{wifi_pass};H:{wifi_hidden};'
         else:
-            self.connection_string = f'WIFI:S:{WIFI_SSID};T:{WIFI_TYPE};P:{WIFI_PASS};;'
-        
+            self.connection_string = f'WIFI:S:{wifi_ssid};T:{wifi_type};P:{wifi_pass};;'
 
     @view_fallback
     def _epd_change(self, first_call):
-        logger.info('%s is running', self.name)
         '''
         IMPORTANT!
-        
+
         Below calculations (qr_size) are adjusted to 200x200 EPD, adjust them to your needs!
         Also check QR codes documentation.
         '''
+        logger.info('%s is running', self.name)
         if not self.connection_string:
             logger.error('Connection string not created, serving fallback image!')
             raise ValueError
-        qr = qrcode.QRCode(
-            version=6,
-            error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=4,
-            border=4,
-        )
+        qr_code = qrcode.QRCode(version=6, error_correction=qrcode.constants.ERROR_CORRECT_L,
+                                box_size=4, border=4)
         # (2 * border + version * 4 + 17) * box_size
-        qr_size = (2 * 4 + 6 * 4 + 17 ) * 4
+        qr_size = (2 * 4 + 6 * 4 + 17) * 4
         margin = (self.epd.width - qr_size)//2
 
-        qr.add_data(self.connection_string)
-        qr.make(fit=True)
-        img = qr.make_image(fill_color="black", back_color="white")
+        qr_code.add_data(self.connection_string)
+        qr_code.make(fit=True)
+        img = qr_code.make_image(fill_color="black", back_color="white")
 
         image = Image.new('1', (self.epd.width, self.epd.height), 255)
         image.paste(img, (margin, margin))
@@ -71,4 +67,3 @@ class QRCodeWiFiView(BaseView):
         self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
         logger.info('EPD updated with %s', self.name)
-

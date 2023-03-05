@@ -11,6 +11,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+# pylint: disable=W0613
+
 class View:
     """View is a basic object which interacts with EPD
 

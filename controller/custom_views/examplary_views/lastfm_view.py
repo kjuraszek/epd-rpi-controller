@@ -17,6 +17,7 @@ from src.helpers import view_fallback, wrap_titles
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 # pylint: disable=R0801
 class LastFmView(BaseView):
     """
@@ -27,17 +28,17 @@ class LastFmView(BaseView):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         load_dotenv()
-        LASTFM_APIKEY = os.getenv('LASTFM_APIKEY')
-        LASTFM_USER = os.getenv('LASTFM_USER')
+        lastfm_apikey = os.getenv('LASTFM_APIKEY')
+        lastfm_user = os.getenv('LASTFM_USER')
         self.artist = None
         self.album = None
         self.track = None
-        self.icons = (u'\uf001', u'\uf0c0', u'\uf114')
-        if None in (LASTFM_APIKEY, LASTFM_USER):
+        self.icons = ('\uf001', '\uf0c0', '\uf114')
+        if None in (lastfm_apikey, lastfm_user):
             self.url = None
         else:
             self.url = f'http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&'\
-                       f'user={LASTFM_USER}&api_key={LASTFM_APIKEY}&format=json&limit=1'
+                       f'user={lastfm_user}&api_key={lastfm_apikey}&format=json&limit=1'
 
     @view_fallback
     def _epd_change(self, first_call):
@@ -57,12 +58,12 @@ class LastFmView(BaseView):
         for index, title in enumerate(wrapped_titles):
             if current_height + title.get('text_height') > self.epd.height:
                 logger.warning('Not all data will be displayed on the EPD')
-            draw.text((0, current_height), self.icons[index], font = font_awesome, fill = 0)
+            draw.text((0, current_height), self.icons[index], font=font_awesome, fill=0)
             draw.text((left_margin, current_height), str(title.get('wrapped_title')), font=font, fill=0)
             current_height += title.get('text_height') + 4
             if index < 2:
                 draw.line((0, current_height, 200, current_height), fill=0, width=2)
-                current_height +=10
+                current_height += 10
 
         self.image = image
         self._rotate_image()
@@ -85,7 +86,7 @@ class LastFmView(BaseView):
                 track = str(recent_track.get('name'))
                 return (artist, album, track)
             return (None, None, None)
-        except:
+        except Exception:  # pylint: disable=W0703
             logger.error('Unable to collect the data from LastFM API.')
             return (None, None, None)
 
@@ -96,8 +97,7 @@ class LastFmView(BaseView):
         if None in (artist, album, track) or all(
             [self.artist == artist,
              self.album == album,
-             self.track == track]
-            ):
+             self.track == track]):
             return False
         self.artist = artist
         self.album = album

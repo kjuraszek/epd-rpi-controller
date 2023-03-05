@@ -15,6 +15,7 @@ from src.helpers import view_fallback
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 # pylint: disable=R0801
 class ClockView(BaseView):
     """Clock view - it displays current time and date"""
@@ -32,7 +33,7 @@ class ClockView(BaseView):
         font = ImageFont.truetype('/usr/share/fonts/truetype/msttcorefonts/Impact.ttf', self.epd.width//6)
         draw.text((self.epd.width//20, self.epd.height//50), f'{current_time}', font=big_font, fill=0)
         draw.text((self.epd.width//20, self.epd.width//4 + self.epd.height//20),
-                    f'----------------\n{current_date}', font=font, fill=0)
+                  f'----------------\n{current_date}', font=font, fill=0)
         self.image = image
         self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))

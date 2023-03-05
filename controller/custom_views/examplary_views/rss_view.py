@@ -14,6 +14,7 @@ from src.helpers import view_fallback, wrap_titles
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 # pylint: disable=R0801
 class RSSView(BaseView):
     """
@@ -28,7 +29,7 @@ class RSSView(BaseView):
     @view_fallback
     def _epd_change(self, first_call):
         logger.info('%s is running', self.name)
-        
+
         image = Image.new('1', (self.epd.width, self.epd.height), 255)
         draw = ImageDraw.Draw(image)
         font = ImageFont.truetype('/usr/share/fonts/truetype/msttcorefonts/Impact.ttf', 18)
