@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def validate_config():
+def validate_config() -> None:
     """Function validates configuration from .cfg and .env files"""
     try:
         assert None not in [Config.KAFKA_VIEW_MANAGER_TOPIC, Config.PRODUCER_INTERVAL, Config.EPD_MODEL,
@@ -53,7 +53,7 @@ def validate_config():
         raise ValidationConfigException from exception
 
 
-def validate_views():
+def validate_views() -> None:
     """Function validates custom views"""
     try:
         assert len(VIEWS) > 0, 'VIEWS must contain at least one element'

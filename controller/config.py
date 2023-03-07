@@ -27,4 +27,4 @@ class Config:
     KAFKA_VIEW_MANAGER_TOPIC = cfg['kafka'].get('view_manager_topic')
 
     KAFKA_BOOTSTRAP_SERVER = 'kafka:29092' if 'EPD_RPI_DOCKERIZED' in os.environ else 'localhost:9092'
-    VITE_API_PORT = int(os.getenv('VITE_API_PORT'))
+    VITE_API_PORT = int(str(os.getenv('VITE_API_PORT')))

@@ -5,11 +5,12 @@ import tornado.web
 from tornado_swagger.setup import setup_swagger
 
 from .handlers import RootHandler, StatusHandler, NextViewHandler, PreviousViewHandler, CurrentDisplayHandler
+from src.view_manager import ViewManager
 
 
 class TornadoApplication(tornado.web.Application):
     """TornadoApplication is an API for EPD RPI Controller"""
-    def __init__(self, view_manager):
+    def __init__(self, view_manager: ViewManager):
         """TornadoApplication constructor method"""
         self._routes = [
             (r"/", RootHandler),
@@ -27,4 +28,4 @@ class TornadoApplication(tornado.web.Application):
                       title='EPD RPI Controller API',
                       schemes=['http'],
                       )
-        super().__init__(self._routes + self._api_routes)
+        super().__init__(self._routes + self._api_routes)  # type: ignore

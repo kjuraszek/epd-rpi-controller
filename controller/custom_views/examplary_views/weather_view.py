@@ -4,6 +4,7 @@ Weather view class
 
 import logging
 import os
+from typing import Any, Union
 
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw, ImageFont
@@ -25,7 +26,7 @@ class WeatherView(BaseView):
 
     It uses environment variables to prepare connection URL.
     '''
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         load_dotenv()
         weather_key = os.getenv('WEATHER_KEY')
@@ -42,7 +43,7 @@ class WeatherView(BaseView):
         self.wind = None
 
     @view_fallback
-    def _epd_change(self, first_call):
+    def _epd_change(self, first_call: bool) -> None:
         '''
         IMPORTANT!
 
@@ -77,14 +78,14 @@ class WeatherView(BaseView):
         self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
 
-    def _get_weather(self):
+    def _get_weather(self) -> tuple[Any, Any, Any, Any]:
         try:
             session = requests.Session()
             retries = Retry(total=5, backoff_factor=1, status_forcelist=[502, 503, 504])
             session.mount('http://', HTTPAdapter(max_retries=retries))
             session.mount('https://', HTTPAdapter(max_retries=retries))
 
-            data = session.get(self.url).json()
+            data = session.get(self.url).json()  # type: ignore
 
             temperature = round(data.get("main", {}).get("temp"))
             pressure = round(data.get("main", {}).get("pressure"))
@@ -95,7 +96,7 @@ class WeatherView(BaseView):
             logger.error('Unable to collect the data from OpenWeather API.')
             return (None, None, None, None)
 
-    def _conditional(self, *args, **kwargs):
+    def _conditional(self, *args: Any, **kwargs: Any) -> bool:
         temp_temperature, temp_pressure, temp_humidity, temp_wind = self._get_weather()
         if None in (temp_temperature, temp_pressure, temp_humidity, temp_wind):
             return False

@@ -4,6 +4,7 @@ AirPollution view class
 
 import logging
 import os
+from typing import Any, Union
 
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw, ImageFont
@@ -25,7 +26,7 @@ class AirPollutionView(BaseView):
 
     It uses environment variables to prepare connection URL.
     '''
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         load_dotenv()
         weather_key = os.getenv('WEATHER_KEY')
@@ -35,12 +36,12 @@ class AirPollutionView(BaseView):
             self.url = None
         else:
             self.url = f'https://api.openweathermap.org/data/2.5/air_pollution?lat={weather_lat}&lon={weather_lon}&appid={weather_key}'
-        self.air_data = {}
+        self.air_data: dict[str, Union[int, float]] = {}
         self.icons = ('\uf118', '\uf118', '\uf11a', '\uf119', '\uf119')
 
     # pylint: disable=R0914
     @view_fallback
-    def _epd_change(self, first_call):
+    def _epd_change(self, first_call: bool) -> None:
         '''
         IMPORTANT!
 
@@ -48,9 +49,7 @@ class AirPollutionView(BaseView):
         Also - units are metrical.
         '''
         logger.info('%s is running', self.name)
-        if not self.url:
-            logger.error('URL not created, serving fallback image!')
-            raise ValueError
+
         image = Image.new('1', (self.epd.width, self.epd.height), 255)
 
         draw = ImageDraw.Draw(image)
@@ -68,7 +67,7 @@ class AirPollutionView(BaseView):
         _, _, aqi_label_width, aqi_label_height = draw.multiline_textbbox((0, 0), aqi_label, font_large)
 
         draw.text((0, 0), aqi_label, font=font_large, fill=0)
-        draw.text((aqi_label_width + 5, 5), self.icons[aqi - 1], font=font_awesome, fill=0)
+        draw.text((aqi_label_width + 5, 5), self.icons[aqi - 1], font=font_awesome, fill=0)  # type: ignore
 
         margin_top = aqi_label_height + 5
         column_width = self.epd.width//2
@@ -80,8 +79,8 @@ class AirPollutionView(BaseView):
         current_width = 0
 
         for data in wrapped_data:
-            draw.text((current_width, current_height), data.get('wrapped_title'), font=font, fill=0)
-            current_height += data.get('text_height') + 4
+            draw.text((current_width, current_height), data.wrapped_text, font=font, fill=0)
+            current_height += data.text_height + 4
             if current_height > self.epd.height - 30:
                 current_height = margin_top
                 current_width = column_width
@@ -90,7 +89,10 @@ class AirPollutionView(BaseView):
         self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
 
-    def _get_data(self):
+    def _get_data(self) -> dict[str, Any]:
+        if not self.url:
+            logger.error('URL not created, serving fallback image!')
+            raise ValueError
         try:
             session = requests.Session()
             retries = Retry(total=5, backoff_factor=1, status_forcelist=[502, 503, 504])
@@ -115,7 +117,7 @@ class AirPollutionView(BaseView):
             logger.error('Unable to collect the data from OpenWeather API.')
             return {}
 
-    def _conditional(self, *args, **kwargs):
+    def _conditional(self, *args: Any, **kwargs: Any) -> bool:
         air_data = self._get_data()
         if not air_data:
             return False

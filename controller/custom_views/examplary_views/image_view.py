@@ -3,6 +3,7 @@ Image view class
 """
 
 import logging
+from typing import Any
 
 from PIL import Image
 
@@ -21,12 +22,12 @@ class ImageView(BaseView):
     Image view displaying the image from a file.
     """
 
-    def __init__(self, *, image_path, **kwargs):
+    def __init__(self, *, image_path: str, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.image_path = image_path
 
     @view_fallback
-    def _epd_change(self, first_call):
+    def _epd_change(self, first_call: bool) -> None:
         logger.info('%s is running', self.name)
 
         image = Image.open(self.image_path)

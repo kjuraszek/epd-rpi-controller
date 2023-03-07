@@ -4,6 +4,7 @@ Speedtest view class
 
 import logging
 import time
+from typing import Any, Optional
 
 from PIL import Image, ImageDraw, ImageFont
 import speedtest
@@ -19,14 +20,14 @@ logger = logging.getLogger(__name__)
 # pylint: disable=R0801
 class SpeedTestView(BaseView):
     """Speedtest view - it displays download and upload speed and ping"""
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
-        self.download = None
-        self.upload = None
-        self.ping = None
+        self.download: Optional[Any] = None
+        self.upload: Optional[Any] = None
+        self.ping: Optional[int] = None
 
     @view_fallback
-    def _epd_change(self, first_call):
+    def _epd_change(self, first_call: bool) -> None:
         self._epd_in_progress()
         self.busy = False
         time.sleep(2)
@@ -53,7 +54,7 @@ class SpeedTestView(BaseView):
         self.epd.display(self.epd.getbuffer(self.image))
         logger.info('EPD updated with %s', self.name)
 
-    def _epd_in_progress(self):
+    def _epd_in_progress(self) -> None:
         """Method updates epd with information about currently running test"""
         image = Image.new('1', (self.epd.width, self.epd.height), 255)
         draw = ImageDraw.Draw(image)
@@ -67,7 +68,7 @@ class SpeedTestView(BaseView):
         self.epd.display(self.epd.getbuffer(self.image))
         logger.info('EPD updated with in progress %s', self.name)
 
-    def _speed_test(self):
+    def _speed_test(self) -> None:
         """Method runs speed test and sets ping, ul and dl speeds"""
         speedtest_client = speedtest.Speedtest()
         speedtest_client.get_servers()

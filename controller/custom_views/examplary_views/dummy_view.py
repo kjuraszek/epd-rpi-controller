@@ -23,7 +23,7 @@ class DummyView(BaseView):
     """
 
     @view_fallback
-    def _epd_change(self, first_call):
+    def _epd_change(self, first_call: bool) -> None:
         logger.info('%s is running', self.name)
 
         time.sleep(2)

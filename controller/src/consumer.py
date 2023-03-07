@@ -1,30 +1,30 @@
 """Module exports Consumer class"""
 
-import threading
 import logging
 
 from kafka import KafkaConsumer
 
 from config import Config
+from src.view_manager import ViewManager
+from src.helpers import BaseThread
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class Consumer(threading.Thread):
+class Consumer(BaseThread):
     """Consumer is responsible for consuming messages from Kafka topic and triggering certain actions"""
 
-    def __init__(self, view_manager):
+    def __init__(self, view_manager: ViewManager) -> None:
         """Consumer constructor method"""
-        threading.Thread.__init__(self)
-        self.stop_event = threading.Event()
+        BaseThread.__init__(self)
         self.view_manager = view_manager
 
-    def stop(self):
+    def stop(self) -> None:
         """Method stops the Consumer"""
         self.stop_event.set()
 
-    def run(self):
+    def run(self) -> None:
         """Main method which runs on Consumer start
 
         Method is responsible for consuming messages from Kafka topic
@@ -54,10 +54,10 @@ class Consumer(threading.Thread):
 
         consumer.close()
 
-    def prev(self):
+    def prev(self) -> None:
         """Method triggers a prev action from ViewManager"""
         self.view_manager.prev()
 
-    def next(self):
+    def next(self) -> None:
         """Method triggers a next action from ViewManager"""
         self.view_manager.next()

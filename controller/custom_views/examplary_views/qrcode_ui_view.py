@@ -4,6 +4,7 @@ QRCodeUiView class
 
 import logging
 import os
+from typing import Any
 
 from dotenv import load_dotenv
 from PIL import Image
@@ -24,7 +25,7 @@ class QRCodeUiView(BaseView):
 
     It uses environment variables to prepare URL.
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         load_dotenv()
         vite_ui_port = os.getenv('VITE_UI_PORT')
@@ -36,7 +37,7 @@ class QRCodeUiView(BaseView):
             self.url = f'{protocol}://{address}:{vite_ui_port}'
 
     @view_fallback
-    def _epd_change(self, first_call):
+    def _epd_change(self, first_call: bool) -> None:
         '''
         IMPORTANT!
 

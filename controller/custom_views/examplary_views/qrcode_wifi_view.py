@@ -4,6 +4,7 @@ QRCodeWiFiView class
 
 import logging
 import os
+from typing import Any
 
 from dotenv import load_dotenv
 from PIL import Image
@@ -24,7 +25,7 @@ class QRCodeWiFiView(BaseView):
 
     It uses environment variables to prepare connection string.
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         load_dotenv()
         wifi_ssid = os.getenv('WIFI_SSID')
@@ -39,7 +40,7 @@ class QRCodeWiFiView(BaseView):
             self.connection_string = f'WIFI:S:{wifi_ssid};T:{wifi_type};P:{wifi_pass};;'
 
     @view_fallback
-    def _epd_change(self, first_call):
+    def _epd_change(self, first_call: bool) -> None:
         '''
         IMPORTANT!
 
