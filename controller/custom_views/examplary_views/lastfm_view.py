@@ -4,7 +4,7 @@ LastFmView class
 
 import logging
 import os
-from typing import Any, Optional, Union
+from typing import Any, Union
 
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw, ImageFont
@@ -47,7 +47,7 @@ class LastFmView(BaseView):
         if None in (self.artist, self.album, self.track):
             logger.error('Incomplete data about the track, serving fallback image!')
             raise ValueError
-        
+
         left_margin = 24
         image = Image.new('1', (self.epd.width, self.epd.height), 255)
         draw = ImageDraw.Draw(image)

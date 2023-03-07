@@ -4,7 +4,7 @@ Weather view class
 
 import logging
 import os
-from typing import Any, Union
+from typing import Any
 
 from dotenv import load_dotenv
 from PIL import Image, ImageDraw, ImageFont

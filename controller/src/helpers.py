@@ -6,7 +6,7 @@ from dataclasses import dataclass
 import functools
 import logging
 import threading
-from typing import Any, Callable, Optional, TypeVar, Union
+from typing import Any, Callable, Optional, TypeVar
 
 from PIL import Image, ImageDraw, ImageFont
 from mypy_extensions import VarArg, KwArg
@@ -19,10 +19,12 @@ R = TypeVar("R")
 
 @dataclass
 class WrappedTitle:
+    """Data class for wrapped titles"""
     wrapped_text: str
     text_width: int
     text_height: int
-    
+
+
 class BaseThread(threading.Thread):
     """Base thread helper class"""
 

@@ -1,6 +1,5 @@
 """Module exports Producer class"""
 
-import threading
 import time
 import logging
 

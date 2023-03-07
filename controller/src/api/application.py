@@ -4,8 +4,8 @@ import tornado.web
 
 from tornado_swagger.setup import setup_swagger
 
-from .handlers import RootHandler, StatusHandler, NextViewHandler, PreviousViewHandler, CurrentDisplayHandler
 from src.view_manager import ViewManager
+from .handlers import RootHandler, StatusHandler, NextViewHandler, PreviousViewHandler, CurrentDisplayHandler
 
 
 class TornadoApplication(tornado.web.Application):

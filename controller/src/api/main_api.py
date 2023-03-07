@@ -1,9 +1,7 @@
 """Module exports MainAPI class"""
 
-import threading
 import logging
 import asyncio
-from typing import Optional
 
 import tornado.ioloop
 import tornado.web

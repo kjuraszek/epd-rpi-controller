@@ -4,8 +4,8 @@ import io
 import tornado.web
 from PIL import Image
 
-from .models import StatusModel, CurrentDisplayModel  # pylint: disable=W0611 # noqa: F401
 from src.view_manager import ViewManager
+from .models import StatusModel, CurrentDisplayModel  # pylint: disable=W0611 # noqa: F401
 
 
 class BaseHandler(tornado.web.RequestHandler):  # pylint: disable=W0223

@@ -24,7 +24,7 @@ class View:
     additionally a _fallback method must be implemented.
     """
 
-    def __init__(self, name: str, interval: int, view_angle: int=Config.VIEW_ANGLE) -> None:
+    def __init__(self, name: str, interval: int, view_angle: int = Config.VIEW_ANGLE) -> None:
         """View constructor method"""
         self.epd: Any = None
         self.name = name
