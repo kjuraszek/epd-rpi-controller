@@ -1,2 +1,5 @@
 pylint==2.15.10
 flake8==6.0.0
+mypy==1.0.1
+types-Pillow
+types-requests
