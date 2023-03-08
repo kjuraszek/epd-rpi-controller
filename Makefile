@@ -96,7 +96,10 @@ stop-docker:
 clean-docker:
 	docker compose down --rmi=all --volume
 
-lint-controller: install-dev lint-pylint lint-flake8
+lint-controller: install-dev lint-pylint lint-flake8 typing-mypy
+
+typing-mypy:
+	$(VENV_ACTIVATE_CONTROLLER) && $(VENV)/bin/mypy $(CONTROLLER) --config-file $(CONTROLLER)/mypy.ini --strict
 
 lint-pylint:
 	$(VENV_ACTIVATE_CONTROLLER) && $(VENV)/bin/pylint --rcfile=$(CONTROLLER)/.pylintrc $(CONTROLLER)/

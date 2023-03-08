@@ -3,6 +3,7 @@ Text view class
 """
 
 import logging
+from typing import Any
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -13,20 +14,21 @@ from src.helpers import view_fallback, wrap_text
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 # pylint: disable=R0801
 class TextView(BaseView):
     """
     A simple view displaying static text adjusted to EPD size
     """
 
-    def __init__(self, *, text, **kwargs):
+    def __init__(self, *, text: str, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.text = text
 
     @view_fallback
-    def _epd_change(self, first_call):
+    def _epd_change(self, first_call: bool) -> None:
         logger.info('%s is running', self.name)
-        
+
         image = Image.new('1', (self.epd.width, self.epd.height), 255)
         draw = ImageDraw.Draw(image)
         font = ImageFont.truetype('/usr/share/fonts/truetype/msttcorefonts/Georgia_Italic.ttf', 20)

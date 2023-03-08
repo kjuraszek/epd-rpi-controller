@@ -2,33 +2,36 @@
 
 import threading
 import logging
+from typing import Any, Optional, Sequence
 
 from waiting import wait, TimeoutExpired
+from PIL import Image
 
 from config import Config
+from src.helpers import BaseThread
+from src.view import View
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class ViewManager(threading.Thread):
+class ViewManager(BaseThread):
     """View manager controls views
 
     ViewManager is reponsible for switching views. Also it returns EPD's current status.
     """
 
-    def __init__(self, views, epd):
+    def __init__(self, views: Sequence[View], epd: Any) -> None:
         """ViewManager constructor method"""
-        threading.Thread.__init__(self)
-        self.stop_event = threading.Event()
+        BaseThread.__init__(self)
         self.busy = threading.Event()
         self.current_view = Config.STARTING_VIEW
         self.views = views
-        self.action = None
+        self.action: Optional[str] = None
         self.epd = epd
-        self.timestamp = None
+        self.timestamp: Optional[str] = None
 
-    def next(self):
+    def next(self) -> None:
         """Method triggers next view if manager isn't busy"""
         if not self.busy.is_set():
             self.busy.set()
@@ -36,7 +39,7 @@ class ViewManager(threading.Thread):
         else:
             logger.debug('View manager is busy')
 
-    def prev(self):
+    def prev(self) -> None:
         """Method triggers previous view if manager isn't busy"""
         if not self.busy.is_set():
             self.busy.set()
@@ -44,11 +47,11 @@ class ViewManager(threading.Thread):
         else:
             logger.debug('View manager is busy')
 
-    def stop(self):
+    def stop(self) -> None:
         """Method stops the ViewManager"""
         self.stop_event.set()
 
-    def run(self):
+    def run(self) -> None:
         """Main method which runs on manager start
 
         Method switches between views and stops the controller on certain actions.
@@ -89,7 +92,7 @@ class ViewManager(threading.Thread):
                         if self.busy.is_set():
                             continue
 
-    def epd_status(self):
+    def epd_status(self) -> dict[str, Any]:
         """Method returns EPD's current status"""
         return {
             'epd_busy': self.views[self.current_view].busy,
@@ -98,11 +101,11 @@ class ViewManager(threading.Thread):
             'timestamp': self.views[self.current_view].timestamp
         }
 
-    def current_display(self):
+    def current_display(self) -> Optional[Image.Image]:
         """Method returns EPD's currently displayed image"""
         return self.views[self.current_view].image
 
-    def current_view_details(self):
+    def current_view_details(self) -> dict[str, Any]:
         """Method returns EPD's currently displayed image"""
         details = {
             'current_view': self.current_view,

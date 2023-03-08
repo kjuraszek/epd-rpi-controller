@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 # pylint: disable=C0415
-def main():
+def main() -> None:
     """EPD Rpi Controller's main function
 
     This function starts the controller. It initiates: Kafka-related classes,

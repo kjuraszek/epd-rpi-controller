@@ -4,12 +4,13 @@ import io
 import tornado.web
 from PIL import Image
 
+from src.view_manager import ViewManager
 from .models import StatusModel, CurrentDisplayModel  # pylint: disable=W0611 # noqa: F401
 
 
 class BaseHandler(tornado.web.RequestHandler):  # pylint: disable=W0223
     """Basic request handler upon which sets others should be based"""
-    def set_default_headers(self):
+    def set_default_headers(self) -> None:
         """Method sets necessary headers"""
         self.set_header("Access-Control-Allow-Origin", "*")
         self.set_header("Access-Control-Allow-Headers", "x-requested-with")
@@ -19,7 +20,7 @@ class BaseHandler(tornado.web.RequestHandler):  # pylint: disable=W0223
 
 class RootHandler(BaseHandler):  # pylint: disable=W0223
     """Request handler for server's root folder"""
-    def get(self):
+    def get(self) -> None:
         """Method handles GET request"""
         self.write("EPD RPI Controller's API root")
 
@@ -27,11 +28,11 @@ class RootHandler(BaseHandler):  # pylint: disable=W0223
 # pylint: disable=W0223,W0201
 class StatusHandler(BaseHandler):
     """Request handler for status endpoint"""
-    def initialize(self, view_manager):
+    def initialize(self, view_manager: ViewManager) -> None:
         """Method initialises necessary properties"""
         self.view_manager = view_manager
 
-    def get(self):
+    def get(self) -> None:
         """
         ---
         tags:
@@ -52,11 +53,11 @@ class StatusHandler(BaseHandler):
 # pylint: disable=W0223,W0201
 class NextViewHandler(BaseHandler):
     """Request handler for endpoint which triggers the next view"""
-    def initialize(self, view_manager):
+    def initialize(self, view_manager: ViewManager) -> None:
         """Method initialises necessary properties"""
         self.view_manager = view_manager
 
-    def get(self):
+    def get(self) -> None:
         """
         ---
         tags:
@@ -81,11 +82,11 @@ class NextViewHandler(BaseHandler):
 # pylint: disable=W0223,W0201
 class PreviousViewHandler(BaseHandler):
     """Request handler for endpoint which triggers the previous view"""
-    def initialize(self, view_manager):
+    def initialize(self, view_manager: ViewManager) -> None:
         """Method initialises necessary properties"""
         self.view_manager = view_manager
 
-    def get(self):
+    def get(self) -> None:
         """
         ---
         tags:
@@ -109,11 +110,11 @@ class PreviousViewHandler(BaseHandler):
 # pylint: disable=W0223,W0201
 class CurrentDisplayHandler(BaseHandler):
     """Request handler for endpoint which returns current view as image"""
-    def initialize(self, view_manager):
+    def initialize(self, view_manager: ViewManager) -> None:
         """Method initialises necessary properties"""
         self.view_manager = view_manager
 
-    def get(self):
+    def get(self) -> None:
         """
         ---
         tags:

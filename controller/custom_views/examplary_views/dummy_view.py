@@ -15,6 +15,7 @@ from src.helpers import view_fallback
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 # pylint: disable=R0801
 class DummyView(BaseView):
     """
@@ -22,7 +23,7 @@ class DummyView(BaseView):
     """
 
     @view_fallback
-    def _epd_change(self, first_call):
+    def _epd_change(self, first_call: bool) -> None:
         logger.info('%s is running', self.name)
 
         time.sleep(2)
@@ -34,4 +35,3 @@ class DummyView(BaseView):
         self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
         logger.info('EPD updated with %s', self.name)
-

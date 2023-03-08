@@ -3,6 +3,7 @@ Base View class
 """
 
 import logging
+from typing import Any
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -12,17 +13,17 @@ from src import View
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# pylint: disable=R0801
+# pylint: disable=R0801,W0223
 
 
 class BaseView(View):
     """
     Base View class - a base for View classes
-    
+
     It has only defined _fallback method so _epd_change still must be defined in child classes.
     """
 
-    def _fallback(self, *args, **kwargs):
+    def _fallback(self, *args: Any, **kwargs: Any) -> None:
         image = Image.new('1', (self.epd.width, self.epd.height), 255)
         draw = ImageDraw.Draw(image)
         font = ImageFont.truetype('/usr/share/fonts/truetype/msttcorefonts/Impact.ttf', self.epd.width//10)

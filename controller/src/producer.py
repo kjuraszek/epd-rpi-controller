@@ -1,6 +1,5 @@
 """Module exports Producer class"""
 
-import threading
 import time
 import logging
 
@@ -9,26 +8,26 @@ from kafka import KafkaProducer
 from waiting import wait, TimeoutExpired
 
 from config import Config
+from src.helpers import BaseThread
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class Producer(threading.Thread):
+class Producer(BaseThread):
     """Producer is responsible for switching view within time interval."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Producer constructor method"""
-        threading.Thread.__init__(self)
-        self.stop_event = threading.Event()
+        BaseThread.__init__(self)
         self.interval = Config.PRODUCER_INTERVAL
         self.order = 'next' if Config.PRODUCER_ASC_ORDER else 'prev'
 
-    def stop(self):
+    def stop(self) -> None:
         """Method stops the Producer"""
         self.stop_event.set()
 
-    def run(self):
+    def run(self) -> None:
         """Main method which runs on Producer start
 
         Method triggers view change (previous or next) within time interval

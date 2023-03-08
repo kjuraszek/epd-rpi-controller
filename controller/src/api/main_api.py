@@ -1,6 +1,5 @@
 """Module exports MainAPI class"""
 
-import threading
 import logging
 import asyncio
 
@@ -9,26 +8,27 @@ import tornado.web
 import tornado.httpserver
 
 from config import Config
+from src.helpers import BaseThread
+from src.view_manager import ViewManager
 from .application import TornadoApplication
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class MainAPI(threading.Thread):
+class MainAPI(BaseThread):
     """API used in UI accessed in browser"""
 
-    def __init__(self, view_manager):
+    def __init__(self, view_manager: ViewManager) -> None:
         """MainAPI constructor method"""
-        threading.Thread.__init__(self, daemon=True)
+        BaseThread.__init__(self, daemon=True)
         self.view_manager = view_manager
-        self.stop_event = threading.Event()
-        self.http_server = None
-        self.ioloop = None
+        self.http_server: tornado.httpserver.HTTPServer
+        self.ioloop: tornado.ioloop.IOLoop
 
         self.app = TornadoApplication(self.view_manager)
 
-    def run(self):
+    def run(self) -> None:
         """Main method which runs on Consumer start
 
         Method starts the tornado server and listens on a certain port.
@@ -46,7 +46,7 @@ class MainAPI(threading.Thread):
 
         logger.info('Tornado server has been stopped')
 
-    def stop(self):
+    def stop(self) -> None:
         """Method stops the MainAPI"""
         logger.info('Stopping tornado server')
         self.http_server.stop()
