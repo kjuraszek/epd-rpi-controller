@@ -112,7 +112,7 @@ typing-mypy:
 
 test-controller:
 	export EPD_RPI_CONFIG_FILE=$(CONTROLLER)/tests/epd-rpi-controller.test.cfg &&\
-	$(VENV_ACTIVATE_CONTROLLER) && pytest -v --cov=$(CONTROLLER)/src --cov=$(CONTROLLER)/custom_views $(CONTROLLER)/tests/
+	$(VENV_ACTIVATE_CONTROLLER) && pytest --cov-report html:$(CONTROLLER)/cov_html --cov-report term -v --cov=$(CONTROLLER)/src --cov=$(CONTROLLER)/custom_views $(CONTROLLER)/tests/
 
 check-controller: install-dev lint-controller typing-mypy test-controller
 
@@ -127,6 +127,7 @@ clean:
 	rm -rf $(CONTROLLER)/api/__pycache__
 	rm -rf $(CONTROLLER)/custom_views/views.py
 	rm -rf $(CONTROLLER)/custom_views/custom_requirements.txt
+	rm -rf $(CONTROLLER)/cov_html
 	rm -rf $(FRONT)/node_modules
 	rm -rf $(FRONT)/dist
 	rm -rf epd-rpi-controller.cfg
