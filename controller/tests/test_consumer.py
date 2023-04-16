@@ -31,7 +31,7 @@ class TestConsumer:
         consumer = Consumer(mocked_view_manager)
         
         consumer.start()
-        time.sleep(0.5)
+        time.sleep(0.1)
         consumer.stop()
         consumer.join()
 
@@ -55,7 +55,7 @@ class TestConsumer:
         consumer.next = Mock()
 
         consumer.start()
-        time.sleep(0.5)
+        time.sleep(0.1)
         consumer.stop()
         consumer.join()
 
@@ -81,7 +81,7 @@ class TestConsumer:
         consumer.next = Mock()
 
         consumer.start()
-        time.sleep(0.5)
+        time.sleep(0.1)
         consumer.stop()
         consumer.join()
 
@@ -107,7 +107,7 @@ class TestConsumer:
         consumer.next = Mock()
 
         consumer.start()
-        time.sleep(0.5)
+        time.sleep(0.1)
         consumer.join()
 
         assert mocked_kafka_consumer.subscribe.called
@@ -132,7 +132,7 @@ class TestConsumer:
         consumer.next = Mock()
 
         consumer.start()
-        time.sleep(0.5)
+        time.sleep(0.1)
         consumer.stop()
         consumer.join()
 
