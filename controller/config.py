@@ -5,9 +5,10 @@ import configparser
 from dataclasses import dataclass
 from dotenv import load_dotenv
 
-cfg = configparser.ConfigParser()
-cfg.read('epd-rpi-controller.cfg')
 load_dotenv()
+config_file = os.getenv('EPD_RPI_CONFIG_FILE', 'epd-rpi-controller.cfg')
+cfg = configparser.ConfigParser()
+cfg.read(config_file)
 
 
 @dataclass

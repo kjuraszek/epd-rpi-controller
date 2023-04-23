@@ -41,7 +41,5 @@ class Producer(BaseThread):
                 wait(lambda: self.stop_event.is_set(), timeout_seconds=self.interval)  # pylint: disable=W0108
             except TimeoutExpired:
                 pass
-            else:
-                break
 
         producer.close()

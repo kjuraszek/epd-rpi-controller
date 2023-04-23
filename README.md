@@ -158,6 +158,7 @@ Variables defined in .env file (file by default doesn't exist):
 | TIMEZONE | Timezone used in Controller container | valid timezone eg. `Europe/Paris`, `UTC` etc. |
 | VITE_API_PORT | Port on which Controller's API will be running (added `VITE_` prefix to allow import in Vue.js) | positive integer |
 | VITE_UI_PORT | Port on which Controller's UI will be running | positive integer |
+| EPD_RPI_CONFIG_FILE | File with configuration, optional variable - by default `epd-rpi-controller.cfg` | string |
 
 ## Using mocked EPD
 

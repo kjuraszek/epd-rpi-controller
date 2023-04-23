@@ -96,11 +96,6 @@ stop-docker:
 clean-docker:
 	docker compose down --rmi=all --volume
 
-lint-controller: install-dev lint-pylint lint-flake8 typing-mypy
-
-typing-mypy:
-	$(VENV_ACTIVATE_CONTROLLER) && $(VENV)/bin/mypy $(CONTROLLER) --config-file $(CONTROLLER)/mypy.ini --strict
-
 lint-pylint:
 	$(VENV_ACTIVATE_CONTROLLER) && $(VENV)/bin/pylint --rcfile=$(CONTROLLER)/.pylintrc $(CONTROLLER)/
 
@@ -110,6 +105,20 @@ lint-flake8:
 lint-ui:
 	npm run --prefix $(FRONT) lint
 
+lint-controller: lint-pylint lint-flake8
+
+typing-mypy:
+	$(VENV_ACTIVATE_CONTROLLER) && $(VENV)/bin/mypy $(CONTROLLER) --config-file $(CONTROLLER)/mypy.ini --strict
+
+test-controller:
+	$(VENV_ACTIVATE_CONTROLLER) && pytest $(CONTROLLER)/tests/
+
+check-controller: install-dev lint-controller typing-mypy test-controller
+
+check-ui: lint-ui
+
+check: check-controller check-ui
+
 clean:
 	rm -rf __pycache__
 	rm -rf $(VENV)
@@ -117,6 +126,7 @@ clean:
 	rm -rf $(CONTROLLER)/api/__pycache__
 	rm -rf $(CONTROLLER)/custom_views/views.py
 	rm -rf $(CONTROLLER)/custom_views/custom_requirements.txt
+	rm -rf $(CONTROLLER)/cov_html
 	rm -rf $(FRONT)/node_modules
 	rm -rf $(FRONT)/dist
 	rm -rf epd-rpi-controller.cfg
