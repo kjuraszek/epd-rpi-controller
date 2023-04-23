@@ -111,8 +111,7 @@ typing-mypy:
 	$(VENV_ACTIVATE_CONTROLLER) && $(VENV)/bin/mypy $(CONTROLLER) --config-file $(CONTROLLER)/mypy.ini --strict
 
 test-controller:
-	export EPD_RPI_CONFIG_FILE=$(CONTROLLER)/tests/epd-rpi-controller.test.cfg &&\
-	$(VENV_ACTIVATE_CONTROLLER) && pytest --cov-report html:$(CONTROLLER)/cov_html --cov-report term -v --cov=$(CONTROLLER)/src --cov=$(CONTROLLER)/custom_views $(CONTROLLER)/tests/
+	$(VENV_ACTIVATE_CONTROLLER) && pytest $(CONTROLLER)/tests/
 
 check-controller: install-dev lint-controller typing-mypy test-controller
 
