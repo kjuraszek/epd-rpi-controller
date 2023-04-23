@@ -77,7 +77,7 @@ class TestButtonManager:
         button_manager.producer = mocked_kafka_producer
         button_manager._left_button_callback()
 
-        mocked_kafka_producer.send.assert_called_once_with('epd_rpi_view_manager', bytes('prev', encoding='utf-8'))
+        mocked_kafka_producer.send.assert_called_once_with('epd_rpi_view_manager_tests', bytes('prev', encoding='utf-8'))
 
     def test_right_button_callback(self, mocker):
         mocked_kafka_producer = Mock()
@@ -94,4 +94,4 @@ class TestButtonManager:
         button_manager.producer = mocked_kafka_producer
         button_manager._right_button_callback()
 
-        mocked_kafka_producer.send.assert_called_once_with('epd_rpi_view_manager', bytes('next', encoding='utf-8'))
+        mocked_kafka_producer.send.assert_called_once_with('epd_rpi_view_manager_tests', bytes('next', encoding='utf-8'))

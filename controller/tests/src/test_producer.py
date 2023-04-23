@@ -43,7 +43,7 @@ class TestProducer:
         assert mock.call_count == 1
         assert mocked_kafka_producer.send.call_count == 2
         assert mocked_kafka_producer.close.call_count == 1
-        mocked_kafka_producer.send.assert_called_with('epd_rpi_view_manager', b'next')
+        mocked_kafka_producer.send.assert_called_with('epd_rpi_view_manager_tests', b'next')
 
     def test_run_desc_order(self, mocker):
         mocker.patch("config.Config.PRODUCER_INTERVAL", 1)
@@ -65,7 +65,7 @@ class TestProducer:
         assert mock.call_count == 1
         assert mocked_kafka_producer.send.call_count == 2
         assert mocked_kafka_producer.close.call_count == 1
-        mocked_kafka_producer.send.assert_called_with('epd_rpi_view_manager', b'prev')
+        mocked_kafka_producer.send.assert_called_with('epd_rpi_view_manager_tests', b'prev')
 
     def test_run_send_called_once(self, mocker):
         mocker.patch("config.Config.PRODUCER_INTERVAL", 2)
@@ -84,7 +84,7 @@ class TestProducer:
         producer.join()
 
         assert mock.call_count == 1
-        mocked_kafka_producer.send.assert_called_once_with('epd_rpi_view_manager', b'next') 
+        mocked_kafka_producer.send.assert_called_once_with('epd_rpi_view_manager_tests', b'next') 
         assert mocked_kafka_producer.close.call_count == 1
             
     def test_run_stopped_before_sending(self, mocker):
