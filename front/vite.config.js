@@ -49,6 +49,7 @@ export default defineConfig(({command, mode}) => {
       environment: "jsdom",
       globals: true,
       reporter: ["verbose"],
+      mockReset: true,
       coverage: {
         provider: "c8",
         all: true,
