@@ -106,6 +106,13 @@ Parameters passed to a constructor:
 
 - `rss_url` - URL of the RSS
 
+## SystemInfoView
+
+This view is displaying: CPU temperature, disk usage, CPU utilization, memory usage and swapped memory usage.
+View uses additional packages:
+
+- `psutil`
+
 ## SpeedTestView
 
 A View triggers SpeedTest and displays the result. It may take some time.
