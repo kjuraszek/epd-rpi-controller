@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster
+FROM python:3.10-slim-buster
 ARG TIMEZONE
 ARG VITE_API_PORT
 RUN apt-get update && apt-get upgrade -y
@@ -23,4 +23,4 @@ EXPOSE $VITE_API_PORT
 
 ENV EPD_RPI_DOCKERIZED true
 
-CMD ["venv/bin/python3.9", "controller/main.py"]
+CMD ["venv/bin/python3.10", "controller/main.py"]

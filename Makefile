@@ -4,7 +4,7 @@ VENV = venv
 CONTROLLER = controller
 FRONT = front
 
-PYTHON_VERSION = 3.9
+PYTHON_VERSION = 3.10
 SYSTEM_PYTHON = $(shell which python$(PYTHON_VERSION))
 
 VENV_ACTIVATE_CONTROLLER = . $(VENV)/bin/activate
