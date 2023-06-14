@@ -59,8 +59,10 @@ class WeatherForecastDailyView(BaseView):
         plot = self._draw_plot()
 
         image = Image.open(plot)
-        image = image.resize((self.epd.width, self.epd.height)).convert('1')
-        
+        if image.size != (self.epd.width, self.epd.height):
+            image = image.resize((self.epd.width, self.epd.height))
+        image = image.convert('1')
+
         self.image = image
         self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
@@ -125,7 +127,7 @@ class WeatherForecastDailyView(BaseView):
 
         plt.bar(days, heights, bottom=min(values) - margin, color='black')
         plt.ylim(bottom=min(values) - margin, top=max(values) + margin)
-        plt.subplots_adjust(top=0.95, right=0.95, bottom=0.25, left=0.25)
+        plt.subplots_adjust(top=0.95,right=0.99,bottom=0.25,left=0.29)
 
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
