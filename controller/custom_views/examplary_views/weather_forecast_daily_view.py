@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 # pylint: disable=R0801
-class WeatherForecastDilyView(BaseView):
+class WeatherForecastDailyView(BaseView):
     '''
     Weather forecast view is displaying daily temperature forecast based on the data from OpenWeather API.
 
