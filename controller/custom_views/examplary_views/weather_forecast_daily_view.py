@@ -12,8 +12,7 @@ from dotenv import load_dotenv
 from PIL import Image
 import requests
 from requests.adapters import HTTPAdapter, Retry
-import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
+from matplotlib import ticker, pyplot
 
 from custom_views.examplary_views.base_view import BaseView
 from src.helpers import view_fallback
@@ -85,14 +84,14 @@ class WeatherForecastDailyView(BaseView):
     def _process_data(self, data):
         day_to_temps = {}
         processed_data = {}
-        for el in data.get('list', []):
+        for element in data.get('list', []):
 
-            temperature = int(el.get('main').get('temp'))
-            timestamp = datetime.datetime.fromtimestamp(el.get('dt'))
+            temperature = int(element.get('main').get('temp'))
+            timestamp = datetime.datetime.fromtimestamp(element.get('dt'))
             day = f'{timestamp.day}.'
-            
-            if day not in day_to_temps.keys():
-                if len(day_to_temps.keys()) == self.max_days:
+
+            if day not in day_to_temps:
+                if len(day_to_temps) == self.max_days:
                     break
                 day_to_temps[day] = []
             day_to_temps[day].append(temperature)
@@ -122,18 +121,18 @@ class WeatherForecastDailyView(BaseView):
         plot_adjustment = (0.29, 0.25, 0.99, 0.95) if self.show_labels else (0.19, 0.15, 0.99, 0.95)
 
         heights = [margin + value - min(values) for value in values]
-        fig = plt.figure(figsize=figsize).gca()
+        fig = pyplot.figure(figsize=figsize).gca()
         fig.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
         if self.show_labels:
             fig.set_ylabel(y_label)
             fig.set_xlabel(x_label)
 
-        plt.bar(days, heights, bottom=min(values) - margin, color='black')
-        plt.ylim(bottom=min(values) - margin, top=max(values) + margin)
-        plt.subplots_adjust(*plot_adjustment)
+        pyplot.bar(days, heights, bottom=min(values) - margin, color='black')
+        pyplot.ylim(bottom=min(values) - margin, top=max(values) + margin)
+        pyplot.subplots_adjust(*plot_adjustment)
 
         buffer = io.BytesIO()
-        plt.savefig(buffer, format='png')
+        pyplot.savefig(buffer, format='png')
         return buffer
 
     def _conditional(self, *args: Any, **kwargs: Any) -> bool:

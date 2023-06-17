@@ -66,7 +66,7 @@ class SystemInfoView(BaseView):
         self.epd.display(self.epd.getbuffer(self.image))
 
     def _get_system_info(self):
-        try:           
+        try:
             Temperature = namedtuple('Temperature', 'current')
 
             temperature = psutil.sensors_temperatures().get('cpu_thermal', [Temperature(current=0.0)])[0].current
@@ -85,7 +85,8 @@ class SystemInfoView(BaseView):
         if None in (temp_temperature, temp_disk_usage, temp_cpu_percent, temp_virtual_memory, temp_swap_memory):
             return False
         if bool(kwargs['first_call']) or (
-                (temp_temperature, temp_disk_usage, temp_cpu_percent, temp_virtual_memory, temp_swap_memory) != (self.temperature, self.disk_usage, self.cpu_percent, self.virtual_memory, self.swap_memory)):
+                (temp_temperature, temp_disk_usage, temp_cpu_percent, temp_virtual_memory, temp_swap_memory) !=
+                (self.temperature, self.disk_usage, self.cpu_percent, self.virtual_memory, self.swap_memory)):
             self.temperature = temp_temperature
             self.disk_usage = temp_disk_usage
             self.cpu_percent = temp_cpu_percent
