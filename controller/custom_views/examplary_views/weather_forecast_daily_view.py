@@ -30,7 +30,7 @@ class WeatherForecastDailyView(BaseView):
 
     It uses environment variables to prepare connection URL.
     '''
-    def __init__(self, *, max_days: int = 6, mode: str = 'avg', **kwargs: Any) -> None:
+    def __init__(self, *, max_days: int = 6, mode: str = 'avg', show_labels: bool = True, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         load_dotenv()
 
@@ -45,6 +45,7 @@ class WeatherForecastDailyView(BaseView):
         self.forecast = None
         self.max_days = max_days
         self.mode = mode
+        self.show_labels = show_labels
 
     @view_fallback
     def _epd_change(self, first_call: bool) -> None:
@@ -108,7 +109,7 @@ class WeatherForecastDailyView(BaseView):
         '''
         IMPORTANT!
 
-        Below positions, margins etc. are chosen arbitrary and they are adjusted to 200x200 EPD, adjust them to your needs!
+        Below positions, adjustments, margins etc. are chosen arbitrary and they are adjusted to 200x200 EPD, adjust them to your needs!
         Also - units are metrical.
         '''
 
@@ -118,16 +119,18 @@ class WeatherForecastDailyView(BaseView):
         figsize = (2, 2)
         x_label = 'time [days]'
         y_label = 'temperature [°C]'
+        plot_adjustment = (0.29, 0.25, 0.99, 0.95) if self.show_labels else (0.19, 0.15, 0.99, 0.95)
 
         heights = [margin + value - min(values) for value in values]
         fig = plt.figure(figsize=figsize).gca()
         fig.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
-        fig.set_ylabel(y_label)
-        fig.set_xlabel(x_label)
+        if self.show_labels:
+            fig.set_ylabel(y_label)
+            fig.set_xlabel(x_label)
 
         plt.bar(days, heights, bottom=min(values) - margin, color='black')
         plt.ylim(bottom=min(values) - margin, top=max(values) + margin)
-        plt.subplots_adjust(top=0.95,right=0.99,bottom=0.25,left=0.29)
+        plt.subplots_adjust(*plot_adjustment)
 
         buffer = io.BytesIO()
         plt.savefig(buffer, format='png')
