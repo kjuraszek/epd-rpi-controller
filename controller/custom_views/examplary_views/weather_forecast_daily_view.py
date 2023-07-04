@@ -6,7 +6,7 @@ import io
 import datetime
 import logging
 import os
-from typing import Any
+from typing import Any, Optional
 
 from dotenv import load_dotenv
 from PIL import Image
@@ -41,7 +41,7 @@ class WeatherForecastDailyView(BaseView):
         else:
             self.url = f'https://api.openweathermap.org/data/2.5/forecast?lat={weather_lat}&lon={weather_lon}'\
                        f'&appid={weather_key}&units=metric'
-        self.forecast = None
+        self.forecast: dict[str, int] = {}
         self.max_days = max_days
         self.mode = mode
         self.show_labels = show_labels
@@ -67,7 +67,7 @@ class WeatherForecastDailyView(BaseView):
         self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
 
-    def _get_forecast(self) -> dict[Any]:
+    def _get_forecast(self) -> Optional[dict[str, int]]:
         try:
             session = requests.Session()
             retries = Retry(total=5, backoff_factor=1, status_forcelist=[502, 503, 504])
@@ -81,9 +81,9 @@ class WeatherForecastDailyView(BaseView):
             logger.error('Unable to collect the data from OpenWeather API.')
             return None
 
-    def _process_data(self, data):
-        day_to_temps = {}
-        processed_data = {}
+    def _process_data(self, data: dict[Any, Any]) -> dict[str, int]:
+        day_to_temps: dict[str, list[int]] = {}
+        processed_data: dict[str, int] = {}
         for element in data.get('list', []):
 
             temperature = int(element.get('main').get('temp'))
@@ -104,7 +104,7 @@ class WeatherForecastDailyView(BaseView):
 
         return processed_data
 
-    def _draw_plot(self):
+    def _draw_plot(self) -> io.BytesIO:
         '''
         IMPORTANT!
 

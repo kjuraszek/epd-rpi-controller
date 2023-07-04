@@ -6,7 +6,7 @@ import io
 import datetime
 import logging
 import os
-from typing import Any
+from typing import Any, Optional
 
 from dotenv import load_dotenv
 from PIL import Image
@@ -42,7 +42,7 @@ class WeatherForecastHourlyView(BaseView):
         else:
             self.url = f'https://api.openweathermap.org/data/2.5/forecast?lat={weather_lat}&lon={weather_lon}'\
                        f'&appid={weather_key}&units=metric&cnt={timestamps}&cnt={timestamps}'
-        self.forecast = None
+        self.forecast: dict[str, int] = {}
         self.timestamps = timestamps
         self.hours_additive = hours_additive
         self.show_labels = show_labels
@@ -68,7 +68,7 @@ class WeatherForecastHourlyView(BaseView):
         self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
 
-    def _get_forecast(self) -> dict[Any]:
+    def _get_forecast(self) -> Optional[dict[str, int]]:
         try:
             session = requests.Session()
             retries = Retry(total=5, backoff_factor=1, status_forcelist=[502, 503, 504])
@@ -82,7 +82,7 @@ class WeatherForecastHourlyView(BaseView):
             logger.error('Unable to collect the data from OpenWeather API.')
             return None
 
-    def _process_data(self, data):
+    def _process_data(self, data: dict[Any, Any]) -> dict[str, int]:
         processed_data = {}
         for index, element in enumerate(data.get('list', [])):
             temperature = int(element.get('main').get('temp'))
@@ -99,7 +99,7 @@ class WeatherForecastHourlyView(BaseView):
 
         return processed_data
 
-    def _draw_plot(self):
+    def _draw_plot(self) -> io.BytesIO:
         '''
         IMPORTANT!
 
