@@ -139,3 +139,31 @@ View uses env vars:
 View uses additional packages:
 
 - `requests`
+
+## WeatherForecastHourlyView
+
+This View displays a hourly temperature forecast as a bar chart based on OpenWeather API `/forecast` endpoint.
+View uses env vars:
+
+- `WEATHER_KEY` - OpenWeather API key
+- `WEATHER_LAT` - longitude
+- `WEATHER_LON` - latitude
+
+View uses additional packages:
+
+- `requests`
+- `matplotlib`
+
+## WeatherForecastDailyView
+
+This View displays a daily temperature forecast as a bar chart based on OpenWeather API `/forecast` endpoint.
+View uses env vars:
+
+- `WEATHER_KEY` - OpenWeather API key
+- `WEATHER_LAT` - longitude
+- `WEATHER_LON` - latitude
+
+View uses additional packages:
+
+- `requests`
+- `matplotlib`
