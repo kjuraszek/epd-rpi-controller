@@ -134,6 +134,8 @@ and then:
 
 Config is stored in a file `epd-rpi-controller.cfg` (file by default doesn't exist).
 
+### `main` section
+
 | Option | Purpose | Values |
 | --- | --- | --- |
 | producer_interval | Interval (in seconds) | positive integers or 0 - 0 means no interval |
@@ -147,7 +149,29 @@ Config is stored in a file `epd-rpi-controller.cfg` (file by default doesn't exi
 | use_buttons | Enables support for two physical buttons (left and right) | bool (yes/no) |
 | left_button_pin | GPIO number (not physical pin on board!) of pin connected to the left button | positive integer |
 | right_button_pin | GPIO number (not physical pin on board!) of pin connected to the right button | positive integer |
+
+### `kafka` section
+
+| Option | Purpose | Values |
+| --- | --- | --- |
 | view_manager_topic | Name of the *topic* used by Kafka | string compatible with Kafka topic naming rules |
+| logging_level | logging level for kafka | level name eg. `DEBUG`, `INFO` etc. |
+
+### `matplotlib` section
+
+| Option | Purpose | Values |
+| --- | --- | --- |
+| logging_level | logging level for matplotlib | level name eg. `DEBUG`, `INFO` etc. |
+
+### `tornado` section
+
+| Option | Purpose | Values |
+| --- | --- | --- |
+| logging_level | logging level for tornado | level name eg. `DEBUG`, `INFO` etc. |
+
+### other sections
+
+Sections below a comment: `; logging config` are related to a main logger, see: <https://docs.python.org/3/library/logging.config.html#configuration-file-format>
 
 ## .env file
 
