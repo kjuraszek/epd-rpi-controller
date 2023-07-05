@@ -1,6 +1,5 @@
 """Module exports MainAPI class"""
 
-from logger import logger
 import asyncio
 
 import tornado.ioloop
@@ -8,6 +7,7 @@ import tornado.web
 import tornado.httpserver
 
 from config import Config
+from logger import logger
 from src.helpers import BaseThread
 from src.view_manager import ViewManager
 from .application import TornadoApplication

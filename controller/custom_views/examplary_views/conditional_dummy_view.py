@@ -2,7 +2,6 @@
 Conditional DummyView class
 """
 
-from logger import logger
 from typing import Any
 
 from custom_views.examplary_views.dummy_view import DummyView

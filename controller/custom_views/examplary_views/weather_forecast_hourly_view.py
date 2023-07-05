@@ -4,7 +4,6 @@ Weather forecast hourly view class
 
 import io
 import datetime
-from logger import logger
 import os
 from typing import Any, Optional
 
@@ -14,6 +13,7 @@ import requests
 from requests.adapters import HTTPAdapter, Retry
 from matplotlib import ticker, pyplot
 
+from logger import logger
 from custom_views.examplary_views.base_view import BaseView
 from src.helpers import view_fallback
 

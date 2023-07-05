@@ -2,9 +2,6 @@
 Broken DummyView class
 """
 
-from logger import logger
-
-
 from custom_views.examplary_views.dummy_view import DummyView
 from src.helpers import view_fallback
 

@@ -2,12 +2,12 @@
 Text view class
 """
 
-from logger import logger
 from typing import Any
 
 from PIL import Image, ImageDraw, ImageFont
 
 from custom_views.examplary_views.base_view import BaseView
+from logger import logger
 from src.helpers import view_fallback, wrap_text
 
 

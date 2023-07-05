@@ -2,7 +2,6 @@
 AirPollution view class
 """
 
-from logger import logger
 import os
 from typing import Any, Union
 
@@ -12,6 +11,7 @@ import requests
 from requests.adapters import HTTPAdapter, Retry
 
 from custom_views.examplary_views.base_view import BaseView
+from logger import logger
 from src.helpers import view_fallback, wrap_titles
 
 

@@ -4,12 +4,13 @@ Module contains helper functions
 
 from dataclasses import dataclass
 import functools
-from logger import logger
 import threading
 from typing import Any, Callable, Optional, TypeVar
 
 from PIL import Image, ImageDraw, ImageFont
 from mypy_extensions import VarArg, KwArg
+
+from logger import logger
 
 R = TypeVar("R")
 

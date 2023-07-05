@@ -2,8 +2,6 @@
 Examplary usage of classes: DummyView, BrokenDummyView, ConditionalDummyView and VIEWS list
 """
 
-from logger import logger
-
 from custom_views.examplary_views import DummyView, BrokenDummyView, ConditionalDummyView, ClockView
 
 

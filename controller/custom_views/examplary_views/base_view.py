@@ -2,11 +2,11 @@
 Base View class
 """
 
-from logger import logger
 from typing import Any
 
 from PIL import Image, ImageDraw, ImageFont
 
+from logger import logger
 from src import View
 
 # pylint: disable=R0801,W0223

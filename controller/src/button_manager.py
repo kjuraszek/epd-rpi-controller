@@ -1,7 +1,6 @@
 """Module exports ButtonManager class"""
 
 import time
-from logger import logger
 from typing import Any, Optional
 
 from kafka import KafkaProducer

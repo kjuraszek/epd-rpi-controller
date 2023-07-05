@@ -1,7 +1,6 @@
 """Module exports Producer class"""
 
 import time
-from logger import logger
 
 from kafka import KafkaProducer
 

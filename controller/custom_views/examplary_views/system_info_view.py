@@ -2,7 +2,6 @@
 SystemInfo view class
 """
 
-from logger import logger
 from typing import Any, Optional
 
 from PIL import Image, ImageDraw, ImageFont
@@ -10,6 +9,7 @@ import psutil
 from psutil._common import shwtemp
 
 from custom_views.examplary_views.base_view import BaseView
+from logger import logger
 from src.helpers import view_fallback
 
 
@@ -64,7 +64,7 @@ class SystemInfoView(BaseView):
     def _get_system_info(self) -> tuple[Optional[float], ...]:
         try:
 
-            temperature = psutil.sensors_temperatures().get('cpu_thermal', [shwtemp(label='cpu_thermal',current=0.0,
+            temperature = psutil.sensors_temperatures().get('cpu_thermal', [shwtemp(label='cpu_thermal', current=0.0,
                                                                                     high=0.0, critical=0.0)])[0].current
             disk_usage = psutil.disk_usage('/').percent
             cpu_percent = psutil.cpu_percent()

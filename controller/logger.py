@@ -1,3 +1,7 @@
+"""
+Module contains logging related functions and variables
+"""
+
 import logging
 import logging.config
 
@@ -12,7 +16,9 @@ _LOGGERS = {
     'matplotlib': Config.MATPLOTLIB_LOGGING_LEVEL
 }
 
-def configure_lib_loggers():
+
+def configure_lib_loggers() -> None:
+    """Function sets logging levels from config for external modules"""
     for log, level in _LOGGERS.items():
         lib_logger = logging.getLogger(log)
         lib_logger.setLevel(level)

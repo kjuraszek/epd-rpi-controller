@@ -2,13 +2,13 @@
 RSS view class
 """
 
-from logger import logger
 from typing import Any
 
 from PIL import Image, ImageDraw, ImageFont
 import feedparser
 
 from custom_views.examplary_views.base_view import BaseView
+from logger import logger
 from src.helpers import view_fallback, wrap_titles
 
 

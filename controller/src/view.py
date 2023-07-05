@@ -1,7 +1,6 @@
 """Module exports View class"""
 
 from datetime import datetime
-from logger import logger
 from typing import Any, Optional
 
 from PIL import Image
