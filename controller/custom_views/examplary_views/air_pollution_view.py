@@ -2,7 +2,6 @@
 AirPollution view class
 """
 
-import logging
 import os
 from typing import Any, Union
 
@@ -12,11 +11,8 @@ import requests
 from requests.adapters import HTTPAdapter, Retry
 
 from custom_views.examplary_views.base_view import BaseView
+from logger import logger
 from src.helpers import view_fallback, wrap_titles
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 # pylint: disable=R0801

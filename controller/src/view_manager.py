@@ -1,18 +1,15 @@
 """Module exports ViewManager class"""
 
 import threading
-import logging
 from typing import Any, Optional, Sequence
 
 from waiting import wait, TimeoutExpired
 from PIL import Image
 
 from config import Config
+from logger import logger
 from src.helpers import BaseThread
 from src.view import View
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 class ViewManager(BaseThread):
