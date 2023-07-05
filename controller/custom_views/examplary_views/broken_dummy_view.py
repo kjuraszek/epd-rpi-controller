@@ -2,15 +2,11 @@
 Broken DummyView class
 """
 
-import logging
+from logger import logger
 
 
 from custom_views.examplary_views.dummy_view import DummyView
 from src.helpers import view_fallback
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 # pylint: disable=R0801

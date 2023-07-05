@@ -1,6 +1,6 @@
 """Module exports MainAPI class"""
 
-import logging
+from logger import logger
 import asyncio
 
 import tornado.ioloop
@@ -11,9 +11,6 @@ from config import Config
 from src.helpers import BaseThread
 from src.view_manager import ViewManager
 from .application import TornadoApplication
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 class MainAPI(BaseThread):

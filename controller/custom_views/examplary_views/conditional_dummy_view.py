@@ -2,14 +2,10 @@
 Conditional DummyView class
 """
 
-import logging
+from logger import logger
 from typing import Any
 
 from custom_views.examplary_views.dummy_view import DummyView
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 # pylint: disable=R0801

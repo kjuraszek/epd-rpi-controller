@@ -2,14 +2,11 @@
 Module contains validation functions
 """
 
-import logging
+from logger import logger
 
 from config import Config
 from src import View
 from custom_views import VIEWS
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 def validate_config() -> None:

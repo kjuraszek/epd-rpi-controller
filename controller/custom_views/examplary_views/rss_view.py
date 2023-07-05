@@ -2,7 +2,7 @@
 RSS view class
 """
 
-import logging
+from logger import logger
 from typing import Any
 
 from PIL import Image, ImageDraw, ImageFont
@@ -10,10 +10,6 @@ import feedparser
 
 from custom_views.examplary_views.base_view import BaseView
 from src.helpers import view_fallback, wrap_titles
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 # pylint: disable=R0801

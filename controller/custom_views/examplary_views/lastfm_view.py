@@ -2,7 +2,7 @@
 LastFmView class
 """
 
-import logging
+from logger import logger
 import os
 from typing import Any, Union
 
@@ -13,10 +13,6 @@ from requests.adapters import HTTPAdapter, Retry
 
 from custom_views.examplary_views.base_view import BaseView
 from src.helpers import view_fallback, wrap_titles
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 # pylint: disable=R0801

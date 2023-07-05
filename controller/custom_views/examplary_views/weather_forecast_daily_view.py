@@ -4,7 +4,7 @@ Weather forecast daily view class
 
 import io
 import datetime
-import logging
+from logger import logger
 import os
 from typing import Any, Optional
 
@@ -16,10 +16,6 @@ from matplotlib import ticker, pyplot
 
 from custom_views.examplary_views.base_view import BaseView
 from src.helpers import view_fallback
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 # pylint: disable=R0801

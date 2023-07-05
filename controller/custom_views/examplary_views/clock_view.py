@@ -3,7 +3,7 @@ Clock view class
 """
 
 import datetime
-import logging
+from logger import logger
 from typing import Any, Optional
 
 from PIL import Image, ImageDraw, ImageFont
@@ -11,10 +11,6 @@ from PIL import Image, ImageDraw, ImageFont
 
 from custom_views.examplary_views.base_view import BaseView
 from src.helpers import view_fallback
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 # pylint: disable=R0801
