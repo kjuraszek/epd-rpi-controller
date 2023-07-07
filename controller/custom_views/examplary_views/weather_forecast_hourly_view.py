@@ -96,3 +96,13 @@ class WeatherForecastHourlyView(ChartView):
         buffer = io.BytesIO()
         pyplot.savefig(buffer, format='png')
         return buffer
+
+    def _conditional(self, *args: Any, **kwargs: Any) -> bool:
+        data = self._get_data()
+        if not data:
+            return False
+        if bool(kwargs['first_call']) or (
+                data != self.data):
+            self.data = data
+            return True
+        return False

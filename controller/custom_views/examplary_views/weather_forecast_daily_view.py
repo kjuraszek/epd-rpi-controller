@@ -53,7 +53,7 @@ class WeatherForecastDailyView(ChartView):
             return None
 
     def _process_data(self, data: dict[Any, Any]) -> dict[str, int]:
-        """Method processes gathered data"""        
+        """Method processes gathered data"""
 
         day_to_temps: dict[str, list[int]] = {}
         processed_data: dict[str, int] = {}
@@ -99,3 +99,13 @@ class WeatherForecastDailyView(ChartView):
         buffer = io.BytesIO()
         pyplot.savefig(buffer, format='png')
         return buffer
+
+    def _conditional(self, *args: Any, **kwargs: Any) -> bool:
+        data = self._get_data()
+        if not data:
+            return False
+        if bool(kwargs['first_call']) or (
+                data != self.data):
+            self.data = data
+            return True
+        return False

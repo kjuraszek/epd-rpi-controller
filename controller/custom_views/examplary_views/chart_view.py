@@ -53,13 +53,3 @@ class ChartView(BaseView):
     def _draw_plot(self) -> io.BytesIO:
         """Method draws a plot basing on the data and returns it as a bytes."""
         raise NotImplementedError
-
-    def _conditional(self, *args: Any, **kwargs: Any) -> bool:
-        data = self._get_data()
-        if not data:
-            return False
-        if bool(kwargs['first_call']) or (
-                data != self.data):
-            self.data = data
-            return True
-        return False
