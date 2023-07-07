@@ -35,7 +35,6 @@ class WeatherForecastDailyView(ChartView):
         else:
             self.url = f'https://api.openweathermap.org/data/2.5/forecast?lat={weather_lat}&lon={weather_lon}'\
                        f'&appid={weather_key}&units=metric'
-        self.forecast: dict[str, int] = {}
         self.max_days = max_days
         self.mode = mode
 
@@ -54,6 +53,8 @@ class WeatherForecastDailyView(ChartView):
             return None
 
     def _process_data(self, data: dict[Any, Any]) -> dict[str, int]:
+        """Method processes gathered data"""        
+
         day_to_temps: dict[str, list[int]] = {}
         processed_data: dict[str, int] = {}
         for element in data.get('list', []):
@@ -77,12 +78,7 @@ class WeatherForecastDailyView(ChartView):
         return processed_data
 
     def _draw_plot(self) -> io.BytesIO:
-        '''
-        IMPORTANT!
-
-        Below positions, adjustments, margins etc. are chosen arbitrary and they are adjusted to 200x200 EPD, adjust them to your needs!
-        Also - units are metrical.
-        '''
+        """Method draws a plot basing on the data and returns it as a bytes."""
 
         y_values = list(self.data.keys())
         x_values = list(self.data.values())
@@ -91,7 +87,7 @@ class WeatherForecastDailyView(ChartView):
         heights = [margin + value - min(x_values) for value in x_values]
         fig = pyplot.figure(figsize=self.figsize).gca()
         fig.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
-        if not None in (self.x_label, self.y_label):
+        if None not in (self.x_label, self.y_label):
             fig.set_ylabel(self.y_label)
             fig.set_xlabel(self.x_label)
 

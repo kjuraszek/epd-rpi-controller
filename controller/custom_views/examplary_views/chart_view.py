@@ -19,14 +19,16 @@ class ChartView(BaseView):
 
     Methods _get_data and _draw_plot must be implemented in child class in order to work properly - see DummyChartView.
     """
-    def __init__(self, *, figsize: tuple[float], plot_adjustment: Optional[tuple[float]] = None,
-                 x_label: Optional[str] = None, y_label: Optional[str] = None, **kwargs: Any) -> None:
+    def __init__(self, *, figsize: Optional[tuple[float]] = None, plot_adjustment: Optional[tuple[float]] = None,
+                 x_label: Optional[str] = None, y_label: Optional[str] = None,
+                 plot_title: Optional[str] = None, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
         self.figsize = figsize
         self.plot_adjustment = plot_adjustment
         self.x_label = x_label
         self.y_label = y_label
+        self.plot_title = plot_title
         self.data: dict[Any, Any] = {}
 
     @view_fallback

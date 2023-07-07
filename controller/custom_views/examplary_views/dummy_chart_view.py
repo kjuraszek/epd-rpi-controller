@@ -34,7 +34,7 @@ class DummyChartView(ChartView):
 
         fig = pyplot.figure(figsize=self.figsize).gca()
         fig.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
-        if not None in (self.x_label, self.y_label):
+        if None not in (self.x_label, self.y_label):
             fig.set_ylabel(self.y_label)
             fig.set_xlabel(self.x_label)
 
@@ -42,6 +42,9 @@ class DummyChartView(ChartView):
         if self.plot_adjustment:
             pyplot.subplots_adjust(*self.plot_adjustment)
 
+        # if self.plot_title:
+        #     pass
+        #     pyplot.sub
         buffer = io.BytesIO()
         pyplot.savefig(buffer, format='png')
         pyplot.close()
