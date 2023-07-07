@@ -8,24 +8,22 @@ import os
 from typing import Any, Optional
 
 from dotenv import load_dotenv
-from PIL import Image
 import requests
 from requests.adapters import HTTPAdapter, Retry
 from matplotlib import ticker, pyplot
 
-from custom_views.examplary_views.base_view import BaseView
+from custom_views.examplary_views.chart_view import ChartView
 from logger import logger
-from src.helpers import view_fallback
 
 
 # pylint: disable=R0801
-class WeatherForecastDailyView(BaseView):
+class WeatherForecastDailyView(ChartView):
     '''
     Weather forecast view is displaying daily temperature forecast based on the data from OpenWeather API.
 
     It uses environment variables to prepare connection URL.
     '''
-    def __init__(self, *, max_days: int = 6, mode: str = 'avg', show_labels: bool = True, **kwargs: Any) -> None:
+    def __init__(self, *, max_days: int = 6, mode: str = 'avg', **kwargs: Any) -> None:
         super().__init__(**kwargs)
         load_dotenv()
 
@@ -37,33 +35,10 @@ class WeatherForecastDailyView(BaseView):
         else:
             self.url = f'https://api.openweathermap.org/data/2.5/forecast?lat={weather_lat}&lon={weather_lon}'\
                        f'&appid={weather_key}&units=metric'
-        self.forecast: dict[str, int] = {}
         self.max_days = max_days
         self.mode = mode
-        self.show_labels = show_labels
 
-    @view_fallback
-    def _epd_change(self, first_call: bool) -> None:
-        logger.info('%s is running', self.name)
-        if not self.url:
-            logger.error('URL not created, serving fallback image!')
-            raise ValueError
-        if self.max_days not in range(1, 7):
-            logger.error('Wrong day range, serving fallback image!')
-            raise ValueError
-
-        plot = self._draw_plot()
-
-        image = Image.open(plot)
-        if image.size != (self.epd.width, self.epd.height):
-            image = image.resize((self.epd.width, self.epd.height))
-        image = image.convert('1')
-
-        self.image = image
-        self._rotate_image()
-        self.epd.display(self.epd.getbuffer(self.image))
-
-    def _get_forecast(self) -> Optional[dict[str, int]]:
+    def _get_data(self) -> Optional[dict[str, int]]:
         try:
             session = requests.Session()
             retries = Retry(total=5, backoff_factor=1, status_forcelist=[502, 503, 504])
@@ -78,6 +53,8 @@ class WeatherForecastDailyView(BaseView):
             return None
 
     def _process_data(self, data: dict[Any, Any]) -> dict[str, int]:
+        """Method processes gathered data"""
+
         day_to_temps: dict[str, list[int]] = {}
         processed_data: dict[str, int] = {}
         for element in data.get('list', []):
@@ -101,42 +78,37 @@ class WeatherForecastDailyView(BaseView):
         return processed_data
 
     def _draw_plot(self) -> io.BytesIO:
-        '''
-        IMPORTANT!
+        """Method draws a plot basing on the data and returns it as a bytes."""
 
-        Below positions, adjustments, margins etc. are chosen arbitrary and they are adjusted to 200x200 EPD, adjust them to your needs!
-        Also - units are metrical.
-        '''
-
-        days = list(self.forecast.keys())
-        values = list(self.forecast.values())
+        y_values = list(self.data.keys())
+        x_values = list(self.data.values())
         margin = 2
-        figsize = (2, 2)
-        x_label = 'time [days]'
-        y_label = 'temperature [°C]'
-        plot_adjustment = (0.29, 0.25, 0.99, 0.95) if self.show_labels else (0.19, 0.15, 0.99, 0.95)
 
-        heights = [margin + value - min(values) for value in values]
-        fig = pyplot.figure(figsize=figsize).gca()
+        heights = [margin + value - min(x_values) for value in x_values]
+        fig = pyplot.figure(figsize=self.figsize).gca()
         fig.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
-        if self.show_labels:
-            fig.set_ylabel(y_label)
-            fig.set_xlabel(x_label)
+        if None not in (self.x_label, self.y_label):
+            fig.set_ylabel(self.y_label)
+            fig.set_xlabel(self.x_label)
 
-        pyplot.bar(days, heights, bottom=min(values) - margin, color='black')
-        pyplot.ylim(bottom=min(values) - margin, top=max(values) + margin)
-        pyplot.subplots_adjust(*plot_adjustment)
+        pyplot.bar(y_values, heights, bottom=min(x_values) - margin, color='black')
+        pyplot.ylim(bottom=min(x_values) - margin, top=max(x_values) + margin)
+        if self.plot_adjustment:
+            pyplot.subplots_adjust(*self.plot_adjustment)
 
+        if self.plot_title:
+            pyplot.title(self.plot_title)
         buffer = io.BytesIO()
         pyplot.savefig(buffer, format='png')
+        pyplot.close()
         return buffer
 
     def _conditional(self, *args: Any, **kwargs: Any) -> bool:
-        forecast = self._get_forecast()
-        if not forecast:
+        data = self._get_data()
+        if not data:
             return False
         if bool(kwargs['first_call']) or (
-                forecast != self.forecast):
-            self.forecast = forecast
+                data != self.data):
+            self.data = data
             return True
         return False
