@@ -96,8 +96,11 @@ class WeatherForecastDailyView(ChartView):
         if self.plot_adjustment:
             pyplot.subplots_adjust(*self.plot_adjustment)
 
+        if self.plot_title:
+            pyplot.title(self.plot_title)
         buffer = io.BytesIO()
         pyplot.savefig(buffer, format='png')
+        pyplot.close()
         return buffer
 
     def _conditional(self, *args: Any, **kwargs: Any) -> bool:
