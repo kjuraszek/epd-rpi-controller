@@ -30,6 +30,12 @@ This is a basic view with a defined `fallback` method.
 
 A View based on DummyView class, but it raises an Exception so it always serves a fallback image.
 
+## ChartView
+
+Chart view is a boilerplate for chart views.
+
+Methods `_get_data` and `_draw_plot` must be implemented in child class in order to work properly - see `DummyChartView`.
+
 ## ClockView
 
 This View displays a simple clock with current date.
@@ -37,6 +43,14 @@ This View displays a simple clock with current date.
 ## ConditionalDummyView
 
 A View based on DummyView class, it displays the image conditionally.
+
+## DummyChartView
+
+View shows dummy basic chart with a random data.
+
+View uses additional packages:
+
+- `matplotlib`
 
 ## DummyView
 
