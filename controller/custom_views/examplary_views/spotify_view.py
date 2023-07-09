@@ -48,7 +48,7 @@ class SpotifyView(BaseView):
             image = self._fetch_album_cover()
         else:
             image = self._prepare_image()
-        
+
         self.image = image
         self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
