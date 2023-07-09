@@ -1,4 +1,4 @@
-"""Configuration which is accessible throughout the application"""
+"""Simple script to set Spotify Authentication"""
 
 from dotenv import load_dotenv
 import spotipy
