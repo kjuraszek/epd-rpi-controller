@@ -5,7 +5,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
 
-def main():
+def main() -> None:
     """Main function which creates spotify client and simplifies authorization."""
     load_dotenv()
     cache_handler = spotipy.CacheFileHandler(cache_path='.spotipy_cache')

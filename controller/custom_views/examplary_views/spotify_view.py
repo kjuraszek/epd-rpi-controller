@@ -60,16 +60,16 @@ class SpotifyView(BaseView):
             data: dict[Any, Any] = self.spotify_client.current_user_playing_track()
             if not data:
                 return (None, None, None, None)
-            album_name = data.get('item').get('album').get('name')
-            artist = data.get('item').get('artists')[0].get('name')
-            track = data.get('item').get('name')
-            album_cover_url = data.get('item').get('album').get('images')[-1].get('url')
+            album_name = data.get('item').get('album').get('name')  # type: ignore
+            artist = data.get('item').get('artists')[0].get('name')  # type: ignore
+            track = data.get('item').get('name')  # type: ignore
+            album_cover_url = data.get('item').get('album').get('images')[-1].get('url')  # type: ignore
             return (album_name, artist, track, album_cover_url)
         except Exception:  # pylint: disable=W0703
             logger.error('Unable to collect the data from Spotify API.')
             return (None, None, None, None)
 
-    def _fetch_album_cover(self) -> Image:
+    def _fetch_album_cover(self) -> Image.Image:
         session = requests.Session()
         retries = Retry(total=5, backoff_factor=1, status_forcelist=[502, 503, 504])
         session.mount('http://', HTTPAdapter(max_retries=retries))
@@ -81,7 +81,7 @@ class SpotifyView(BaseView):
         image = image.convert('1')
         return image
 
-    def _prepare_image(self) -> Image:
+    def _prepare_image(self) -> Image.Image:
         left_margin = 24
         image = Image.new('1', (self.epd.width, self.epd.height), 255)
         draw = ImageDraw.Draw(image)
