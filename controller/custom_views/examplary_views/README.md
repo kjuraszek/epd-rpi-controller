@@ -3,6 +3,15 @@
 A collection of prepared view classes ready to use.
 > ⚠️**Warning!** Those classes use additional packages and environment variables - see `views_requirements.txt` and `views_env` files. Update your `.env` and `custom_requirements.txt` files to use those views properly.
 
+Every view must be constructed with two parameters:
+
+- `name` - view instance name
+- `interval` - how often view should refresh, `0` if it should be "*static*".
+
+> ⚠️**Warning!** `interval` value must be either `0` or higher than EPD's refresh rate.
+
+If a view angle should be different than set in config it can be overriden by optional `view_angle` parameter.
+
 Some of those views can be seen on this video:
 
 [![EPD RPi Controller](/images/epd-rpi-controller-yt.jpg)](https://youtu.be/IhibN0U2Lx4?t=127 "Raspberry Pi Epaper Display Controller")
@@ -22,13 +31,21 @@ View uses additional packages:
 
 - `requests`
 
+### AirPollutionView examplary usage
+
+    examplary_views.AirPollutionView(name='Air pollution view', interval=60)
+
 ## BaseView
 
-This is a basic view with a defined `fallback` method.
+This is a boilerplate for other views - it has got defined `fallback` method but `_epd_change` method must be defined in child class in order to work properly - see `DummyView`.
 
 ## BrokenDummyView
 
 A View based on DummyView class, but it raises an Exception so it always serves a fallback image.
+
+### BrokenDummyView examplary usage
+
+    examplary_views.BrokenDummyView(name='Broken Dummy view', interval=0, view_angle=180)
 
 ## ChartView
 
@@ -40,9 +57,17 @@ Methods `_get_data` and `_draw_plot` must be implemented in child class in order
 
 This View displays a simple clock with current date.
 
+### ClockView examplary usage
+
+    examplary_views.ClockView(name='clock', interval=1)
+
 ## ConditionalDummyView
 
 A View based on DummyView class, it displays the image conditionally.
+
+### ConditionalDummyView examplary usage
+
+    examplary_views.ConditionalDummyView(name='Conditional Dummy view', interval=0)
 
 ## DummyChartView
 
@@ -52,9 +77,18 @@ View uses additional packages:
 
 - `matplotlib`
 
+### DummyChartView examplary usages
+
+    examplary_views.DummyChartView(plot_type='stem', figsize=(2, 2), x_label='X LABEL', y_label='Y LABEL', name='DummyChartView', interval=10),
+    examplary_views.DummyChartView(figsize=(2, 2), plot_adjustment=(0.19, 0.15, 0.99, 0.95), name='DummyChartView 2', interval=0)
+
 ## DummyView
 
 A simple View displaying *Hello World*-like text.
+
+### DummyView examplary usage
+
+    examplary_views.DummyView(name='Dummy view', interval=0)
 
 ## ImageView
 
@@ -62,6 +96,10 @@ A View displays an image from certain location - the best idea to store images i
 Parameters passed to a constructor:
 
 - `image_path` - path to a `.jpg` image file
+
+### ImageView examplary usage
+
+    examplary_views.ImageView(name='Image', interval=0, image_path='assets/dog_image.jpg')
 
 ## LastFmView
 
@@ -75,6 +113,10 @@ View uses additional packages:
 
 - `requests`
 
+### LastFmView examplary usage
+
+    examplary_views.LastFmView(name='lastfm', interval=0)
+
 ## QRCodeUiView
 
 A View displays QR code with URL to web user interface.
@@ -86,6 +128,10 @@ View uses env vars:
 View uses additional packages:
 
 - `qrcode`
+
+### QRCodeUiView examplary usage
+
+    examplary_views.QRCodeUiView(name='QRcode UI', interval=0)
 
 ## QRCodeWiFiView
 
@@ -101,6 +147,10 @@ View uses additional packages:
 
 - `qrcode`
 
+### QRCodeWiFiView examplary usage
+
+    examplary_views.QRCodeWiFiView(name='QRcode WiFi', interval=0)
+
 ## QuoteView
 
 A View displays a quote.
@@ -108,6 +158,10 @@ Parameters passed to a constructor:
 
 - `quote` - a quote displayed in italic font
 - `author` - author of the quote, displayed below
+
+### QuoteView examplary usage
+
+    examplary_views.QuoteView(name='Quote', interval=0, quote='Now, I am become Death, the destroyer of worlds.', author='J. Robert Oppenheimer'),
 
 ## RSSView
 
@@ -120,6 +174,10 @@ Parameters passed to a constructor:
 
 - `rss_url` - URL of the RSS
 
+### RSSView examplary usage
+
+    examplary_views.RSSView(name='RSS', interval=0, rss_url='https://hnrss.org/newest?count=10')
+
 ## SystemInfoView
 
 This view is displaying: CPU temperature, disk usage, CPU utilization, memory usage and swapped memory usage.
@@ -127,12 +185,20 @@ View uses additional packages:
 
 - `psutil`
 
+### SystemInfoView examplary usage
+
+    examplary_views.SystemInfoView(name='SystemInfoView', interval=10)
+
 ## SpeedTestView
 
 A View triggers SpeedTest and displays the result. It may take some time.
 View uses additional packages:
 
 - `speedtest-cli`
+
+### SpeedTestView examplary usage
+
+    examplary_views.SpeedTestView(name='SpeedTest', interval=0)
 
 ## SpotifyView
 
@@ -155,12 +221,21 @@ Before first use application must be authorized, you can use a command `make pre
 
 See more about authorization here: <https://spotipy.readthedocs.io/en/2.22.1/#authorization-code-flow>
 
+### SpotifyView examplary usages
+
+    examplary_views.SpotifyView(name='SpotifyView', interval=360)
+    examplary_views.SpotifyView(name='SpotifyView 2', interval=360, album_cover_mode=True)
+
 ## TextView
 
 A View displays simple italic text.
 Parameters passed to a constructor:
 
 - `text` - text which will be displayed in italic font
+
+### TextView examplary usage
+
+    examplary_views.TextView(name='text', interval=0, text='Lorem ipsum dolor sit amet...')
 
 ## WeatherView
 
@@ -174,6 +249,10 @@ View uses env vars:
 View uses additional packages:
 
 - `requests`
+
+### WeatherView examplary usage
+
+    examplary_views.WeatherView(name='Weather', interval=60)
 
 ## WeatherForecastHourlyView
 
@@ -189,6 +268,11 @@ View uses additional packages:
 - `requests`
 - `matplotlib`
 
+### WeatherForecastHourlyView examplary usages
+
+    examplary_views.WeatherForecastHourlyView(name='WeatherForecast', interval=600, figsize=(2, 2), x_label='temperature [°C]', y_label='time [hours]', timestamps=5, hours_additive=True)
+    examplary_views.WeatherForecastHourlyView(name='WeatherForecast 2', interval=600, plot_title='Forecast Hourly', plot_adjustment=(0.19, 0.15, 0.99, 0.95))
+
 ## WeatherForecastDailyView
 
 This View displays a daily temperature forecast as a bar chart based on OpenWeather API `/forecast` endpoint.
@@ -202,3 +286,8 @@ View uses additional packages:
 
 - `requests`
 - `matplotlib`
+
+### WeatherForecastDailyView examplary usages
+
+    examplary_views.WeatherForecastDailyView(name='WeatherForecastDaily', interval=600, figsize=(2, 2), x_label='temperature [°C]', y_label='time [days]', max_days=4, mode='max')
+    examplary_views.WeatherForecastDailyView(name='WeatherForecastDaily 2', interval=600, figsize=(2, 2), plot_title='Forecast Daily', plot_adjustment=(0.19, 0.15, 0.99, 0.95))
