@@ -59,4 +59,4 @@ If a View uses any additional Python packages they should be added to a `control
 
 ## Examplary Views
 
-There's a set of predefined View-based classes ready to use - go to [Examplary Views](/controller/custom_views/examplary_views/).
+There's a set of predefined View-based classes ready to use - go to [Examplary Views](/controller/custom_views/examplary_views/README.md).

@@ -1,6 +1,6 @@
 # EPD Rpi Controller
 
-Epaper display controller for Raspberry Pi. Project is mostly written in Python 3.9, web interface un Vue.js 3. It is based on Waveshare EPD library, Apache Kafka and Docker containers.
+Epaper display controller for Raspberry Pi. Project is mostly written in Python 3.9, web interface in Vue.js 3. It is based on Waveshare EPD library, Apache Kafka and Docker containers.
 
 ## About the project
 
@@ -9,7 +9,7 @@ Epaper display controller for Raspberry Pi. Project is mostly written in Python 
 This project simplifies displaying custom informations on Epaper display connected to a Raspberry Pi. Display part is realized by a `View` - configured object with a defined method `_epd_change` which performs directly on EPD object. Views are managed by a `View Manager` - they can be switched automatically by some time interval and in a different order. EPD can be simulated using config option - an image with a current view will be generated (instead of displaying it on a physical device). Controller exposes an API to trigger view changes via specific `GET` request. Web user interface is also created to make switching views even simplier.
 
 In addition controller also allows to switch between `Views` using physical buttons.
-More about Controller: go to [Controller](/controller/).
+More about Controller: go to [Controller](/controller/README.md).
 
 ## Prerequisites
 
@@ -51,8 +51,8 @@ Alternatively you can use a command:
 to copy contents from `example.py`.
 
 Also custom requirements.txt file is supported.
-To learn more about custom views and custom_requirements.txt go to [Custom views](/controller/custom_views/)
-There are also some predefined View classes - see [Examplary Views](/controller/custom_views/examplary_views/).
+To learn more about custom views and custom_requirements.txt go to [Custom views](/controller/custom_views/README.md)
+There are also some predefined View classes - see [Examplary Views](/controller/custom_views/examplary_views/README.md).
 
 ### Prepare Kafka stack
 
