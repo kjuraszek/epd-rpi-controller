@@ -134,6 +134,27 @@ View uses additional packages:
 
 - `speedtest-cli`
 
+## SpotifyView
+
+View displays informations about currently played track by user.
+View uses env vars (which are defined via Spotify Dashboard):
+
+- `SPOTIPY_CLIENT_ID` - Spotify Client ID
+- `SPOTIPY_CLIENT_SECRET` - Spotify Client Secret
+- `SPOTIPY_REDIRECT_URI` - Spotify Redirect Uri
+
+View uses additional packages:
+
+- `requests`
+- `spotipy`
+
+Before first use application must be authorized, you can use a command `make prepare-spotipy` and follow the instructions in terminal:
+
+- go to URL printed in your console, it starts with `https://accounts.spotify.com/authorize?client_id=`
+- paste in the terminal URL  you've been redirected to (eg. `<SPOTIPY_REDIRECT_URI>/?code=...`), even if it ends with connection or similiar error
+
+See more about authorization here: <https://spotipy.readthedocs.io/en/2.22.1/#authorization-code-flow>
+
 ## TextView
 
 A View displays simple italic text.
