@@ -72,6 +72,9 @@ run-ui:
 build-docker:
 	docker compose --profile all build
 
+prepare-spotipy: install
+	$(VENV_ACTIVATE_CONTROLLER) && $(PYTHON_CONTROLLER) $(CONTROLLER)/spotipy_helper.py
+
 run-docker:
 	docker compose up -d
 
