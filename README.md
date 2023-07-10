@@ -11,6 +11,44 @@ This project simplifies displaying custom informations on Epaper display connect
 In addition controller also allows to switch between `Views` using physical buttons.
 More about Controller: go to [Controller](/controller/README.md).
 
+### Examplary views
+
+Some examples of predefined views classes.
+
+### Clock
+
+![ClockView](/controller/custom_views/examplary_views/images/ClockView.jpg)
+
+### Image
+
+![ImageView](/controller/custom_views/examplary_views/images/ImageView.jpg)
+
+### QRCode WiFi
+
+![QRCodeWiFiView](/controller/custom_views/examplary_views/images/QRCodeWiFiView.jpg)
+
+### System Info
+
+![SystemInfoView](/controller/custom_views/examplary_views/images/SystemInfoView.jpg)
+
+### SpeedTest
+
+![SpeedTestView](/controller/custom_views/examplary_views/images/SpeedTestView.jpg)
+
+### Spotify
+
+![SpotifyView](/controller/custom_views/examplary_views/images/SpotifyView.jpg)
+
+### Weather
+
+![WeatherView](/controller/custom_views/examplary_views/images/WeatherView.jpg)
+
+### Weather Forecast
+
+![WeatherForecastDailyView](/controller/custom_views/examplary_views/images/WeatherForecastDailyView.jpg)
+
+... and more, see [Examplary Views](/controller/custom_views/examplary_views/README.md).
+
 ## Prerequisites
 
 - Raspberry Pi (tested using Rpi 3B, v4 should also be fine) with 2GB memory (if less than 2GB - swapping memory *might* do the trick, see `dphys-swapfile`)
