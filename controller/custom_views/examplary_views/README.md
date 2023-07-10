@@ -33,6 +33,8 @@ View uses additional packages:
 
 ### AirPollutionView examplary usage
 
+![AirPollutionView](/controller/custom_views/examplary_views/images/AirPollutionView.jpg)
+
     examplary_views.AirPollutionView(name='Air pollution view', interval=60)
 
 ## BaseView
@@ -44,6 +46,8 @@ This is a boilerplate for other views - it has got defined `fallback` method but
 A View based on DummyView class, but it raises an Exception so it always serves a fallback image.
 
 ### BrokenDummyView examplary usage
+
+![BrokenDummyView](/controller/custom_views/examplary_views/images/BrokenDummyView.jpg)
 
     examplary_views.BrokenDummyView(name='Broken Dummy view', interval=0, view_angle=180)
 
@@ -59,6 +63,8 @@ This View displays a simple clock with current date.
 
 ### ClockView examplary usage
 
+![ClockView](/controller/custom_views/examplary_views/images/ClockView.jpg)
+
     examplary_views.ClockView(name='clock', interval=1)
 
 ## ConditionalDummyView
@@ -66,6 +72,8 @@ This View displays a simple clock with current date.
 A View based on DummyView class, it displays the image conditionally.
 
 ### ConditionalDummyView examplary usage
+
+![ConditionalDummyView](/controller/custom_views/examplary_views/images/ConditionalDummyView.jpg)
 
     examplary_views.ConditionalDummyView(name='Conditional Dummy view', interval=0)
 
@@ -79,7 +87,12 @@ View uses additional packages:
 
 ### DummyChartView examplary usages
 
-    examplary_views.DummyChartView(plot_type='stem', figsize=(2, 2), x_label='X LABEL', y_label='Y LABEL', name='DummyChartView', interval=10),
+![DummyChartView](/controller/custom_views/examplary_views/images/DummyChartView.jpg)
+
+    examplary_views.DummyChartView(plot_type='stem', figsize=(2, 2), x_label='X LABEL', y_label='Y LABEL', name='DummyChartView', interval=10)
+
+![DummyChartView 2](/controller/custom_views/examplary_views/images/DummyChartView%202.jpg)
+
     examplary_views.DummyChartView(figsize=(2, 2), plot_adjustment=(0.19, 0.15, 0.99, 0.95), name='DummyChartView 2', interval=0)
 
 ## DummyView
@@ -87,6 +100,8 @@ View uses additional packages:
 A simple View displaying *Hello World*-like text.
 
 ### DummyView examplary usage
+
+![DummyView](/controller/custom_views/examplary_views/images/DummyView.jpg)
 
     examplary_views.DummyView(name='Dummy view', interval=0)
 
@@ -98,6 +113,8 @@ Parameters passed to a constructor:
 - `image_path` - path to a `.jpg` image file
 
 ### ImageView examplary usage
+
+![ImageView](/controller/custom_views/examplary_views/images/ImageView.jpg)
 
     examplary_views.ImageView(name='Image', interval=0, image_path='assets/dog_image.jpg')
 
@@ -115,6 +132,8 @@ View uses additional packages:
 
 ### LastFmView examplary usage
 
+![LastFmView](/controller/custom_views/examplary_views/images/LastFmView.jpg)
+
     examplary_views.LastFmView(name='lastfm', interval=0)
 
 ## QRCodeUiView
@@ -130,6 +149,8 @@ View uses additional packages:
 - `qrcode`
 
 ### QRCodeUiView examplary usage
+
+![QRCodeUiView](/controller/custom_views/examplary_views/images/QRCodeUiView.jpg)
 
     examplary_views.QRCodeUiView(name='QRcode UI', interval=0)
 
@@ -149,6 +170,8 @@ View uses additional packages:
 
 ### QRCodeWiFiView examplary usage
 
+![QRCodeWiFiView](/controller/custom_views/examplary_views/images/QRCodeWiFiView.jpg)
+
     examplary_views.QRCodeWiFiView(name='QRcode WiFi', interval=0)
 
 ## QuoteView
@@ -160,6 +183,8 @@ Parameters passed to a constructor:
 - `author` - author of the quote, displayed below
 
 ### QuoteView examplary usage
+
+![QuoteView](/controller/custom_views/examplary_views/images/QuoteView.jpg)
 
     examplary_views.QuoteView(name='Quote', interval=0, quote='Now, I am become Death, the destroyer of worlds.', author='J. Robert Oppenheimer'),
 
@@ -176,6 +201,8 @@ Parameters passed to a constructor:
 
 ### RSSView examplary usage
 
+![RSSView](/controller/custom_views/examplary_views/images/RSSView.jpg)
+
     examplary_views.RSSView(name='RSS', interval=0, rss_url='https://hnrss.org/newest?count=10')
 
 ## SystemInfoView
@@ -187,6 +214,8 @@ View uses additional packages:
 
 ### SystemInfoView examplary usage
 
+![SystemInfoView](/controller/custom_views/examplary_views/images/SystemInfoView.jpg)
+
     examplary_views.SystemInfoView(name='SystemInfoView', interval=10)
 
 ## SpeedTestView
@@ -197,6 +226,8 @@ View uses additional packages:
 - `speedtest-cli`
 
 ### SpeedTestView examplary usage
+
+![SpeedTestView](/controller/custom_views/examplary_views/images/SpeedTestView.jpg)
 
     examplary_views.SpeedTestView(name='SpeedTest', interval=0)
 
@@ -223,7 +254,12 @@ See more about authorization here: <https://spotipy.readthedocs.io/en/2.22.1/#au
 
 ### SpotifyView examplary usages
 
+![SpotifyView](/controller/custom_views/examplary_views/images/SpotifyView.jpg)
+
     examplary_views.SpotifyView(name='SpotifyView', interval=360)
+
+![SpotifyView 2](/controller/custom_views/examplary_views/images/SpotifyView%202.jpg)
+
     examplary_views.SpotifyView(name='SpotifyView 2', interval=360, album_cover_mode=True)
 
 ## TextView
@@ -234,6 +270,8 @@ Parameters passed to a constructor:
 - `text` - text which will be displayed in italic font
 
 ### TextView examplary usage
+
+![TextView](/controller/custom_views/examplary_views/images/TextView.jpg)
 
     examplary_views.TextView(name='text', interval=0, text='Lorem ipsum dolor sit amet...')
 
@@ -251,6 +289,8 @@ View uses additional packages:
 - `requests`
 
 ### WeatherView examplary usage
+
+![WeatherView](/controller/custom_views/examplary_views/images/WeatherView.jpg)
 
     examplary_views.WeatherView(name='Weather', interval=60)
 
@@ -270,8 +310,13 @@ View uses additional packages:
 
 ### WeatherForecastHourlyView examplary usages
 
-    examplary_views.WeatherForecastHourlyView(name='WeatherForecast', interval=600, figsize=(2, 2), x_label='temperature [°C]', y_label='time [hours]', timestamps=5, hours_additive=True)
-    examplary_views.WeatherForecastHourlyView(name='WeatherForecast 2', interval=600, plot_title='Forecast Hourly', plot_adjustment=(0.19, 0.15, 0.99, 0.95))
+![WeatherForecastHourlyView](/controller/custom_views/examplary_views/images/WeatherForecastHourlyView.jpg)
+
+    examplary_views.WeatherForecastHourlyView(name='WeatherForecastHourlyView', interval=600, figsize=(2, 2), x_label='temperature [°C]', y_label='time [hours]', plot_adjustment=(0.29, 0.25, 0.99, 0.95), timestamps=5, hours_additive=True)
+
+![WeatherForecastHourlyView 2](/controller/custom_views/examplary_views/images/WeatherForecastHourlyView%202.jpg)
+
+    examplary_views.WeatherForecastHourlyView(name='WeatherForecastHourlyView 2', interval=600, figsize=(2.25, 2.25), plot_title='Forecast Hourly', plot_adjustment=(0.19, 0.1, 0.99, 0.9))
 
 ## WeatherForecastDailyView
 
@@ -289,5 +334,10 @@ View uses additional packages:
 
 ### WeatherForecastDailyView examplary usages
 
-    examplary_views.WeatherForecastDailyView(name='WeatherForecastDaily', interval=600, figsize=(2, 2), x_label='temperature [°C]', y_label='time [days]', max_days=4, mode='max')
-    examplary_views.WeatherForecastDailyView(name='WeatherForecastDaily 2', interval=600, figsize=(2, 2), plot_title='Forecast Daily', plot_adjustment=(0.19, 0.15, 0.99, 0.95))
+![WeatherForecastDailyView](/controller/custom_views/examplary_views/images/WeatherForecastDailyView.jpg)
+
+    examplary_views.WeatherForecastDailyView(name='WeatherForecastDaily', interval=600, figsize=(2, 2), x_label='temperature [°C]', y_label='time [days]', plot_adjustment=(0.29, 0.25, 0.99, 0.95), max_days=4, mode='max')
+
+![WeatherForecastDailyView 2](/controller/custom_views/examplary_views/images/WeatherForecastDailyView%202.jpg)
+
+    examplary_views.WeatherForecastDailyView(name='WeatherForecastDaily 2', interval=600, figsize=(1.8, 1.8), plot_adjustment=(0.19, 0.15, 0.99, 0.95))
