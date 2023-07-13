@@ -312,7 +312,7 @@ View uses additional packages:
 
 ![WeatherForecastHourlyView](/controller/custom_views/examplary_views/images/WeatherForecastHourlyView.jpg)
 
-    examplary_views.WeatherForecastHourlyView(name='WeatherForecastHourlyView', interval=600, figsize=(2, 2), x_label='temperature [°C]', y_label='time [hours]', plot_adjustment=(0.29, 0.25, 0.99, 0.95), timestamps=5, hours_additive=True)
+    examplary_views.WeatherForecastHourlyView(name='WeatherForecastHourlyView', interval=600, figsize=(2, 2), x_label='time [hours]', y_label='temperature [°C]', plot_adjustment=(0.29, 0.25, 0.99, 0.95), timestamps=5, hours_additive=True)
 
 ![WeatherForecastHourlyView 2](/controller/custom_views/examplary_views/images/WeatherForecastHourlyView%202.jpg)
 
@@ -336,7 +336,7 @@ View uses additional packages:
 
 ![WeatherForecastDailyView](/controller/custom_views/examplary_views/images/WeatherForecastDailyView.jpg)
 
-    examplary_views.WeatherForecastDailyView(name='WeatherForecastDaily', interval=600, figsize=(2, 2), x_label='temperature [°C]', y_label='time [days]', plot_adjustment=(0.29, 0.25, 0.99, 0.95), max_days=4, mode='max')
+    examplary_views.WeatherForecastDailyView(name='WeatherForecastDaily', interval=600, figsize=(2, 2), x_label='time [days]', y_label='temperature [°C]', plot_adjustment=(0.29, 0.25, 0.99, 0.95), max_days=4, mode='max')
 
 ![WeatherForecastDailyView 2](/controller/custom_views/examplary_views/images/WeatherForecastDailyView%202.jpg)
 
