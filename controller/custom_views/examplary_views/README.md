@@ -57,6 +57,14 @@ Chart view is a boilerplate for chart views.
 
 Methods `_get_data` and `_draw_plot` must be implemented in child class in order to work properly - see `DummyChartView`.
 
+Parameters passed to a constructor:
+
+- `figsize` - tuple of floats to change plot size
+- `plot_adjustment` - tuple of floats to adjust plot position
+- `x_label` - text which will be displayed as X label
+- `y_label` - text which will be displayed as Y label
+- `plot_title` - text which will be displayed as plot title
+
 ## ClockView
 
 This View displays a simple clock with current date.
@@ -84,6 +92,15 @@ View shows dummy basic chart with a random data.
 View uses additional packages:
 
 - `matplotlib`
+
+Parameters passed to a constructor:
+
+- `figsize` - tuple of floats to change plot size
+- `plot_adjustment` - tuple of floats to adjust plot position
+- `x_label` - text which will be displayed as X label
+- `y_label` - text which will be displayed as Y label
+- `plot_title` - text which will be displayed as plot title
+- `plot_type` - type of plot, supported types: `plot`, `scatter`, `bar`, `stem`, `step`, `stackplot`.
 
 ### DummyChartView examplary usages
 
@@ -245,6 +262,10 @@ View uses additional packages:
 - `requests`
 - `spotipy`
 
+Parameters passed to a constructor:
+
+- `album_cover_mode` - if set to True this View will display album cover instead of text information abouth current track
+
 Before first use application must be authorized, you can use a command `make prepare-spotipy` and follow the instructions in terminal:
 
 - go to URL printed in your console, it starts with `https://accounts.spotify.com/authorize?client_id=`
@@ -308,6 +329,16 @@ View uses additional packages:
 - `requests`
 - `matplotlib`
 
+Parameters passed to a constructor:
+
+- `figsize` - tuple of floats to change plot size
+- `plot_adjustment` - tuple of floats to adjust plot position
+- `x_label` - text which will be displayed as X label
+- `y_label` - text which will be displayed as Y label
+- `plot_title` - text which will be displayed as plot title
+- `timestamps` - maximum amount of hours
+- `hours_additive` - if set to True hours will be displayed relative to a first timestamp
+
 ### WeatherForecastHourlyView examplary usages
 
 ![WeatherForecastHourlyView](/controller/custom_views/examplary_views/images/WeatherForecastHourlyView.jpg)
@@ -331,6 +362,16 @@ View uses additional packages:
 
 - `requests`
 - `matplotlib`
+
+Parameters passed to a constructor:
+
+- `figsize` - tuple of floats to change plot size
+- `plot_adjustment` - tuple of floats to adjust plot position
+- `x_label` - text which will be displayed as X label
+- `y_label` - text which will be displayed as Y label
+- `plot_title` - text which will be displayed as plot title
+- `max_days` - maximum amount of days
+- `mode` - `avg` or `max` - either calculate average temperature or get maximum value
 
 ### WeatherForecastDailyView examplary usages
 
