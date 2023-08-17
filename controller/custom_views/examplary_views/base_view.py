@@ -2,16 +2,12 @@
 Base View class
 """
 
-import logging
 from typing import Any
 
 from PIL import Image, ImageDraw, ImageFont
 
+from logger import logger
 from src import View
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 # pylint: disable=R0801,W0223
 

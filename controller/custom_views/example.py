@@ -2,13 +2,7 @@
 Examplary usage of classes: DummyView, BrokenDummyView, ConditionalDummyView and VIEWS list
 """
 
-import logging
-
 from custom_views.examplary_views import DummyView, BrokenDummyView, ConditionalDummyView, ClockView
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 VIEWS = [

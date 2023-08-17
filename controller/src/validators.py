@@ -2,14 +2,12 @@
 Module contains validation functions
 """
 
-import logging
+from logging import _nameToLevel
 
+from logger import logger
 from config import Config
 from src import View
 from custom_views import VIEWS
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 def validate_config() -> None:
@@ -36,6 +34,12 @@ def validate_config() -> None:
             'EPD_MODEL must be a boolean'
         assert isinstance(Config.VITE_API_PORT, int),\
             'VITE_API_PORT must be an integer'
+        assert Config.KAFKA_LOGGING_LEVEL in _nameToLevel,\
+            'KAFKA_LOGGING_LEVEL must be a string representing proper level name'
+        assert Config.MATPLOTLIB_LOGGING_LEVEL in _nameToLevel,\
+            'MATPLOTLIB_LOGGING_LEVEL must be a string representing proper level name'
+        assert Config.TORNADO_LOGGING_LEVEL in _nameToLevel,\
+            'TORNADO_LOGGING_LEVEL must be a string representing proper level name'
         if Config.EPD_MODEL == 'mock':
             assert isinstance(Config.MOCKED_EPD_WIDTH, int) and Config.MOCKED_EPD_WIDTH > 0,\
                 'MOCKED_EPD_WIDTH must be an integer greater than 0'

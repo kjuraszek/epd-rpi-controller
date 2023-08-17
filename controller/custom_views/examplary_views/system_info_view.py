@@ -2,19 +2,15 @@
 SystemInfo view class
 """
 
-import logging
-from collections import namedtuple
-from typing import Any
+from typing import Any, Optional
 
 from PIL import Image, ImageDraw, ImageFont
 import psutil
+from psutil._common import shwtemp
 
 from custom_views.examplary_views.base_view import BaseView
+from logger import logger
 from src.helpers import view_fallback
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 # pylint: disable=R0801
@@ -22,14 +18,14 @@ class SystemInfoView(BaseView):
     '''
     SystemInfo view is displaying: CPU temperature, disk usage, CPU utilization, memory usage and swapped memory usage.
     '''
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
-        self.temperature = None
-        self.disk_usage = None
-        self.cpu_percent = None
-        self.virtual_memory = None
-        self.swap_memory = None
+        self.temperature: Optional[float] = None
+        self.disk_usage: Optional[float] = None
+        self.cpu_percent: Optional[float] = None
+        self.virtual_memory: Optional[float] = None
+        self.swap_memory: Optional[float] = None
 
     @view_fallback
     def _epd_change(self, first_call: bool) -> None:
@@ -65,11 +61,11 @@ class SystemInfoView(BaseView):
         self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
 
-    def _get_system_info(self):
-        try:           
-            Temperature = namedtuple('Temperature', 'current')
+    def _get_system_info(self) -> tuple[Optional[float], ...]:
+        try:
 
-            temperature = psutil.sensors_temperatures().get('cpu_thermal', [Temperature(current=0.0)])[0].current
+            temperature = psutil.sensors_temperatures().get('cpu_thermal', [shwtemp(label='cpu_thermal', current=0.0,
+                                                                                    high=0.0, critical=0.0)])[0].current
             disk_usage = psutil.disk_usage('/').percent
             cpu_percent = psutil.cpu_percent()
             virtual_memory = psutil.virtual_memory().percent
@@ -85,7 +81,8 @@ class SystemInfoView(BaseView):
         if None in (temp_temperature, temp_disk_usage, temp_cpu_percent, temp_virtual_memory, temp_swap_memory):
             return False
         if bool(kwargs['first_call']) or (
-                (temp_temperature, temp_disk_usage, temp_cpu_percent, temp_virtual_memory, temp_swap_memory) != (self.temperature, self.disk_usage, self.cpu_percent, self.virtual_memory, self.swap_memory)):
+                (temp_temperature, temp_disk_usage, temp_cpu_percent, temp_virtual_memory, temp_swap_memory) !=
+                (self.temperature, self.disk_usage, self.cpu_percent, self.virtual_memory, self.swap_memory)):
             self.temperature = temp_temperature
             self.disk_usage = temp_disk_usage
             self.cpu_percent = temp_cpu_percent

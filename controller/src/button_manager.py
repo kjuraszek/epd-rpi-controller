@@ -1,7 +1,6 @@
 """Module exports ButtonManager class"""
 
 import time
-import logging
 from typing import Any, Optional
 
 from kafka import KafkaProducer
@@ -16,9 +15,6 @@ if Config.USE_BUTTONS:
     import RPi.GPIO as GPIO
 else:
     import Mock.GPIO as GPIO
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 class ButtonManager(BaseThread):

@@ -1,7 +1,6 @@
 """An entrypoint for EPD Rpi Controller"""
 
 import time
-import logging
 import importlib
 import signal
 from functools import partial
@@ -11,16 +10,13 @@ from kafka import KafkaAdminClient
 from kafka.admin import NewTopic
 from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError, NoBrokersAvailable, NodeNotReadyError
 
+from logger import logger, configure_lib_loggers
 from config import Config
 from src import Consumer, Producer, ViewManager
 from src.api import MainAPI
 from src.helpers import signal_handler
 from src.validators import validate_config, validate_views
 from custom_views import VIEWS
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 # pylint: disable=C0415
@@ -34,6 +30,7 @@ def main() -> None:
 
     validate_config()
     validate_views()
+    configure_lib_loggers()
 
     if Config.EPD_MODEL == 'mock':
         from src import MockedEPD

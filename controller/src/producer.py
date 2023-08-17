@@ -1,7 +1,6 @@
 """Module exports Producer class"""
 
 import time
-import logging
 
 from kafka import KafkaProducer
 
@@ -9,9 +8,6 @@ from waiting import wait, TimeoutExpired
 
 from config import Config
 from src.helpers import BaseThread
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 class Producer(BaseThread):

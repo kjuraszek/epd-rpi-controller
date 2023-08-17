@@ -1,16 +1,12 @@
 """Module exports View class"""
 
 from datetime import datetime
-import logging
 from typing import Any, Optional
 
 from PIL import Image
 
 from config import Config
 from src.helpers import view_conditional
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 # pylint: disable=W0613
