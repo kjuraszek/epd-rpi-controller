@@ -1,6 +1,6 @@
 # EPD Rpi Controller
 
-Epaper display controller for Raspberry Pi. Project is mostly written in Python 3.9, web interface un Vue.js 3. It is based on Waveshare EPD library, Apache Kafka and Docker containers.
+Epaper display controller for Raspberry Pi. Project is mostly written in Python 3.9, web interface in Vue.js 3. It is based on Waveshare EPD library, Apache Kafka and Docker containers.
 
 ## About the project
 
@@ -9,7 +9,45 @@ Epaper display controller for Raspberry Pi. Project is mostly written in Python 
 This project simplifies displaying custom informations on Epaper display connected to a Raspberry Pi. Display part is realized by a `View` - configured object with a defined method `_epd_change` which performs directly on EPD object. Views are managed by a `View Manager` - they can be switched automatically by some time interval and in a different order. EPD can be simulated using config option - an image with a current view will be generated (instead of displaying it on a physical device). Controller exposes an API to trigger view changes via specific `GET` request. Web user interface is also created to make switching views even simplier.
 
 In addition controller also allows to switch between `Views` using physical buttons.
-More about Controller: go to [Controller](/controller/).
+More about Controller: go to [Controller](/controller/README.md).
+
+### Examplary views
+
+Some examples of predefined views classes.
+
+### Clock
+
+![ClockView](/controller/custom_views/examplary_views/images/ClockView.jpg)
+
+### Image
+
+![ImageView](/controller/custom_views/examplary_views/images/ImageView.jpg)
+
+### QRCode WiFi
+
+![QRCodeWiFiView](/controller/custom_views/examplary_views/images/QRCodeWiFiView.jpg)
+
+### System Info
+
+![SystemInfoView](/controller/custom_views/examplary_views/images/SystemInfoView.jpg)
+
+### SpeedTest
+
+![SpeedTestView](/controller/custom_views/examplary_views/images/SpeedTestView.jpg)
+
+### Spotify
+
+![SpotifyView](/controller/custom_views/examplary_views/images/SpotifyView.jpg)
+
+### Weather
+
+![WeatherView](/controller/custom_views/examplary_views/images/WeatherView.jpg)
+
+### Weather Forecast
+
+![WeatherForecastDailyView](/controller/custom_views/examplary_views/images/WeatherForecastDailyView.jpg)
+
+... and more, see [Examplary Views](/controller/custom_views/examplary_views/README.md).
 
 ## Prerequisites
 
@@ -51,8 +89,8 @@ Alternatively you can use a command:
 to copy contents from `example.py`.
 
 Also custom requirements.txt file is supported.
-To learn more about custom views and custom_requirements.txt go to [Custom views](/controller/custom_views/)
-There are also some predefined View classes - see [Examplary Views](/controller/custom_views/examplary_views/).
+To learn more about custom views and custom_requirements.txt go to [Custom views](/controller/custom_views/README.md)
+There are also some predefined View classes - see [Examplary Views](/controller/custom_views/examplary_views/README.md).
 
 ### Prepare Kafka stack
 
@@ -134,6 +172,8 @@ and then:
 
 Config is stored in a file `epd-rpi-controller.cfg` (file by default doesn't exist).
 
+### `main` section
+
 | Option | Purpose | Values |
 | --- | --- | --- |
 | producer_interval | Interval (in seconds) | positive integers or 0 - 0 means no interval |
@@ -147,7 +187,29 @@ Config is stored in a file `epd-rpi-controller.cfg` (file by default doesn't exi
 | use_buttons | Enables support for two physical buttons (left and right) | bool (yes/no) |
 | left_button_pin | GPIO number (not physical pin on board!) of pin connected to the left button | positive integer |
 | right_button_pin | GPIO number (not physical pin on board!) of pin connected to the right button | positive integer |
+
+### `kafka` section
+
+| Option | Purpose | Values |
+| --- | --- | --- |
 | view_manager_topic | Name of the *topic* used by Kafka | string compatible with Kafka topic naming rules |
+| logging_level | logging level for kafka | level name eg. `DEBUG`, `INFO` etc. |
+
+### `matplotlib` section
+
+| Option | Purpose | Values |
+| --- | --- | --- |
+| logging_level | logging level for matplotlib | level name eg. `DEBUG`, `INFO` etc. |
+
+### `tornado` section
+
+| Option | Purpose | Values |
+| --- | --- | --- |
+| logging_level | logging level for tornado | level name eg. `DEBUG`, `INFO` etc. |
+
+### other sections
+
+Sections below a comment: `; logging config` are related to a main logger, see: <https://docs.python.org/3/library/logging.config.html#configuration-file-format>
 
 ## .env file
 

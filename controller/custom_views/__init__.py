@@ -1,9 +1,6 @@
 """Module exports defined VIEWS"""
 
-import logging
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+from logger import logger
 
 try:
     from custom_views.views import VIEWS

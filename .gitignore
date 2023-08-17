@@ -140,3 +140,6 @@ controller/custom_views/custom_requirements.txt
 
 # custom assets: images etc.
 /assets
+
+# spotipy cache
+.spotipy_cache

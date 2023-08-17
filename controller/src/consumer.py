@@ -1,15 +1,12 @@
 """Module exports Consumer class"""
 
-import logging
+from logger import logger
 
 from kafka import KafkaConsumer
 
 from config import Config
 from src.view_manager import ViewManager
 from src.helpers import BaseThread
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 class Consumer(BaseThread):

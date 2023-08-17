@@ -19,6 +19,8 @@ COPY epd-rpi-controller.cfg .
 COPY .env .
 RUN make install
 
+COPY .spotipy_cache .
+
 EXPOSE $VITE_API_PORT
 
 ENV EPD_RPI_DOCKERIZED true
