@@ -28,6 +28,9 @@ endif
 install-dev: install
 	$(VENV_ACTIVATE_CONTROLLER) && $(PIP_CONTROLLER) install -r $(CONTROLLER)/requirements_development.txt
 
+install-ui:
+	npm install --prefix $(FRONT)
+
 create-config:
 ifeq ($(shell test -s epd-rpi-controller.cfg && echo -n 0), 0)
 	@echo 'Skipping this step - epd-rpi-controller.cfg file exists.'
@@ -45,7 +48,7 @@ endif
 create-docker-network:
 	docker network create epd-rpi-network || true
 
-prepare: install create-config create-env create-docker-network create-assets-folder
+prepare: install install-ui create-config create-env create-docker-network create-assets-folder
 
 create-views-file:
 ifeq ($(shell test -s controller/custom_views/views.py && echo -n 0), 0)
@@ -136,4 +139,4 @@ clean:
 	rm -rf mocked_epd.png
 	rm -rf assets
 	
-.PHONY: venv install create-env create-config create-assets-folder copy-config prepare run-controller run-ui build-docker run-docker stop-docker clean-docker clean
+.PHONY: venv install install-ui create-env create-config create-assets-folder copy-config prepare run-controller run-ui build-docker run-docker stop-docker clean-docker clean
