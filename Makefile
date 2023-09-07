@@ -4,17 +4,25 @@ VENV = venv
 CONTROLLER = controller
 FRONT = front
 
-PYTHON_VERSION = 3.9
+PYTHON_VERSION = 3.11
 SYSTEM_PYTHON = $(shell which python$(PYTHON_VERSION))
 
 VENV_ACTIVATE_CONTROLLER = . $(VENV)/bin/activate
 
 PYTHON_CONTROLLER = $(VENV)/bin/python$(PYTHON_VERSION)
 
-PIP_CONTROLLER = $(VENV)/bin/pip
+PIP_CONTROLLER = $(VENV)/bin/pip$(PYTHON_VERSION)
 
 venv:
-	test -d $(VENV) || $(SYSTEM_PYTHON) -m venv $(VENV)
+ifneq ($(shell test -d $(VENV) && echo -n 1), 1)
+	@echo 'Venv not exists. Proceeding with setting up virtual environment'
+	$(SYSTEM_PYTHON) -m venv $(VENV)
+else ifeq ($(shell test -d $(VENV) && test -f $(PYTHON_CONTROLLER) && echo -n 1), 1)
+	@echo 'Venv exists with Python $(PYTHON_VERSION). Nothing to do in this step, moving forward.'
+else
+	@echo 'Venv exists without Python $(PYTHON_VERSION). Consider removing or renaming this directory to avoid conflicts and run command again.'
+	@exit 1
+endif
 
 install: venv
 	$(VENV_ACTIVATE_CONTROLLER) && $(PIP_CONTROLLER) install -r $(CONTROLLER)/requirements.txt

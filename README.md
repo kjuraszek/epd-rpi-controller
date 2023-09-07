@@ -1,6 +1,6 @@
 # EPD Rpi Controller
 
-Epaper display controller for Raspberry Pi. Project is mostly written in Python 3.9, web interface in Vue.js 3. It is based on Waveshare EPD library, Apache Kafka and Docker containers.
+Epaper display controller for Raspberry Pi. Project is mostly written in Python 3.9 and above, web interface in Vue.js 3. The project makes use of a Waveshare EPD library, Apache Kafka and Docker containers.
 
 ## About the project
 
