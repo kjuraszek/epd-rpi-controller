@@ -1,6 +1,6 @@
 # EPD Rpi Controller
 
-Epaper display controller for Raspberry Pi. Project is mostly written in Python 3.9, web interface in Vue.js 3. It is based on Waveshare EPD library, Apache Kafka and Docker containers.
+Epaper display controller for Raspberry Pi. Project is mostly written in Python 3.9 and above, web interface in Vue.js 3. The project makes use of a Waveshare EPD library, Apache Kafka and Docker containers.
 
 ## About the project
 
@@ -82,7 +82,7 @@ which:
 - installs JS dependencies
 - creates docker network `epd-rpi-network`
 
-You should adjust config and .env files to your needs - however bear in mind that all defined variables/parameters in examplary .cfg/.env files are crucial for controller to work properly. Also to run the Controller you must prepare Views in `controller/custom_views/views.py` (file by default doesn't exist) - take a look on file `controller/custom_views/example.py`.
+You should adjust config and .env files to your needs - however bear in mind that all defined variables/parameters in examplary .cfg/.env files are crucial for controller to work properly. Also to run the Controller you must prepare Views in `controller/custom_views/views.py` (file by default doesn't exist) - take a look on files `controller/custom_views/example.py` and `controller/custom_views/examplary_usages.py`.
 Alternatively you can use a command:
 
 `make create-views-file`

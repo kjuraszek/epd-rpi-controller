@@ -12,6 +12,8 @@ Every view must be constructed with two parameters:
 
 If a view angle should be different than set in config it can be overriden by optional `view_angle` parameter.
 
+Some of below examples are also presented in `controller/custom_views/examplary_usages.py` file.
+
 Some of those views can be seen on this video:
 
 [![EPD RPi Controller](/images/epd-rpi-controller-yt.jpg)](https://youtu.be/IhibN0U2Lx4?t=127 "Raspberry Pi Epaper Display Controller")

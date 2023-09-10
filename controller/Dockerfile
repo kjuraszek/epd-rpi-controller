@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster
+FROM python:3.11-slim-bookworm
 ARG TIMEZONE
 ARG VITE_API_PORT
 RUN apt-get update && apt-get upgrade -y
@@ -14,15 +14,12 @@ RUN mkdir controller
 COPY controller controller
 RUN mkdir assets
 COPY assets assets
-COPY Makefile .
-COPY epd-rpi-controller.cfg .
-COPY .env .
-RUN make install
+COPY Makefile epd-rpi-controller.cfg .env .spotipy_cache* /code/
 
-COPY .spotipy_cache .
+RUN make install
 
 EXPOSE $VITE_API_PORT
 
 ENV EPD_RPI_DOCKERIZED true
 
-CMD ["venv/bin/python3.9", "controller/main.py"]
+CMD ["venv/bin/python3.11", "controller/main.py"]
