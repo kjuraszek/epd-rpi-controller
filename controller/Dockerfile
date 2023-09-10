@@ -14,12 +14,9 @@ RUN mkdir controller
 COPY controller controller
 RUN mkdir assets
 COPY assets assets
-COPY Makefile .
-COPY epd-rpi-controller.cfg .
-COPY .env .
-RUN make install
+COPY Makefile epd-rpi-controller.cfg .env .spotipy_cache* /code/
 
-COPY .spotipy_cache .
+RUN make install
 
 EXPOSE $VITE_API_PORT
 
