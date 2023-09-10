@@ -4,7 +4,7 @@ Instruction on how to use custom views.
 
 ## views.py file
 
-Firstly a `views.py` file must be created - it can be based or copied from `example.py` file. It must contain a list `VIEWS` containing *View* class objects only.
+Firstly a `views.py` file must be created - it can be based or copied from `example.py` file. It must contain a list `VIEWS` containing *View* class objects only. `examplary_usages.py` file shows examplary usages of examplary_views classes.
 
 ## View class
 
