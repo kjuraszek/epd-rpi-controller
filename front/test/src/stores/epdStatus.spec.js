@@ -3,18 +3,11 @@ import { flushPromises } from "@vue/test-utils";
 import { createPinia, setActivePinia } from 'pinia'
 import { useEpdStatusStore } from '@/stores/epdStatus'
 import { useUiStatusStore } from '@/stores/uiStatus'
+import { createFetchResponseJSON, createFetchResponseBlob } from 'test/helpers'
 
 
 global.fetch = vi.fn()
 global.URL.createObjectURL = vi.fn()
-
-function createFetchResponseJSON(data) {
-  return { json: () => new Promise((resolve) => resolve(data)) }
-}
-
-function createFetchResponseBlob(data) {
-  return { blob: () => new Promise((resolve) => resolve(data)) }
-}
 
 describe('epdStatus Store', () => {
   beforeEach(() => {

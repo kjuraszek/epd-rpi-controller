@@ -23,4 +23,12 @@ const getMockedConsts = () => ({
 })
 
 
-export { mockWindowLocation, restoreWindowLocation, getMockedConsts }
+const createFetchResponseJSON = (data) => {
+    return { json: () => new Promise((resolve) => resolve(data)) }
+}
+  
+const createFetchResponseBlob = (data) => {
+    return { blob: () => new Promise((resolve) => resolve(data)) }
+}
+
+export { mockWindowLocation, restoreWindowLocation, getMockedConsts, createFetchResponseJSON, createFetchResponseBlob }
