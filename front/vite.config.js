@@ -45,7 +45,6 @@ export default defineConfig(({command, mode}) => {
       exclude: [
         "**/node_modules/**",
       ],
-      alias: [{ find: /^vue$/, replacement: "vue/dist/vue.runtime.common.js" }],
       environment: "jsdom",
       globals: true,
       reporter: ["verbose"],
