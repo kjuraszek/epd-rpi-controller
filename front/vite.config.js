@@ -67,8 +67,10 @@ export default defineConfig(({command, mode}) => {
       },
       deps: {
         external: ["**/node_modules/**", "**/dist/**"],
+        inline: ["vuetify"],
       },
       include: ["**/*.spec.{js,ts,vue}"],
+      setupFiles: ['./test/setup.js'],
     },
   }
 })
