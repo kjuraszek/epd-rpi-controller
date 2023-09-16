@@ -127,9 +127,12 @@ typing-mypy:
 test-controller:
 	$(VENV_ACTIVATE_CONTROLLER) && pytest $(CONTROLLER)/tests/
 
+test-ui:
+	npm run --prefix $(FRONT) test
+
 check-controller: install-dev lint-controller typing-mypy test-controller
 
-check-ui: lint-ui
+check-ui: lint-ui test-ui
 
 check: check-controller check-ui
 

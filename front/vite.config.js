@@ -40,5 +40,37 @@ export default defineConfig(({command, mode}) => {
     server: {
       port: parseInt(env.VITE_UI_PORT),
     },
+    test: {
+      passWithNoTests: true,
+      exclude: [
+        "**/node_modules/**",
+      ],
+      environment: "jsdom",
+      globals: true,
+      reporter: ["verbose"],
+      mockReset: true,
+      coverage: {
+        provider: "c8",
+        all: true,
+        reporter: ["text", "text-summary", "html"],
+        include: ["**/*.{js,ts,vue}"],
+        exclude: [
+          "*.{config,options,spec,eslintrc}.*",
+          "coverage/**",
+          "dist/**",
+          "public/**",
+          "test/**",
+          "src/assets/**",
+          "src/plugins/**",
+        ],
+        reportsDirectory: "coverage",
+      },
+      deps: {
+        external: ["**/node_modules/**", "**/dist/**"],
+        inline: ["vuetify"],
+      },
+      include: ["**/*.spec.{js,ts,vue}"],
+      setupFiles: ['./test/setup.js'],
+    },
   }
 })
