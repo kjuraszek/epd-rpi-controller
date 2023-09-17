@@ -44,6 +44,7 @@ export default defineConfig(({command, mode}) => {
       passWithNoTests: true,
       exclude: [
         "**/node_modules/**",
+        "main.js",
       ],
       environment: "jsdom",
       globals: true,
@@ -62,6 +63,7 @@ export default defineConfig(({command, mode}) => {
           "test/**",
           "src/assets/**",
           "src/plugins/**",
+          "src/main.js",
         ],
         reportsDirectory: "coverage",
       },
