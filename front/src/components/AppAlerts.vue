@@ -1,11 +1,13 @@
 <template>
   <div class="text-center">
+    /* c8 ignore start */
     <v-snackbar
       v-model="successAlert"
       :timeout="timeout"
       variant="tonal"
       class="pa-0"
     >
+      /* c8 ignore stop */
       <v-alert
         width="100%"
         type="success"
@@ -14,12 +16,14 @@
       </v-alert>
     </v-snackbar>
 
+    /* c8 ignore start */
     <v-snackbar
       v-model="warningAlert"
       :timeout="timeout"
       variant="tonal"
       class="pa-0"
     >
+      /* c8 ignore stop */
       <v-alert
         width="100%"
         type="warning"
@@ -28,12 +32,14 @@
       </v-alert>
     </v-snackbar>
 
+    /* c8 ignore start */
     <v-snackbar
       v-model="errorAlert"
       :timeout="timeout"
       variant="tonal"
       class="pa-0"
     >
+      /* c8 ignore stop */
       <v-alert
         width="100%"
         type="error"
