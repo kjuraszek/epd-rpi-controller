@@ -1,19 +1,11 @@
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mount, flushPromises } from "@vue/test-utils"
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import { createTestingPinia  } from '@pinia/testing'
-import { mockWindowLocation, restoreWindowLocation } from 'test/helpers'
+import { mockWindowLocation, restoreWindowLocation, vuetify } from 'test/helpers'
 import App from "@/App.vue"
 import { useUiStatusStore } from '@/stores/uiStatus'
 
-
-const vuetify = createVuetify({
-  components,
-  directives,
-})
 
 describe('App', () => {
   let wrapper = null

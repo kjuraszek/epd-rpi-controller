@@ -1,31 +1,18 @@
-import { afterAll, beforeAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mount, enableAutoUnmount, flushPromises } from "@vue/test-utils"
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import { createTestingPinia  } from '@pinia/testing'
-import { mockWindowLocation, restoreWindowLocation } from 'test/helpers'
 import ControlButton from '@/components/ControlButton.vue'
 import { useUiStatusStore } from '@/stores/uiStatus'
+import { vuetify } from 'test/helpers'
 
 
 global.fetch = vi.fn()
 
-const vuetify = createVuetify({
-  components,
-  directives,
-})
 
 describe('ControlButton', () => {
 
   enableAutoUnmount(afterEach)
 
-  beforeAll(() => {
-    mockWindowLocation()
-  })
-  afterAll(() => {
-    restoreWindowLocation()
-  })
 
   it("throws error when no action set", async () => {
     expect( () => mount(ControlButton, {

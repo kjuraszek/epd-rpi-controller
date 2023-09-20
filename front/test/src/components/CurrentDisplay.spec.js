@@ -1,21 +1,15 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 import { mount, enableAutoUnmount } from "@vue/test-utils"
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import { createTestingPinia  } from '@pinia/testing'
 import CurrentDisplay from '@/components/CurrentDisplay.vue'
 import { useUiStatusStore } from '@/stores/uiStatus'
 import { useEpdStatusStore } from '@/stores/epdStatus'
+import { vuetify } from 'test/helpers'
 
 
 global.fetch = vi.fn()
 
-const vuetify = createVuetify({
-  components,
-  directives,
-})
 
 describe('CurrentDisplay', () => {
 

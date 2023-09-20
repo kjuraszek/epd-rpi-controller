@@ -1,20 +1,14 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mount, enableAutoUnmount } from "@vue/test-utils"
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import { createTestingPinia  } from '@pinia/testing'
 import CurrentDisplayInfo from '@/components/CurrentDisplayInfo.vue'
 import { useEpdStatusStore } from '@/stores/epdStatus'
+import { vuetify } from 'test/helpers'
 
 
 global.fetch = vi.fn()
 
-const vuetify = createVuetify({
-  components,
-  directives,
-})
 
 describe('CurrentDisplayInfo', () => {
 
@@ -48,7 +42,7 @@ describe('CurrentDisplayInfo', () => {
             totalViews: 5,
         })
         await nextTick()
-        console.log(wrapper.html())
+
         expect(wrapper.findAll("p").length).toBe(2)
         expect(wrapper.findAll("p")[0].text().length).toBe(0)
         expect(wrapper.findAll("p")[1].text()).toContain("View 2 of 5")
@@ -60,16 +54,9 @@ describe('CurrentDisplayInfo', () => {
             epdBusy: true,
         })
         await nextTick()
-        console.log(wrapper.html())
+
         expect(wrapper.findAll("p").length).toBe(2)
         expect(wrapper.findAll("p")[0].text()).toContain("(EPD is switching)")
         expect(wrapper.findAll("p")[1].text()).toContain("View 2 of 5")
     })
-    // it("shows image with shadow when loading", async () => {
-    //     epdStatusStore.currentImage = "http://localhost/image.jpg"
-    //     await nextTick()
-
-    //     expect(wrapper.find("div.img-loading-shadow").exists()).toBe(true)
-    //     expect(wrapper.find("img").exists()).toBe(true)
-    // })
 })
