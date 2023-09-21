@@ -1,3 +1,13 @@
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
+
+const vuetify = createVuetify({
+  components,
+  directives,
+})
+
 const GLOBAL_LOCATION = global.window.location
 
 const mockWindowLocation = () => {
@@ -31,4 +41,4 @@ const createFetchResponseBlob = (data) => {
     return { blob: () => new Promise((resolve) => resolve(data)) }
 }
 
-export { mockWindowLocation, restoreWindowLocation, getMockedConsts, createFetchResponseJSON, createFetchResponseBlob }
+export { mockWindowLocation, restoreWindowLocation, getMockedConsts, createFetchResponseJSON, createFetchResponseBlob, vuetify }

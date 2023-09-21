@@ -1,15 +1,8 @@
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { mount, enableAutoUnmount } from "@vue/test-utils"
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import AppFooter from "@/components/AppFooter.vue"
+import { vuetify } from 'test/helpers'
 
-
-const vuetify = createVuetify({
-  components,
-  directives,
-})
 
 describe('AppFooter', () => {
   let wrapper = null
