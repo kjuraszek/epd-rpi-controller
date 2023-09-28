@@ -1,13 +1,13 @@
-import { nextTick } from 'vue'
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { nextTick } from "vue"
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest"
 import { mount, flushPromises } from "@vue/test-utils"
-import { createTestingPinia  } from '@pinia/testing'
-import { mockWindowLocation, restoreWindowLocation, vuetify } from 'test/helpers'
+import { createTestingPinia  } from "@pinia/testing"
+import { mockWindowLocation, restoreWindowLocation, vuetify } from "test/helpers"
 import App from "@/App.vue"
-import { useUiStatusStore } from '@/stores/uiStatus'
+import { useUiStatusStore } from "@/stores/uiStatus"
 
 
-describe('App', () => {
+describe("App", () => {
   let wrapper = null
   let app = null
   let store = null
@@ -17,7 +17,7 @@ describe('App', () => {
   })
 
   beforeEach(() => {
-    wrapper = mount({template: '<v-layout><App></App></v-layout>'}, {
+    wrapper = mount({template: "<v-layout><App></App></v-layout>"}, {
       props: {},
       global: {
         plugins: [vuetify,
@@ -42,15 +42,15 @@ describe('App', () => {
     expect(app.vm.$data.interval).not.toBe(null)
   })
   it("has proper components", async () => {
-    expect(app.findAllComponents('.v-toolbar').length).toBe(1)
-    expect(app.findAllComponents('.v-main').length).toBe(1)
-    expect(app.findAllComponents('.v-footer').length).toBe(1)
+    expect(app.findAllComponents(".v-toolbar").length).toBe(1)
+    expect(app.findAllComponents(".v-main").length).toBe(1)
+    expect(app.findAllComponents(".v-footer").length).toBe(1)
   })
   describe("methods", () => {
     describe("startInterval", () => {
       beforeEach(() => {
         vi.useFakeTimers()
-        wrapper = mount({template: '<v-layout><App></App></v-layout>'}, {
+        wrapper = mount({template: "<v-layout><App></App></v-layout>"}, {
           props: {},
           global: {
             plugins: [vuetify,

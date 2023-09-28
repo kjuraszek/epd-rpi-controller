@@ -1,15 +1,15 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { flushPromises } from "@vue/test-utils";
-import { createPinia, setActivePinia } from 'pinia'
-import { useEpdStatusStore } from '@/stores/epdStatus'
-import { useUiStatusStore } from '@/stores/uiStatus'
-import { createFetchResponseJSON, createFetchResponseBlob } from 'test/helpers'
+import { createPinia, setActivePinia } from "pinia"
+import { useEpdStatusStore } from "@/stores/epdStatus"
+import { useUiStatusStore } from "@/stores/uiStatus"
+import { createFetchResponseJSON, createFetchResponseBlob } from "test/helpers"
 
 
 global.fetch = vi.fn()
 global.URL.createObjectURL = vi.fn()
 
-describe('epdStatus Store', () => {
+describe("epdStatus Store", () => {
   beforeEach(() => {
     setActivePinia(createPinia())
   })
@@ -17,9 +17,9 @@ describe('epdStatus Store', () => {
     vi.clearAllMocks()
     vi.resetAllMocks()
   })
-  describe('actions', () => {
-      describe('fetchStatus', () => {
-        it('is triggering fetching image and updating epdStatus', async () => {
+  describe("actions", () => {
+      describe("fetchStatus", () => {
+        it("is triggering fetching image and updating epdStatus", async () => {
           
           const epdResponse = {
             "current_view": 0,
@@ -32,8 +32,8 @@ describe('epdStatus Store', () => {
 
           const epdStatusStore = useEpdStatusStore()
           const uiStatusStore = useUiStatusStore()
-          const spyFetchCurrentImage = vi.spyOn(epdStatusStore, 'fetchCurrentImage').mockImplementation(vi.fn)
-          const spyPatch = vi.spyOn(uiStatusStore, '$patch').mockImplementation()
+          const spyFetchCurrentImage = vi.spyOn(epdStatusStore, "fetchCurrentImage").mockImplementation(vi.fn)
+          const spyPatch = vi.spyOn(uiStatusStore, "$patch").mockImplementation()
 
           expect(epdStatusStore.timestamp).toBe(null)
 
@@ -46,7 +46,7 @@ describe('epdStatus Store', () => {
           expect(spyPatch).toHaveBeenCalledTimes(4)
         })
 
-        it('is not fetching image if epd is busy', async () => {
+        it("is not fetching image if epd is busy", async () => {
           
           const epdResponse = {
             "current_view": 0,
@@ -59,8 +59,8 @@ describe('epdStatus Store', () => {
 
           const epdStatusStore = useEpdStatusStore()
           const uiStatusStore = useUiStatusStore()
-          const spyFetchCurrentImage = vi.spyOn(epdStatusStore, 'fetchCurrentImage').mockImplementation(vi.fn)
-          const spyPatch = vi.spyOn(uiStatusStore, '$patch').mockImplementation()
+          const spyFetchCurrentImage = vi.spyOn(epdStatusStore, "fetchCurrentImage").mockImplementation(vi.fn)
+          const spyPatch = vi.spyOn(uiStatusStore, "$patch").mockImplementation()
 
           await epdStatusStore.fetchStatus()
           await flushPromises()
@@ -70,7 +70,7 @@ describe('epdStatus Store', () => {
           expect(spyPatch).toHaveBeenCalledTimes(2)
         })
 
-        it('updates UI status when fetching status fails', async () => {
+        it("updates UI status when fetching status fails", async () => {
 
           const epdResponse = null
 
@@ -78,8 +78,8 @@ describe('epdStatus Store', () => {
 
           const epdStatusStore = useEpdStatusStore()
           const uiStatusStore = useUiStatusStore()
-          const spyFetchCurrentImage = vi.spyOn(epdStatusStore, 'fetchCurrentImage').mockImplementation(vi.fn)
-          const spyPatch = vi.spyOn(uiStatusStore, '$patch')
+          const spyFetchCurrentImage = vi.spyOn(epdStatusStore, "fetchCurrentImage").mockImplementation(vi.fn)
+          const spyPatch = vi.spyOn(uiStatusStore, "$patch")
 
           await epdStatusStore.fetchStatus()
           await flushPromises()
@@ -92,14 +92,14 @@ describe('epdStatus Store', () => {
           expect(spyPatch).toHaveBeenCalledTimes(3)
         })
 
-        it('not fetching image if UI is already fetching', async () => {
+        it("not fetching image if UI is already fetching", async () => {
 
           const epdStatusStore = useEpdStatusStore()
           const uiStatusStore = useUiStatusStore()
           uiStatusStore.$patch({fetchingStatus: true})
 
-          const spyFetchCurrentImage = vi.spyOn(epdStatusStore, 'fetchCurrentImage').mockImplementation(vi.fn)
-          const spyPatch = vi.spyOn(uiStatusStore, '$patch').mockImplementation()
+          const spyFetchCurrentImage = vi.spyOn(epdStatusStore, "fetchCurrentImage").mockImplementation(vi.fn)
+          const spyPatch = vi.spyOn(uiStatusStore, "$patch").mockImplementation()
 
 
           await epdStatusStore.fetchStatus()
@@ -109,10 +109,10 @@ describe('epdStatus Store', () => {
           expect(spyPatch).not.toHaveBeenCalled()
         })
       })
-      describe('fetchCurrentImage', () => {
-        it('is fetching image and updating epdStatus', async () => {
+      describe("fetchCurrentImage", () => {
+        it("is fetching image and updating epdStatus", async () => {
           
-          const epdResponse = new Blob(['1,2,3'], {type: 'image/jpg'})
+          const epdResponse = new Blob(["1,2,3"], {type: "image/jpg"})
           const mockedObjectURL = "blob:localhost/1e423fda-22a2-4b2a-bca9-ab5c186493fe"
 
           fetch.mockResolvedValue(createFetchResponseBlob(epdResponse))
@@ -120,7 +120,7 @@ describe('epdStatus Store', () => {
 
           const epdStatusStore = useEpdStatusStore()
           const uiStatusStore = useUiStatusStore()
-          const spyPatch = vi.spyOn(uiStatusStore, '$patch')
+          const spyPatch = vi.spyOn(uiStatusStore, "$patch")
 
           await epdStatusStore.fetchCurrentImage()
           await flushPromises()
@@ -129,7 +129,7 @@ describe('epdStatus Store', () => {
           expect(uiStatusStore.loadingImage).toBe(false)
           expect(spyPatch).toHaveBeenCalledTimes(1)
         })
-        it('updates UI status when fetching image fails', async () => {
+        it("updates UI status when fetching image fails", async () => {
 
           const epdResponse = null
 
@@ -137,7 +137,7 @@ describe('epdStatus Store', () => {
 
           const epdStatusStore = useEpdStatusStore()
           const uiStatusStore = useUiStatusStore()
-          const spyPatch = vi.spyOn(uiStatusStore, '$patch')
+          const spyPatch = vi.spyOn(uiStatusStore, "$patch")
 
           await epdStatusStore.fetchCurrentImage()
           await flushPromises()

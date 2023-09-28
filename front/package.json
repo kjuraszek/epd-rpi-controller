@@ -6,7 +6,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint --ext .js,.vue src",
-    "test": "VITE_API_PORT=50000 vitest --run --coverage"
+    "test": "VITE_API_PORT=50000 vitest --run --coverage --silent"
   },
   "dependencies": {
     "@mdi/font": "7.0.96",

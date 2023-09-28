@@ -1,16 +1,16 @@
-import { nextTick } from 'vue'
-import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { nextTick } from "vue"
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest"
 import { mount } from "@vue/test-utils"
-import { createTestingPinia  } from '@pinia/testing'
-import { mockWindowLocation, restoreWindowLocation, vuetify } from 'test/helpers'
+import { createTestingPinia  } from "@pinia/testing"
+import { mockWindowLocation, restoreWindowLocation, vuetify } from "test/helpers"
 import AppMain from "@/components/AppMain.vue"
-import ControlButton from '@/components/ControlButton.vue'
-import CurrentDisplay from '@/components/CurrentDisplay.vue'
-import MainHeadings from '@/components/MainHeadings.vue'
-import { useUiStatusStore } from '@/stores/uiStatus'
+import ControlButton from "@/components/ControlButton.vue"
+import CurrentDisplay from "@/components/CurrentDisplay.vue"
+import MainHeadings from "@/components/MainHeadings.vue"
+import { useUiStatusStore } from "@/stores/uiStatus"
 
 
-describe('AppMain', () => {
+describe("AppMain", () => {
   let wrapper = null
   let store = null
 
@@ -46,7 +46,7 @@ describe('AppMain', () => {
     expect(wrapper.findAllComponents(MainHeadings)).toHaveLength(1)
     expect(wrapper.findAllComponents(ControlButton)).toHaveLength(2)
     expect(wrapper.findAllComponents(CurrentDisplay)).toHaveLength(1)
-    expect(wrapper.findComponent('.v-alert').exists()).toBe(false)
+    expect(wrapper.findComponent(".v-alert").exists()).toBe(false)
   })
   it("shows error alert when more than 50 failed requests", async () => {
     store.$patch({
@@ -58,6 +58,6 @@ describe('AppMain', () => {
     expect(wrapper.findAllComponents(MainHeadings)).toHaveLength(1)
     expect(wrapper.findComponent(ControlButton).exists()).toBe(false)
     expect(wrapper.findComponent(CurrentDisplay).exists()).toBe(false)
-    expect(wrapper.getComponent('.v-alert').text()).toContain('Unable to connect to an API')
+    expect(wrapper.getComponent(".v-alert").text()).toContain("Unable to connect to an API")
   })
 })
