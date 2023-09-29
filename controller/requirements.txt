@@ -4,7 +4,7 @@ mypy_extensions==1.0.0
 Mock.GPIO==0.1.8
 python-dotenv==0.21.0
 Pillow==9.3.0
-RPi.GPIO==0.7.1
+RPi.GPIO2
 spidev==3.5
 tornado==6.3.3
 tornado-swagger==1.4.5
