@@ -7,8 +7,6 @@ FRONT = front
 PYTHON_VERSION = 3.11
 SYSTEM_PYTHON = $(shell which python$(PYTHON_VERSION))
 
-VENV_ACTIVATE_CONTROLLER = . $(VENV)/bin/activate
-
 PYTHON_CONTROLLER = $(VENV)/bin/python$(PYTHON_VERSION)
 
 PIP_CONTROLLER = $(VENV)/bin/pip$(PYTHON_VERSION)
@@ -25,16 +23,18 @@ else
 endif
 
 install: venv
-	$(VENV_ACTIVATE_CONTROLLER) && $(PIP_CONTROLLER) install -r $(CONTROLLER)/requirements.txt
+	$(PIP_CONTROLLER) install -r $(CONTROLLER)/requirements.txt
+	# W/A for issues with RPi.GPIO
+	$(PIP_CONTROLLER) install --upgrade --force-reinstall RPi.GPIO
 ifeq ($(shell test -f $(CONTROLLER)/custom_views/custom_requirements.txt && echo -n 0), 0)
 	@echo 'Installing custom_requirements.'
-	$(VENV_ACTIVATE_CONTROLLER) && $(PIP_CONTROLLER) install -r $(CONTROLLER)/custom_views/custom_requirements.txt
+	$(PIP_CONTROLLER) install -r $(CONTROLLER)/custom_views/custom_requirements.txt
 else
 	@echo 'No custom_requirements.txt file - skipping.'
 endif
 
 install-dev: install
-	$(VENV_ACTIVATE_CONTROLLER) && $(PIP_CONTROLLER) install -r $(CONTROLLER)/requirements_development.txt
+	$(PIP_CONTROLLER) install -r $(CONTROLLER)/requirements_development.txt
 
 install-ui:
 	npm install --prefix $(FRONT)
@@ -73,7 +73,7 @@ else
 endif
 
 run-controller:
-	$(VENV_ACTIVATE_CONTROLLER) && $(PYTHON_CONTROLLER) $(CONTROLLER)/main.py
+	$(PYTHON_CONTROLLER) $(CONTROLLER)/main.py
 
 run-ui:
 	export VITE_UI_PORT=$(VITE_UI_PORT) &&\
@@ -84,7 +84,7 @@ build-docker:
 	docker compose --profile all build
 
 prepare-spotipy: install
-	$(VENV_ACTIVATE_CONTROLLER) && $(PYTHON_CONTROLLER) $(CONTROLLER)/spotipy_helper.py
+	$(PYTHON_CONTROLLER) $(CONTROLLER)/spotipy_helper.py
 
 run-docker:
 	docker compose up -d
@@ -111,10 +111,10 @@ clean-docker:
 	docker compose down --rmi=all --volume
 
 lint-pylint:
-	$(VENV_ACTIVATE_CONTROLLER) && $(VENV)/bin/pylint --rcfile=$(CONTROLLER)/.pylintrc $(CONTROLLER)/
+	$(VENV)/bin/pylint --rcfile=$(CONTROLLER)/.pylintrc $(CONTROLLER)/
 
 lint-flake8:
-	$(VENV_ACTIVATE_CONTROLLER) && $(VENV)/bin/flake8 --config=$(CONTROLLER)/.flake8 $(CONTROLLER)/
+	$(VENV)/bin/flake8 --config=$(CONTROLLER)/.flake8 $(CONTROLLER)/
 
 lint-ui:
 	npm run --prefix $(FRONT) lint
@@ -122,10 +122,10 @@ lint-ui:
 lint-controller: lint-pylint lint-flake8
 
 typing-mypy:
-	$(VENV_ACTIVATE_CONTROLLER) && $(VENV)/bin/mypy $(CONTROLLER) --config-file $(CONTROLLER)/mypy.ini --strict
+	$(VENV)/bin/mypy $(CONTROLLER) --config-file $(CONTROLLER)/mypy.ini --strict
 
 test-controller:
-	$(VENV_ACTIVATE_CONTROLLER) && pytest $(CONTROLLER)/tests/
+	$(VENV)/bin/pytest $(CONTROLLER)/tests/
 
 test-ui:
 	npm run --prefix $(FRONT) test
