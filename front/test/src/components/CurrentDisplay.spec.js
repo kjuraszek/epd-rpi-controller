@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { nextTick } from "vue"
-import { mount, enableAutoUnmount } from "@vue/test-utils"
+import { mount, enableAutoUnmount, flushPromises } from "@vue/test-utils"
 import { createTestingPinia  } from "@pinia/testing"
 import CurrentDisplay from "@/components/CurrentDisplay.vue"
 import { useUiStatusStore } from "@/stores/uiStatus"
@@ -54,5 +54,127 @@ describe("CurrentDisplay", () => {
 
     expect(wrapper.find("div.img-loading-shadow").exists()).toBe(true)
     expect(wrapper.find("img").exists()).toBe(true)
+  })
+  it("triggers swipeHandler on horizontal swipe", async () => {
+    const response = {
+      status: 204
+    }
+    fetch.mockResolvedValue(response)
+    epdStatusStore.currentImage = "http://localhost/image.jpg"
+
+    await nextTick()
+
+    const spy = vi.spyOn(wrapper.vm, "swipeHandler")
+    wrapper.find("div.img-no-shadow").trigger("touchstart", { changedTouches:[
+      {
+        clientX: 199,
+        clientY: 451,
+        identifier: 99
+      }
+    ] })
+    wrapper.find("div.img-no-shadow").trigger("touchend", { changedTouches:[
+      {
+        clientX: 23,
+        clientY: 451,
+        identifier: 99
+      }
+    ] })
+    await nextTick()
+
+    expect(spy).toHaveBeenCalledWith("prev")
+  })
+  it("does nothing on vertical swipe", async () => {
+    const response = {
+      status: 204
+    }
+    fetch.mockResolvedValue(response)
+    epdStatusStore.currentImage = "http://localhost/image.jpg"
+
+    await nextTick()
+
+    const spy = vi.spyOn(wrapper.vm, "swipeHandler")
+    wrapper.find("div.img-no-shadow").trigger("touchstart", { changedTouches:[
+      {
+        clientX: 199,
+        clientY: 451,
+        identifier: 99
+      }
+    ] })
+    wrapper.find("div.img-no-shadow").trigger("touchend", { changedTouches:[
+      {
+        clientX: 199,
+        clientY: 251,
+        identifier: 99
+      }
+    ] })
+    await nextTick()
+
+    expect(spy).toHaveBeenCalledTimes(0)
+  })
+  describe("methods", () => {
+    describe("swipeHandler", () => {
+      it("switches view with success", async () => {
+        const response = {
+          status: 204
+        }
+
+        fetch.mockResolvedValue(response)
+        vi.spyOn(uiStatusStore, "resetAlerts")
+        expect(uiStatusStore.successAlert).toBe(false)
+
+        wrapper.vm.swipeHandler()
+
+        await flushPromises()
+
+        expect(uiStatusStore.resetAlerts).toHaveBeenCalledTimes(1)
+        expect(uiStatusStore.successAlert).toBe(true)
+      })
+      it("switching view fails with warning", async () => {
+        const response = {
+          status: 404
+        }
+
+        fetch.mockResolvedValue(response)
+        vi.spyOn(uiStatusStore, "resetAlerts")
+        expect(uiStatusStore.warningAlert).toBe(false)
+
+        wrapper.vm.swipeHandler()
+
+        await flushPromises()
+
+        expect(uiStatusStore.resetAlerts).toHaveBeenCalledTimes(1)
+        expect(uiStatusStore.warningAlert).toBe(true)
+      })
+      it("switching view fails with error", async () => {
+        const response = {
+          status: 500
+        }
+
+        fetch.mockResolvedValue(response)
+        vi.spyOn(uiStatusStore, "resetAlerts")
+        expect(uiStatusStore.errorAlert).toBe(false)
+
+        wrapper.vm.swipeHandler()
+
+        await flushPromises()
+
+        expect(uiStatusStore.resetAlerts).toHaveBeenCalledTimes(1)
+        expect(uiStatusStore.errorAlert).toBe(true)
+      })
+      it("fetching UI status fails", async () => {
+        const response = null
+
+        fetch.mockResolvedValue(response)
+        vi.spyOn(uiStatusStore, "resetAlerts")
+        expect(uiStatusStore.errorAlert).toBe(false)
+
+        wrapper.vm.swipeHandler()
+
+        await flushPromises()
+
+        expect(uiStatusStore.resetAlerts).toHaveBeenCalledTimes(1)
+        expect(uiStatusStore.errorAlert).toBe(true)
+      })
+    })
   })
 })
