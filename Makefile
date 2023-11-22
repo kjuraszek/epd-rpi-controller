@@ -130,7 +130,10 @@ test-controller:
 test-ui:
 	npm run --prefix $(FRONT) test
 
-check-controller: install-dev lint-controller typing-mypy test-controller
+bandit-scan:
+	$(VENV)/bin/bandit --ini $(CONTROLLER)/.bandit $(CONTROLLER) -r
+
+check-controller: install-dev lint-controller typing-mypy test-controller bandit-scan
 
 check-ui: lint-ui test-ui
 
