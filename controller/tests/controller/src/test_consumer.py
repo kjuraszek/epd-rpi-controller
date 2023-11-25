@@ -8,6 +8,7 @@ from unittest.mock import Mock, MagicMock
 import src.consumer
 from src.consumer import Consumer
 
+
 class TestConsumer:
     def test_stop(self, mocker):
         mocked_view_manager = Mock()
@@ -26,10 +27,10 @@ class TestConsumer:
         mocked_kafka_consumer.subscribe = Mock()
         mock = Mock(return_value=mocked_kafka_consumer)
 
-        mocker.patch('src.consumer.KafkaConsumer', mock)
-        
+        mocker.patch("src.consumer.KafkaConsumer", mock)
+
         consumer = Consumer(mocked_view_manager)
-        
+
         consumer.start()
         time.sleep(0.1)
         consumer.stop()
@@ -41,15 +42,15 @@ class TestConsumer:
     def test_run_prev_message(self, mocker):
         mocked_view_manager = Mock()
         mocked_message = Mock()
-        mocked_message.value = bytes('prev', encoding='utf-8')
+        mocked_message.value = bytes("prev", encoding="utf-8")
         mocked_kafka_consumer = MagicMock()
         mocked_kafka_consumer.__iter__.return_value = [mocked_message]
         mocked_kafka_consumer.close = Mock()
         mocked_kafka_consumer.subscribe = Mock()
         mock = Mock(return_value=mocked_kafka_consumer)
 
-        mocker.patch('src.consumer.KafkaConsumer', mock)
-        
+        mocker.patch("src.consumer.KafkaConsumer", mock)
+
         consumer = Consumer(mocked_view_manager)
         consumer.prev = Mock()
         consumer.next = Mock()
@@ -67,15 +68,15 @@ class TestConsumer:
     def test_run_next_message(self, mocker):
         mocked_view_manager = Mock()
         mocked_message = Mock()
-        mocked_message.value = bytes('next', encoding='utf-8')
+        mocked_message.value = bytes("next", encoding="utf-8")
         mocked_kafka_consumer = MagicMock()
         mocked_kafka_consumer.__iter__.return_value = [mocked_message]
         mocked_kafka_consumer.close = Mock()
         mocked_kafka_consumer.subscribe = Mock()
         mock = Mock(return_value=mocked_kafka_consumer)
 
-        mocker.patch('src.consumer.KafkaConsumer', mock)
-        
+        mocker.patch("src.consumer.KafkaConsumer", mock)
+
         consumer = Consumer(mocked_view_manager)
         consumer.prev = Mock()
         consumer.next = Mock()
@@ -93,15 +94,15 @@ class TestConsumer:
     def test_run_stop_message(self, mocker):
         mocked_view_manager = Mock()
         mocked_message = Mock()
-        mocked_message.value = bytes('stop', encoding='utf-8')
+        mocked_message.value = bytes("stop", encoding="utf-8")
         mocked_kafka_consumer = MagicMock()
         mocked_kafka_consumer.__iter__.return_value = [mocked_message]
         mocked_kafka_consumer.close = Mock()
         mocked_kafka_consumer.subscribe = Mock()
         mock = Mock(return_value=mocked_kafka_consumer)
 
-        mocker.patch('src.consumer.KafkaConsumer', mock)
-        
+        mocker.patch("src.consumer.KafkaConsumer", mock)
+
         consumer = Consumer(mocked_view_manager)
         consumer.prev = Mock()
         consumer.next = Mock()
@@ -118,15 +119,15 @@ class TestConsumer:
     def test_run_invalid_message(self, mocker):
         mocked_view_manager = Mock()
         mocked_message = Mock()
-        mocked_message.value = 'invalid_message'
+        mocked_message.value = "invalid_message"
         mocked_kafka_consumer = MagicMock()
         mocked_kafka_consumer.__iter__.return_value = [mocked_message]
         mocked_kafka_consumer.close = Mock()
         mocked_kafka_consumer.subscribe = Mock()
         mock = Mock(return_value=mocked_kafka_consumer)
 
-        mocker.patch('src.consumer.KafkaConsumer', mock)
-        
+        mocker.patch("src.consumer.KafkaConsumer", mock)
+
         consumer = Consumer(mocked_view_manager)
         consumer.prev = Mock()
         consumer.next = Mock()

@@ -6,6 +6,7 @@ from unittest.mock import Mock
 
 from src.api.main_api import MainAPI
 
+
 class TestMainAPI:
     def test_stop(self, mocker):
         mocked_view_manager = Mock()
@@ -27,17 +28,17 @@ class TestMainAPI:
         mocked_ioloop = Mock()
         mocked_ioloop.current = Mock()
         mocked_ioloop.start = Mock()
-        
+
         mocked_http_server_instance = Mock()
         mocked_http_server_instance.listen = Mock()
         mocked_http_server = Mock(return_value=mocked_http_server_instance)
-        
-        mocker.patch('src.api.main_api.asyncio', mocked_asyncio)
-        mocker.patch('tornado.ioloop.IOLoop', mocked_ioloop)
-        mocker.patch('tornado.httpserver.HTTPServer', mocked_http_server)
+
+        mocker.patch("src.api.main_api.asyncio", mocked_asyncio)
+        mocker.patch("tornado.ioloop.IOLoop", mocked_ioloop)
+        mocker.patch("tornado.httpserver.HTTPServer", mocked_http_server)
 
         main_api = MainAPI(mocked_view_manager)
-        main_api.run()      
+        main_api.run()
 
         mocked_asyncio.set_event_loop.assert_called_once
         mocked_asyncio.new_event_loop.assert_called_once

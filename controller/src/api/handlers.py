@@ -5,11 +5,15 @@ import tornado.web
 from PIL import Image
 
 from src.view_manager import ViewManager
-from .models import StatusModel, CurrentDisplayModel  # pylint: disable=W0611 # noqa: F401
+from .models import (
+    StatusModel,
+    CurrentDisplayModel,
+)  # pylint: disable=W0611 # noqa: F401
 
 
 class BaseHandler(tornado.web.RequestHandler):  # pylint: disable=W0223
     """Basic request handler upon which sets others should be based"""
+
     def set_default_headers(self) -> None:
         """Method sets necessary headers"""
         self.set_header("Access-Control-Allow-Origin", "*")
@@ -20,6 +24,7 @@ class BaseHandler(tornado.web.RequestHandler):  # pylint: disable=W0223
 
 class RootHandler(BaseHandler):  # pylint: disable=W0223
     """Request handler for server's root folder"""
+
     def get(self) -> None:
         """Method handles GET request"""
         self.write("EPD RPI Controller's API root")
@@ -28,6 +33,7 @@ class RootHandler(BaseHandler):  # pylint: disable=W0223
 # pylint: disable=W0223,W0201
 class StatusHandler(BaseHandler):
     """Request handler for status endpoint"""
+
     def initialize(self, view_manager: ViewManager) -> None:
         """Method initialises necessary properties"""
         self.view_manager = view_manager
@@ -53,6 +59,7 @@ class StatusHandler(BaseHandler):
 # pylint: disable=W0223,W0201
 class NextViewHandler(BaseHandler):
     """Request handler for endpoint which triggers the next view"""
+
     def initialize(self, view_manager: ViewManager) -> None:
         """Method initialises necessary properties"""
         self.view_manager = view_manager
@@ -82,6 +89,7 @@ class NextViewHandler(BaseHandler):
 # pylint: disable=W0223,W0201
 class PreviousViewHandler(BaseHandler):
     """Request handler for endpoint which triggers the previous view"""
+
     def initialize(self, view_manager: ViewManager) -> None:
         """Method initialises necessary properties"""
         self.view_manager = view_manager
@@ -110,6 +118,7 @@ class PreviousViewHandler(BaseHandler):
 # pylint: disable=W0223,W0201
 class CurrentDisplayHandler(BaseHandler):
     """Request handler for endpoint which returns current view as image"""
+
     def initialize(self, view_manager: ViewManager) -> None:
         """Method initialises necessary properties"""
         self.view_manager = view_manager
@@ -135,11 +144,11 @@ class CurrentDisplayHandler(BaseHandler):
         if not current_image or not isinstance(current_image, Image.Image):
             self.set_status(400, "Returning current display failed.")
             return
-        current_angle = view_details.get('view_angle', 0)
+        current_angle = view_details.get("view_angle", 0)
         current_image = current_image.rotate(current_angle * -1)
         current_image_buffer = io.BytesIO()
         current_image.save(current_image_buffer, format="JPEG")
         current_image_bytes = current_image_buffer.getvalue()
-        self.set_header('Content-type', 'image/jpg')
-        self.set_header('Content-length', len(current_image_bytes))
+        self.set_header("Content-type", "image/jpg")
+        self.set_header("Content-length", len(current_image_bytes))
         self.write(current_image_bytes)

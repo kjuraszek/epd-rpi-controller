@@ -19,9 +19,17 @@ class ChartView(BaseView):
 
     Methods _get_data and _draw_plot must be implemented in child class in order to work properly - see DummyChartView.
     """
-    def __init__(self, *, figsize: Optional[tuple[float]] = None, plot_adjustment: Optional[tuple[float]] = None,
-                 x_label: Optional[str] = None, y_label: Optional[str] = None,
-                 plot_title: Optional[str] = None, **kwargs: Any) -> None:
+
+    def __init__(
+        self,
+        *,
+        figsize: Optional[tuple[float]] = None,
+        plot_adjustment: Optional[tuple[float]] = None,
+        x_label: Optional[str] = None,
+        y_label: Optional[str] = None,
+        plot_title: Optional[str] = None,
+        **kwargs: Any
+    ) -> None:
         super().__init__(**kwargs)
 
         self.figsize = figsize
@@ -33,14 +41,14 @@ class ChartView(BaseView):
 
     @view_fallback
     def _epd_change(self, first_call: bool) -> None:
-        logger.info('%s is running', self.name)
+        logger.info("%s is running", self.name)
 
         plot = self._draw_plot()
 
         image = Image.open(plot)
         if image.size != (self.epd.width, self.epd.height):
             image = image.resize((self.epd.width, self.epd.height))
-        image = image.convert('1')
+        image = image.convert("1")
 
         self.image = image
         self._rotate_image()

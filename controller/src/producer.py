@@ -17,7 +17,7 @@ class Producer(BaseThread):
         """Producer constructor method"""
         BaseThread.__init__(self)
         self.interval = Config.PRODUCER_INTERVAL
-        self.order = 'next' if Config.PRODUCER_ASC_ORDER else 'prev'
+        self.order = "next" if Config.PRODUCER_ASC_ORDER else "prev"
 
     def stop(self) -> None:
         """Method stops the Producer"""
@@ -32,9 +32,13 @@ class Producer(BaseThread):
         producer = KafkaProducer(bootstrap_servers=Config.KAFKA_BOOTSTRAP_SERVER)
         time.sleep(self.interval)
         while not self.stop_event.is_set():
-            producer.send(Config.KAFKA_VIEW_MANAGER_TOPIC, bytes(self.order, encoding='utf-8'))
+            producer.send(
+                Config.KAFKA_VIEW_MANAGER_TOPIC, bytes(self.order, encoding="utf-8")
+            )
             try:
-                wait(lambda: self.stop_event.is_set(), timeout_seconds=self.interval)  # pylint: disable=W0108
+                wait(
+                    lambda: self.stop_event.is_set(), timeout_seconds=self.interval
+                )  # pylint: disable=W0108
             except TimeoutExpired:
                 pass
 

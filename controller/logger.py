@@ -11,9 +11,9 @@ logging.config.fileConfig(Config.CONFIG_FILE)
 logger = logging.getLogger()
 
 _LOGGERS = {
-    'kafka': Config.KAFKA_LOGGING_LEVEL,
-    'tornado': Config.TORNADO_LOGGING_LEVEL,
-    'matplotlib': Config.MATPLOTLIB_LOGGING_LEVEL
+    "kafka": Config.KAFKA_LOGGING_LEVEL,
+    "tornado": Config.TORNADO_LOGGING_LEVEL,
+    "matplotlib": Config.MATPLOTLIB_LOGGING_LEVEL,
 }
 
 

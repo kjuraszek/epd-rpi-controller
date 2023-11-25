@@ -11,6 +11,7 @@ from unittest.mock import Mock
 import src.view_manager
 from src.view_manager import ViewManager
 
+
 class TestViewManager:
     def test_stop(self, mocker):
         mocked_epd = Mock()
@@ -40,7 +41,7 @@ class TestViewManager:
 
         view_manager.next()
 
-        assert view_manager.action == 'next'
+        assert view_manager.action == "next"
         assert view_manager.busy.set.called
 
     def test_prev(self, mocker):
@@ -61,7 +62,7 @@ class TestViewManager:
 
         view_manager.prev()
 
-        assert view_manager.action == 'prev'
+        assert view_manager.action == "prev"
         assert view_manager.busy.set.called
 
     def test_run(self, mocker):
@@ -74,10 +75,10 @@ class TestViewManager:
         mocked_view_2 = Mock()
         mocked_view_2.interval = 0
         mocked_view_2.show = Mock()
-        
+
         views = [mocked_view_1, mocked_view_2]
         view_manager = ViewManager(views, mocked_epd)
-    
+
         view_manager.start()
         time.sleep(0.1)
         view_manager.stop()
@@ -101,10 +102,10 @@ class TestViewManager:
         mocked_view_3 = Mock()
         mocked_view_3.interval = 0
         mocked_view_3.show = Mock()
-        
+
         views = [mocked_view_1, mocked_view_2, mocked_view_3]
         view_manager = ViewManager(views, mocked_epd)
-    
+
         view_manager.start()
         time.sleep(0.1)
         view_manager.next()
@@ -130,10 +131,10 @@ class TestViewManager:
         mocked_view_3 = Mock()
         mocked_view_3.interval = 0
         mocked_view_3.show = Mock()
-        
+
         views = [mocked_view_1, mocked_view_2, mocked_view_3]
         view_manager = ViewManager(views, mocked_epd)
-    
+
         view_manager.start()
         time.sleep(0.1)
         view_manager.prev()
@@ -156,10 +157,10 @@ class TestViewManager:
         mocked_view_2 = Mock()
         mocked_view_2.interval = 0
         mocked_view_2.show = Mock()
-        
+
         views = [mocked_view_1, mocked_view_2]
         view_manager = ViewManager(views, mocked_epd)
-    
+
         view_manager.start()
         time.sleep(5)
         view_manager.stop()
@@ -178,10 +179,10 @@ class TestViewManager:
         mocked_view_2 = Mock()
         mocked_view_2.interval = 0
         mocked_view_2.show = Mock()
-        
+
         views = [mocked_view_1, mocked_view_2]
         view_manager = ViewManager(views, mocked_epd)
-    
+
         view_manager.start()
         time.sleep(0.1)
         view_manager.stop()
@@ -200,10 +201,10 @@ class TestViewManager:
         mocked_view_2 = Mock()
         mocked_view_2.interval = 0
         mocked_view_2.show = Mock()
-        
+
         views = [mocked_view_1, mocked_view_2]
         view_manager = ViewManager(views, mocked_epd)
-    
+
         view_manager.start()
         time.sleep(0.5)
         view_manager.next()
@@ -218,15 +219,15 @@ class TestViewManager:
         mocked_epd = Mock()
         mocked_view = Mock()
         mocked_view.busy = True
-        mocked_view.timestamp =  '2023-04-16, 12:00:00'
-        
+        mocked_view.timestamp = "2023-04-16, 12:00:00"
+
         views = [mocked_view]
         view_manager = ViewManager(views, mocked_epd)
         expected_status = {
-            'epd_busy': True,
-            'current_view': 0,
-            'total_views': 1,
-            'timestamp': '2023-04-16, 12:00:00'
+            "epd_busy": True,
+            "current_view": 0,
+            "total_views": 1,
+            "timestamp": "2023-04-16, 12:00:00",
         }
 
         status = view_manager.epd_status()
@@ -236,32 +237,32 @@ class TestViewManager:
         mocked_epd = Mock()
         mocked_view = Mock()
         mocked_view.image = Mock()
-        
+
         views = [mocked_view]
         view_manager = ViewManager(views, mocked_epd)
-        
+
         current_display = view_manager.current_display()
         assert current_display == mocked_view.image
 
     def test_current_view_details(self, mocker):
         mocked_epd = Mock()
         mocked_view = Mock()
-        mocked_view.name = 'Test view'
+        mocked_view.name = "Test view"
         mocked_view.view_angle = 90
         mocked_view.interval = 0
         mocked_view.busy = False
-        mocked_view.timestamp = '2023-04-16, 12:00:00'
-        
+        mocked_view.timestamp = "2023-04-16, 12:00:00"
+
         views = [mocked_view]
         view_manager = ViewManager(views, mocked_epd)
         expected_details = {
-            'current_view': 0,
-            'name': 'Test view',
-            'view_angle': 90,
-            'interval': 0,
-            'timestamp': '2023-04-16, 12:00:00',
-            'busy': False,
+            "current_view": 0,
+            "name": "Test view",
+            "view_angle": 90,
+            "interval": 0,
+            "timestamp": "2023-04-16, 12:00:00",
+            "busy": False,
         }
-        
+
         current_view_details = view_manager.current_view_details()
         assert current_view_details == expected_details

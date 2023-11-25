@@ -23,15 +23,15 @@ class ImageView(BaseView):
 
     @view_fallback
     def _epd_change(self, first_call: bool) -> None:
-        logger.info('%s is running', self.name)
+        logger.info("%s is running", self.name)
 
         image = Image.open(self.image_path)
         rotated_image = image.rotate(self.view_angle)
         image_width, image_height = rotated_image.size
         if self.epd.width != image_width or self.epd.height != image_height:
-            logger.error('Image and EPD dimensions are different!')
+            logger.error("Image and EPD dimensions are different!")
             raise ValueError
         self.image = image
         self._rotate_image()
         self.epd.display(self.epd.getbuffer(self.image))
-        logger.info('EPD updated with %s', self.name)
+        logger.info("EPD updated with %s", self.name)

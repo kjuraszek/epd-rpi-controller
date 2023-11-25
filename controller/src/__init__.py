@@ -11,5 +11,12 @@ from src.helpers import BaseThread
 
 
 __all__ = [
-    'BaseThread', 'ButtonManager', 'Consumer', 'MockedEPD', 'Producer', 'View', 'ViewManager', 'MainAPI'
+    "BaseThread",
+    "ButtonManager",
+    "Consumer",
+    "MockedEPD",
+    "Producer",
+    "View",
+    "ViewManager",
+    "MainAPI",
 ]
