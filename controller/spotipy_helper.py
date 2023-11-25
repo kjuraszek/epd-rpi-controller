@@ -17,9 +17,9 @@ def main() -> None:
         )
     )
     # checking if everything works
-    track = (
+    track = (  # pylint: disable=W0612 # noqa: F841
         spotify_client.current_user_playing_track()
-    )  # pylint: disable=W0612 # noqa: F841
+    )
 
 
 if __name__ == "__main__":

@@ -59,8 +59,8 @@ class ButtonManager(BaseThread):
         while not self.stop_event.is_set():
             try:
                 wait(
-                    lambda: self.stop_event.is_set(), timeout_seconds=0.1
-                )  # pylint: disable=W0108
+                    lambda: self.stop_event.is_set(), timeout_seconds=0.1  # pylint: disable=W0108
+                )
             except TimeoutExpired:
                 pass
 
