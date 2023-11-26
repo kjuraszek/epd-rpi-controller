@@ -1,4 +1,4 @@
-include .env
+-include .env  # not fail if .env not found
 
 VENV = venv
 CONTROLLER = controller
