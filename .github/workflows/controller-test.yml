@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -31,7 +31,12 @@ jobs:
     - name: Pylint
       run: |
         make lint-pylint
-    - name: Flake8
+    - name: Mypy
       run: |
-        make lint-flake8
-
+        make typing-mypy
+    - name: Pytest
+      run: |
+        make test-controller
+    - name: Bandit
+      run: |
+        make bandit-scan
