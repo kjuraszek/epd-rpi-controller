@@ -1,0 +1,49 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+
+name: Test Controller
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+env:
+  python-version: '3.11'
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{env.python-version}}
+      uses: actions/setup-python@v3
+      with:
+        python-version: "${{env.python-version}}"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        make install-dev
+        make create-config
+        make create-env
+        make create-views-file
+    - name: Pylint
+      run: |
+        make lint-pylint
+    - name: Flake8
+      run: |
+        make lint-flake8
+    - name: Mypy
+      run: |
+        make typing-mypy
+    - name: Pytest
+      run: |
+        make test-controller
+    - name: Bandit
+      run: |
+        make bandit-scan
