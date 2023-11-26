@@ -2,6 +2,7 @@
 Examplary usage of classes: DummyView, BrokenDummyView, ConditionalDummyView and VIEWS list
 """
 
+# pylint: disable=R0801
 from custom_views.examplary_views import (
     DummyView,
     BrokenDummyView,
