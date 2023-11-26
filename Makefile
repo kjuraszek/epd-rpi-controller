@@ -34,7 +34,7 @@ else
 endif
 
 install-dev: install
-	$(PIP_CONTROLLER) install -r $(CONTROLLER)/requirements_development.txt
+	$(PIP_CONTROLLER) install -r $(CONTROLLER)/requirements_development.txt -r $(CONTROLLER)/custom_views/examplary_views/views_requirements.txt
 
 install-ui:
 	npm install --prefix $(FRONT)
