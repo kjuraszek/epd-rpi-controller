@@ -32,17 +32,17 @@ class ViewManager(BaseThread):
         """Method triggers next view if manager isn't busy"""
         if not self.busy.is_set():
             self.busy.set()
-            self.action = 'next'
+            self.action = "next"
         else:
-            logger.debug('View manager is busy')
+            logger.debug("View manager is busy")
 
     def prev(self) -> None:
         """Method triggers previous view if manager isn't busy"""
         if not self.busy.is_set():
             self.busy.set()
-            self.action = 'prev'
+            self.action = "prev"
         else:
-            logger.debug('View manager is busy')
+            logger.debug("View manager is busy")
 
     def stop(self) -> None:
         """Method stops the ViewManager"""
@@ -60,18 +60,26 @@ class ViewManager(BaseThread):
         self.epd.init(0)
         self.epd.Clear(0xFF)
         while not self.stop_event.is_set():
-            if self.busy.is_set() and self.action in ('next', 'prev'):
-                if self.action == 'next':
-                    self.current_view = self.current_view + 1 if self.current_view < len(self.views) - 1 else 0
+            if self.busy.is_set() and self.action in ("next", "prev"):
+                if self.action == "next":
+                    self.current_view = (
+                        self.current_view + 1
+                        if self.current_view < len(self.views) - 1
+                        else 0
+                    )
                 else:
-                    self.current_view = self.current_view - 1 if self.current_view > 0 else len(self.views) - 1
+                    self.current_view = (
+                        self.current_view - 1
+                        if self.current_view > 0
+                        else len(self.views) - 1
+                    )
                 switched = False
                 first_call = True
             if not switched:
                 self.busy.set()
-                logger.debug('\tView is running')
+                logger.debug("\tView is running")
                 self.views[self.current_view].show(first_call=first_call)
-                logger.debug('\tView is idle')
+                logger.debug("\tView is idle")
                 self.busy.clear()
                 if self.views[self.current_view].interval == 0:
                     switched = True
@@ -79,8 +87,10 @@ class ViewManager(BaseThread):
                     first_call = False
                     switched = False
                     try:
-                        wait(lambda: self.busy.is_set() or self.stop_event.is_set(),
-                             timeout_seconds=self.views[self.current_view].interval)
+                        wait(
+                            lambda: self.busy.is_set() or self.stop_event.is_set(),
+                            timeout_seconds=self.views[self.current_view].interval,
+                        )
                     except TimeoutExpired:
                         continue
                     else:
@@ -92,10 +102,10 @@ class ViewManager(BaseThread):
     def epd_status(self) -> dict[str, Any]:
         """Method returns EPD's current status"""
         return {
-            'epd_busy': self.views[self.current_view].busy,
-            'current_view': self.current_view,
-            'total_views': len(self.views),
-            'timestamp': self.views[self.current_view].timestamp
+            "epd_busy": self.views[self.current_view].busy,
+            "current_view": self.current_view,
+            "total_views": len(self.views),
+            "timestamp": self.views[self.current_view].timestamp,
         }
 
     def current_display(self) -> Optional[Image.Image]:
@@ -105,11 +115,11 @@ class ViewManager(BaseThread):
     def current_view_details(self) -> dict[str, Any]:
         """Method returns EPD's currently displayed image"""
         details = {
-            'current_view': self.current_view,
-            'name': self.views[self.current_view].name,
-            'view_angle': self.views[self.current_view].view_angle,
-            'interval': self.views[self.current_view].interval,
-            'timestamp': self.views[self.current_view].timestamp,
-            'busy': self.views[self.current_view].busy,
+            "current_view": self.current_view,
+            "name": self.views[self.current_view].name,
+            "view_angle": self.views[self.current_view].view_angle,
+            "interval": self.views[self.current_view].interval,
+            "timestamp": self.views[self.current_view].timestamp,
+            "busy": self.views[self.current_view].busy,
         }
         return details

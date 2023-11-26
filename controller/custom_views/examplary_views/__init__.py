@@ -18,13 +18,35 @@ from custom_views.examplary_views.system_info_view import SystemInfoView
 from custom_views.examplary_views.speedtest_view import SpeedTestView
 from custom_views.examplary_views.spotify_view import SpotifyView
 from custom_views.examplary_views.text_view import TextView
-from custom_views.examplary_views.weather_forecast_daily_view import WeatherForecastDailyView
-from custom_views.examplary_views.weather_forecast_hourly_view import WeatherForecastHourlyView
+from custom_views.examplary_views.weather_forecast_daily_view import (
+    WeatherForecastDailyView,
+)
+from custom_views.examplary_views.weather_forecast_hourly_view import (
+    WeatherForecastHourlyView,
+)
 from custom_views.examplary_views.weather_view import WeatherView
 
 
 __all__ = [
-    'AirPollutionView', 'BaseView', 'BrokenDummyView', 'ChartView', 'ClockView', 'ConditionalDummyView', 'DummyChartView',
-    'DummyView', 'ImageView', 'LastFmView', 'QRCodeUiView', 'QRCodeWiFiView', 'QuoteView', 'RSSView', 'SystemInfoView',
-    'SpeedTestView', 'SpotifyView', 'TextView', 'WeatherForecastDailyView', 'WeatherForecastHourlyView', 'WeatherView'
+    "AirPollutionView",
+    "BaseView",
+    "BrokenDummyView",
+    "ChartView",
+    "ClockView",
+    "ConditionalDummyView",
+    "DummyChartView",
+    "DummyView",
+    "ImageView",
+    "LastFmView",
+    "QRCodeUiView",
+    "QRCodeWiFiView",
+    "QuoteView",
+    "RSSView",
+    "SystemInfoView",
+    "SpeedTestView",
+    "SpotifyView",
+    "TextView",
+    "WeatherForecastDailyView",
+    "WeatherForecastHourlyView",
+    "WeatherView",
 ]

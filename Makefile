@@ -133,6 +133,9 @@ test-ui:
 bandit-scan:
 	$(VENV)/bin/bandit --ini $(CONTROLLER)/.bandit $(CONTROLLER) -r
 
+black-format:
+	$(VENV)/bin/black $(CONTROLLER)
+
 check-controller: install-dev lint-controller typing-mypy test-controller bandit-scan
 
 check-ui: lint-ui test-ui

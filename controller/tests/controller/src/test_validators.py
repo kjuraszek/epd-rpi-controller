@@ -3,7 +3,12 @@ validators tests
 """
 
 import pytest
-from src.validators import validate_views, validate_config, ValidationViewException, ValidationConfigException
+from src.validators import (
+    validate_views,
+    validate_config,
+    ValidationViewException,
+    ValidationConfigException,
+)
 from custom_views.examplary_views import DummyView
 
 
@@ -20,11 +25,11 @@ class TestValidateConfig:
         with pytest.raises(ValidationConfigException):
             validate_config()
 
-        mocker.patch("config.Config.KAFKA_VIEW_MANAGER_TOPIC", 'test-topic')
+        mocker.patch("config.Config.KAFKA_VIEW_MANAGER_TOPIC", "test-topic")
         validate_config()
 
     def test_validate_config_starting_view(self, mocker):
-        mocked_views = [DummyView('test_name', 0, 0)]
+        mocked_views = [DummyView("test_name", 0, 0)]
         mocker.patch("src.validators.VIEWS", mocked_views)
 
         mocker.patch("config.Config.STARTING_VIEW", -1)
@@ -96,7 +101,7 @@ class TestValidateConfig:
 
 class TestValidateViews:
     def test_validate_views(self, mocker):
-        mocked_views = [DummyView('test_name', 0, 0)]
+        mocked_views = [DummyView("test_name", 0, 0)]
         mocker.patch("src.validators.VIEWS", mocked_views)
         validate_views()
 
@@ -107,7 +112,11 @@ class TestValidateViews:
             validate_views()
 
     def test_validate_views_mixed_elements(self, mocker):
-        mocked_views = [DummyView('test_name', 0, 0), 1, 'test', ]
+        mocked_views = [
+            DummyView("test_name", 0, 0),
+            1,
+            "test",
+        ]
         mocker.patch("src.validators.VIEWS", mocked_views)
         with pytest.raises(ValidationViewException):
             validate_views()

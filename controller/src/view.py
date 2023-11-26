@@ -11,6 +11,7 @@ from src.helpers import view_conditional
 
 # pylint: disable=W0613
 
+
 class View:
     """View is a basic object which interacts with EPD
 
@@ -20,7 +21,9 @@ class View:
     additionally a _fallback method must be implemented.
     """
 
-    def __init__(self, name: str, interval: int, view_angle: int = Config.VIEW_ANGLE) -> None:
+    def __init__(
+        self, name: str, interval: int, view_angle: int = Config.VIEW_ANGLE
+    ) -> None:
         """View constructor method"""
         self.epd: Any = None
         self.name = name

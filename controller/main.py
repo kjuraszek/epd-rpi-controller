@@ -8,7 +8,12 @@ from copy import deepcopy
 
 from kafka import KafkaAdminClient
 from kafka.admin import NewTopic
-from kafka.errors import UnknownTopicOrPartitionError, TopicAlreadyExistsError, NoBrokersAvailable, NodeNotReadyError
+from kafka.errors import (
+    UnknownTopicOrPartitionError,
+    TopicAlreadyExistsError,
+    NoBrokersAvailable,
+    NodeNotReadyError,
+)
 
 from logger import logger, configure_lib_loggers
 from config import Config
@@ -32,11 +37,14 @@ def main() -> None:
     validate_views()
     configure_lib_loggers()
 
-    if Config.EPD_MODEL == 'mock':
+    if Config.EPD_MODEL == "mock":
         from src import MockedEPD
+
         epd = MockedEPD(width=Config.MOCKED_EPD_WIDTH, height=Config.MOCKED_EPD_HEIGHT)
     else:
-        epd_package = importlib.import_module(f'waveshare_epd_driver.{Config.EPD_MODEL}')
+        epd_package = importlib.import_module(
+            f"waveshare_epd_driver.{Config.EPD_MODEL}"
+        )
         epd = epd_package.EPD()
 
     if Config.USE_BUTTONS:
@@ -44,24 +52,31 @@ def main() -> None:
 
     for number in range(1, 8):
         try:
-            kafka_admin = KafkaAdminClient(bootstrap_servers=Config.KAFKA_BOOTSTRAP_SERVER, api_version=(2, 5, 0))
+            kafka_admin = KafkaAdminClient(
+                bootstrap_servers=Config.KAFKA_BOOTSTRAP_SERVER, api_version=(2, 5, 0)
+            )
             break
         except (NoBrokersAvailable, NodeNotReadyError) as kafka_exception:
             if number == 7:
                 raise kafka_exception
-            logger.error('Failed to connect with Kafka broker, retrying in: %s seconds.', number * 10)
+            logger.error(
+                "Failed to connect with Kafka broker, retrying in: %s seconds.",
+                number * 10,
+            )
             time.sleep(number * 10)
 
-    topic = NewTopic(name=Config.KAFKA_VIEW_MANAGER_TOPIC,
-                     num_partitions=1,
-                     replication_factor=1,
-                     topic_configs={'retention.ms': '60000'})
+    topic = NewTopic(
+        name=Config.KAFKA_VIEW_MANAGER_TOPIC,
+        num_partitions=1,
+        replication_factor=1,
+        topic_configs={"retention.ms": "60000"},
+    )
     try:
         kafka_admin.delete_topics([Config.KAFKA_VIEW_MANAGER_TOPIC])
         time.sleep(2)
-        logger.debug('topic deleted')
+        logger.debug("topic deleted")
     except UnknownTopicOrPartitionError:
-        logger.debug('unable to delete topic')
+        logger.debug("unable to delete topic")
     kafka_admin.create_topics([topic])
 
     views = deepcopy(VIEWS)
@@ -75,11 +90,7 @@ def main() -> None:
     signal.signal(signal.SIGINT, partial(signal_handler, consumer))
     signal.signal(signal.SIGTERM, partial(signal_handler, consumer))
 
-    tasks = [
-        consumer,
-        view_manager,
-        api
-    ]
+    tasks = [consumer, view_manager, api]
 
     if Config.PRODUCER_INTERVAL > 0:
         tasks.append(Producer())
@@ -95,9 +106,9 @@ def main() -> None:
 
     try:
         kafka_admin.delete_topics([Config.KAFKA_VIEW_MANAGER_TOPIC])
-        logger.debug('topic deleted')
+        logger.debug("topic deleted")
     except TopicAlreadyExistsError:
-        logger.debug('unable to delete topic')
+        logger.debug("unable to delete topic")
 
     for task in tasks:
         task.stop()
@@ -107,9 +118,9 @@ def main() -> None:
 
     if Config.CLEAR_EPD_ON_EXIT:
         epd.Clear(0xFF)
-        logger.info('EPD has been cleaned.')
-    logger.info('Controller has been stopped.')
+        logger.info("EPD has been cleaned.")
+    logger.info("Controller has been stopped.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

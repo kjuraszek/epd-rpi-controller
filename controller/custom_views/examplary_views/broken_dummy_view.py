@@ -11,6 +11,7 @@ class BrokenDummyView(DummyView):
     """
     Broken DummyView class - it always serves a fallback image.
     """
+
     @view_fallback
     def _epd_change(self, first_call: bool) -> None:
         raise NotImplementedError

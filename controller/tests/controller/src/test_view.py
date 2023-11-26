@@ -10,11 +10,12 @@ from PIL import Image
 import src.view
 from src.view import View
 
+
 class TestView:
     def test_show(self, mocker):
-        view = View('test_view', 0)
+        view = View("test_view", 0)
 
-        mocker.patch('src.View._after_epd_change', Mock())
+        mocker.patch("src.View._after_epd_change", Mock())
 
         with pytest.raises(NotImplementedError):
             view.show(first_call=True)
@@ -22,11 +23,11 @@ class TestView:
         assert not view._after_epd_change.called
 
     def test_show_mocked_epd_change(self, mocker):
-        view = View('test_view', 0)
+        view = View("test_view", 0)
 
-        mocker.patch('src.View._before_epd_change', Mock())
-        mocker.patch('src.View._epd_change', Mock())
-        mocker.patch('src.View._set_timestamp', Mock())
+        mocker.patch("src.View._before_epd_change", Mock())
+        mocker.patch("src.View._epd_change", Mock())
+        mocker.patch("src.View._set_timestamp", Mock())
 
         view.show(False)
 
@@ -35,28 +36,28 @@ class TestView:
         assert view._set_timestamp.called
 
     def test_before_epd_change(self, mocker):
-        view = View('test_view', 0)
+        view = View("test_view", 0)
 
         assert not view.busy
         view._before_epd_change()
         assert view.busy
 
     def test_epd_change(self, mocker):
-        view = View('test_view', 0)
+        view = View("test_view", 0)
 
         with pytest.raises(NotImplementedError):
             view._epd_change(first_call=True)
 
     def test_after_epd_change(self, mocker):
-        view = View('test_view', 0)
+        view = View("test_view", 0)
 
-        mocker.patch('src.View._set_timestamp', Mock())
+        mocker.patch("src.View._set_timestamp", Mock())
 
         view._after_epd_change()
         assert view._set_timestamp.called
 
     def test_rotate_image_no_image(self, mocker):
-        view = View('test_view', 0)
+        view = View("test_view", 0)
         view.image = None
 
         view._rotate_image()
@@ -71,7 +72,7 @@ class TestView:
         assert not mock.rotate.called
 
     def test_rotate_image_mocked_image(self, mocker):
-        view = View('test_view', 0, 180)
+        view = View("test_view", 0, 180)
         assert view.view_angle == 180
 
         old_image = Mock(spec=Image.Image)
@@ -88,7 +89,7 @@ class TestView:
         old_image.rotate.assert_called_once_with(180)
 
     def test_set_timestamp(self, mocker):
-        view = View('test_view', 0)
+        view = View("test_view", 0)
         assert not view.timestamp
 
         date_time = datetime.datetime(2023, 3, 23, 12, 40, 30, 0)
@@ -98,7 +99,7 @@ class TestView:
         mock_date.now.return_value = date_time
         mock_date.strftime.return_value = timestamp
 
-        mocker.patch('src.view.datetime', mock_date)
+        mocker.patch("src.view.datetime", mock_date)
 
         view._set_timestamp()
 
@@ -106,10 +107,10 @@ class TestView:
         assert view.timestamp == timestamp
 
     def test_fallback(self, mocker):
-        view = View('test_view', 0)
+        view = View("test_view", 0)
         with pytest.raises(NotImplementedError):
             view._fallback()
 
     def test_conditional(self, mocker):
-        view = View('test_view', 0)
+        view = View("test_view", 0)
         assert view._conditional() == True
