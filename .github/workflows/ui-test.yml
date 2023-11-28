@@ -1,0 +1,39 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+
+name: Test UI
+
+on:
+  push:
+    paths:
+      - front/**
+    branches: [ "main" ]
+  pull_request:
+    paths:
+      - front/**
+    branches: [ "main" ]
+
+env:
+  node-version: '16.x'
+  
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ env.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.node-version }}
+        cache: 'npm'
+        cache-dependency-path: './front/package-lock.json'
+    - name: Prepare Environment
+      run: |
+        make install-ui
+        make create-config
+        make create-env
+        make create-views-file
+    - name: Lint UI
+      run: make lint-ui
+    - name: Test UI
+      run: make test-ui
