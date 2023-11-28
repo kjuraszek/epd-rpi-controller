@@ -4,8 +4,12 @@ name: Test Controller
 
 on:
   push:
+    paths:
+      - controller/**
     branches: [ "main" ]
   pull_request:
+    paths:
+      - controller/**
     branches: [ "main" ]
 
 permissions:

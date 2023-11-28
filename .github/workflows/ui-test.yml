@@ -4,22 +4,24 @@ name: Test UI
 
 on:
   push:
+    paths:
+      - front/**
     branches: [ "main" ]
   pull_request:
+    paths:
+      - front/**
     branches: [ "main" ]
 
 env:
   node-version: '16.x'
-
-defaults:
-  run:
-    working-directory: ./front
   
 jobs:
   test:
 
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./front
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ env.node-version }}
