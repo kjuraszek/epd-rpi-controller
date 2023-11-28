@@ -29,6 +29,7 @@ jobs:
       with:
         node-version: ${{ env.node-version }}
         cache: 'npm'
+        cache-dependency-path: './front/package-lock.json'
     - name: Prepare Environment
       run: |
         make install-ui
