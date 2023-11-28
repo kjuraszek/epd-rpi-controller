@@ -19,9 +19,6 @@ jobs:
   test:
 
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./front
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ env.node-version }}
@@ -37,6 +34,6 @@ jobs:
         make create-env
         make create-views-file
     - name: Lint UI
-      run: npm run build --if-present
+      run: make lint-ui
     - name: Test UI
-      run: npm test
+      run: make test-ui
