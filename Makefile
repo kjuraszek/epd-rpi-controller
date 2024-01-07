@@ -142,6 +142,12 @@ check-ui: lint-ui test-ui
 
 check: check-controller check-ui
 
+sphinx-md: install-dev
+	export EPD_RPI_CONFIG_FILE=epd-rpi-controller.example.cfg && $(VENV)/bin/sphinx-build -M markdown docs/controller docs/controller/_build
+
+sphinx-html: install-dev
+	export EPD_RPI_CONFIG_FILE=epd-rpi-controller.example.cfg && $(VENV)/bin/sphinx-build -M html docs/controller docs/controller/_build
+
 clean:
 	rm -rf __pycache__
 	rm -rf $(VENV)
@@ -152,6 +158,7 @@ clean:
 	rm -rf $(CONTROLLER)/cov_html
 	rm -rf $(FRONT)/node_modules
 	rm -rf $(FRONT)/dist
+	rm -rf docs/controller/_build
 	rm -rf epd-rpi-controller.cfg
 	rm -rf mocked_epd.png
 	rm -rf assets
