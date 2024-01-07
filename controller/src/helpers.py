@@ -114,7 +114,7 @@ def wrap_text(
         if index > 0:
             size = font.getlength(text[start:index])
             if size > epd_width:
-                lines.append(text[start: index - 1] + "\n")
+                lines.append(text[start : index - 1] + "\n")  # noqa: E203
                 start = index - 1
         if index == len(text) - 1:
             lines.append(text[start:])
