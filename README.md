@@ -248,3 +248,23 @@ Examplary button config for a circuit above would be:
     use_buttons = yes
     left_button_pin = 26
     right_button_pin = 16
+
+## Generating documentation locally
+
+Controller's documentation can be generated using Sphinx either in HTML or Markdown format.
+
+### HTML
+
+Running a command
+
+`make sphinx-html`
+
+will create a Sphinx documentation in the HTML format. It will be available in the `docs/controller/_build/html` directory.
+
+### Markdown
+
+Running a command
+
+`make sphinx-md`
+
+will create a Sphinx documentation in the Markdown format. It will be available in the `docs/controller/_build/markdown` directory.
