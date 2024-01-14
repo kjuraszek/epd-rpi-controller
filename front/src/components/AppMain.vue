@@ -86,6 +86,9 @@
   import { useUiStatusStore } from '@/stores/uiStatus'
   import { mapState } from 'pinia'
 
+  /**
+  * Application main Component, contains: headings, alerts, display with buttons.
+  */
   export default {
     components: {
       ControlButton, CurrentDisplay, MainHeadings

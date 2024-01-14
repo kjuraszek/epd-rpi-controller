@@ -17,3 +17,12 @@
     </v-row>
   </v-footer>
 </template>
+
+<script>
+/**
+ * Application footer, shows current year.
+ */
+export default {
+	name: 'AppFooter'
+}
+</script>

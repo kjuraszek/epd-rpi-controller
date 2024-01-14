@@ -7,3 +7,12 @@
     A controller for Epaper display for Raspberry Pi.
   </p>
 </template>
+
+<script>
+/**
+ * Application main heading and subheading.
+ */
+export default {
+	name: 'MainHeadings'
+}
+</script>
