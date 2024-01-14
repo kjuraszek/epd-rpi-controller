@@ -251,9 +251,20 @@ Examplary button config for a circuit above would be:
 
 ## Generating documentation locally
 
+EPD RPi Controller's documentation can be generated using command:
+
+`make docs`
+
+which will generate:
+
+- **Controller** docs in the `docs/controller/_build/markdown` directory
+- **UI** docs in the `docs/front/src/components` directory
+
+### Controller
+
 Controller's documentation can be generated using Sphinx either in HTML or Markdown format.
 
-### HTML
+#### HTML
 
 Running a command
 
@@ -261,10 +272,20 @@ Running a command
 
 will create a Sphinx documentation in the HTML format. It will be available in the `docs/controller/_build/html` directory.
 
-### Markdown
+#### Markdown
 
 Running a command
 
 `make sphinx-md`
 
 will create a Sphinx documentation in the Markdown format. It will be available in the `docs/controller/_build/markdown` directory.
+
+### UI
+
+UI Components documentation can be generated using vue-docgen in the Markdown format.
+
+Running a command
+
+`make vue-docgen`
+
+will create a documentation in the Markdown format. It will be available in the `docs/front/src/components` directory.
