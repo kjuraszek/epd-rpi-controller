@@ -7,7 +7,7 @@
     "preview": "vite preview",
     "lint": "eslint --ext .js,.vue src",
     "test": "VITE_API_PORT=50000 vitest --run --coverage --silent",
-    "docgen": "vue-docgen src/components/**/*.vue docs/components"
+    "docgen": "vue-docgen src/components/**/*.vue ../docs/front"
   },
   "dependencies": {
     "@mdi/font": "7.0.96",
