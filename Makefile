@@ -148,6 +148,11 @@ sphinx-md: install-dev
 sphinx-html: install-dev
 	export EPD_RPI_CONFIG_FILE=epd-rpi-controller.example.cfg && $(VENV)/bin/sphinx-build -M html docs/controller docs/controller/_build
 
+vue-docgen: install-ui
+	npm run --prefix $(FRONT) docgen
+
+docs: sphinx-md vue-docgen
+
 clean:
 	rm -rf __pycache__
 	rm -rf $(VENV)
