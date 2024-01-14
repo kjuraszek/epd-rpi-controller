@@ -143,3 +143,6 @@ controller/custom_views/custom_requirements.txt
 
 # spotipy cache
 .spotipy_cache
+
+# vue-docgen documentation
+docs/front/
