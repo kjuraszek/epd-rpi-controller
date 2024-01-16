@@ -164,8 +164,9 @@ clean:
 	rm -rf $(FRONT)/node_modules
 	rm -rf $(FRONT)/dist
 	rm -rf docs/controller/_build
+	rm -rf docs/front/src
 	rm -rf epd-rpi-controller.cfg
 	rm -rf mocked_epd.png
 	rm -rf assets
 	
-.PHONY: venv install install-ui create-env create-config create-assets-folder copy-config prepare run-controller run-ui build-docker run-docker stop-docker clean-docker clean
+.PHONY: venv install install-ui create-env create-config create-assets-folder copy-config prepare run-controller run-ui build-docker run-docker stop-docker clean-docker lint-pylint lint-flake8 lint-ui lint-controller typing-mypy test-controller test-ui bandit-scan black-format check-controller check-ui check sphinx-md sphinx-html vue-docgen docs clean
