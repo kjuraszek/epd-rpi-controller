@@ -55,6 +55,9 @@
   import { useUiStatusStore } from '@/stores/uiStatus'
   import { mapWritableState, mapActions } from 'pinia'
 
+  /**
+  * Application alerts which are showing depending on user's actions and EPD state.
+  */
   export default {
     data: () => ({
       timeout: 3000,

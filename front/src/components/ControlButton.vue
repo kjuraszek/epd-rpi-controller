@@ -36,8 +36,15 @@
     },
   }
 
+  /**
+   * A button which triggers change of the current view - next or previous.
+   */
   export default {
     props: {
+      /**
+       * Action which will be triggered by the button.
+       * @values next, prev
+       */
       controlAction: {
         type: String,
         required: true
@@ -58,6 +65,11 @@
       }
     },
     methods: {
+      /**
+       * Gets called on button click. It switches the current view.
+       * 
+       * @public
+       */
       switchView () {
         fetch(`${API}/${this.controlAction}`)
         .then(response => {

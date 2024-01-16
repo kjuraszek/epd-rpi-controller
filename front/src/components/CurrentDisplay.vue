@@ -23,6 +23,9 @@
   import { mapWritableState, mapState, mapActions } from 'pinia'
   import { API } from '@/consts'
 
+  /**
+  * Component is showing current display with controls and additional data.
+  */
   export default {
     components: {
       CurrentDisplayInfo
@@ -36,6 +39,12 @@
       }
     },
     methods: {
+      /**
+       * Gets called on left or right side of the image. It switches the current view.
+       * 
+       * @public
+       * @param {string} direction direction of swipe
+       */
       swipeHandler(direction) {
         fetch(`${API}/${direction}`)
         .then(response => {

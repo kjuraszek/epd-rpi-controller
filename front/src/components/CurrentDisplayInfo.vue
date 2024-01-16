@@ -23,6 +23,9 @@
   import { useEpdStatusStore } from '@/stores/epdStatus'
   import { mapState } from 'pinia'
 
+  /**
+  * Component displays the data about views progress and the current state of the EPD.
+  */
   export default {
     computed: {
       ...mapState(useEpdStatusStore, ['currentView', 'totalViews', 'epdBusy']),
