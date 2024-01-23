@@ -62,7 +62,7 @@ class TestHelpers:
         assert not mocked_function_second.called
 
     def test_wrap_text(self, mocker):
-        font = ImageFont.load_default()
+        font = ImageFont.load_default(size=11)
 
         with pytest.raises(ValueError):
             wrapped_text = wrap_text(1, 100, font, "Lorem testum testum")
@@ -74,10 +74,10 @@ class TestHelpers:
         assert wrapped_text == "Lorem testum testum"
 
         wrapped_text = wrap_text(20, 60, font, "Lorem testum testum")
-        assert wrapped_text == "Lor\nem \ntes\ntum\n te\nstum"
+        assert wrapped_text == "Lor\nem \ntest\num \ntest\num"
 
     def test_wrap_titles(self, mocker):
-        font = ImageFont.load_default()
+        font = ImageFont.load_default(size=11)
 
         wrapped_titles = wrap_titles(200, 200, font, [])
         assert wrapped_titles == []
@@ -86,7 +86,7 @@ class TestHelpers:
         assert len(wrapped_titles) == 1
         assert isinstance(wrapped_titles[0], WrappedTitle)
         assert wrapped_titles[0].text_height == 11
-        assert wrapped_titles[0].text_width == 114
+        assert wrapped_titles[0].text_width == 108
         assert wrapped_titles[0].wrapped_text == "Lorem testum testum"
 
         wrapped_titles = wrap_titles(
@@ -95,5 +95,5 @@ class TestHelpers:
         assert len(wrapped_titles) == 2
         assert isinstance(wrapped_titles[1], WrappedTitle)
         assert wrapped_titles[1].text_height == 26
-        assert wrapped_titles[1].text_width == 96
-        assert wrapped_titles[1].wrapped_text == "Lorem second tes\ntum testum"
+        assert wrapped_titles[1].text_width == 100
+        assert wrapped_titles[1].wrapped_text == "Lorem second test\num testum"
